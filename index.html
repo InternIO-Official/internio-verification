@@ -168,6 +168,10 @@
       font-weight: 700;
     }
 
+    .certificate-button:hover {
+      background: #c49f2f;
+    }
+
     footer {
       text-align: center;
       color: #777;
@@ -177,6 +181,7 @@
     }
 
     @media (max-width: 600px) {
+
       header {
         padding: 30px 15px;
       }
@@ -208,16 +213,23 @@
       }
     }
   </style>
+
 </head>
+
 
 <body>
 
+
 <header>
-  <div class="logo">Intern<span>IO</span></div>
+
+  <div class="logo">
+    Intern<span>IO</span>
+  </div>
 
   <div class="tagline">
     INNOVATION &amp; OPPORTUNITIES
   </div>
+
 </header>
 
 
@@ -225,12 +237,15 @@
 
   <div class="card">
 
-    <h1>Certificate Verification</h1>
+    <h1>
+      Certificate Verification
+    </h1>
 
     <p class="description">
       Verify the authenticity of an internship
       certificate issued by InternIO.
     </p>
+
 
     <input
       id="certificateId"
@@ -239,11 +254,16 @@
       autocomplete="off"
     >
 
+
     <button onclick="verifyCertificate()">
       Verify Certificate
     </button>
 
-    <div id="result" class="result"></div>
+
+    <div
+      id="result"
+      class="result"
+    ></div>
 
   </div>
 
@@ -255,7 +275,9 @@
 </footer>
 
 
+
 <script>
+
 
 /*
 =====================================================
@@ -266,17 +288,6 @@ SUPABASE CONNECTION
 const SUPABASE_URL =
   "https://hgodypvijzrvnsfylwdu.supabase.co";
 
-
-/*
-PASTE YOUR SUPABASE PUBLISHABLE KEY BETWEEN
-THE QUOTES BELOW.
-
-Example:
-
-const SUPABASE_KEY = "sb_publishable_xxxxx";
-
-DO NOT USE sb_secret_ OR service_role.
-*/
 
 const SUPABASE_KEY =
   "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
@@ -291,10 +302,15 @@ VERIFY CERTIFICATE
 async function verifyCertificate() {
 
   const input =
-    document.getElementById("certificateId");
+    document.getElementById(
+      "certificateId"
+    );
+
 
   const result =
-    document.getElementById("result");
+    document.getElementById(
+      "result"
+    );
 
 
   const id =
@@ -307,9 +323,13 @@ async function verifyCertificate() {
   if (!id) {
 
     result.innerHTML = `
+
       <div class="not-found">
+
         Please enter a Certificate ID.
+
       </div>
+
     `;
 
     return;
@@ -317,29 +337,53 @@ async function verifyCertificate() {
 
 
   result.innerHTML = `
+
     <p style="text-align:center;">
+
       Verifying certificate...
+
     </p>
+
   `;
 
 
   try {
 
+    /*
+    Send ONLY the requested certificate ID
+    to the secure Supabase function.
+    */
+
     const response = await fetch(
+
       SUPABASE_URL +
-      "/rest/v1/certificates" +
-      "?certificate_id=eq." +
-      encodeURIComponent(id) +
-      "&select=certificate_id,student_name,internship,project,start_date,end_date,duration,issue_date,status,certificate_url",
+      "/rest/v1/rpc/verify_certificate",
+
       {
-        method: "GET",
+
+        method: "POST",
 
         headers: {
-          "apikey": SUPABASE_KEY,
+
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_KEY,
+
           "Authorization":
             "Bearer " + SUPABASE_KEY
-        }
+
+        },
+
+        body: JSON.stringify({
+
+          lookup_id: id
+
+        })
+
       }
+
     );
 
 
@@ -357,17 +401,33 @@ async function verifyCertificate() {
       await response.json();
 
 
-    if (!data || data.length === 0) {
+    /*
+    No matching certificate
+    */
+
+    if (
+      !data ||
+      data.length === 0
+    ) {
 
       result.innerHTML = `
+
         <div class="not-found">
+
           ✕ Certificate Not Found
+
         </div>
+
       `;
 
       return;
+
     }
 
+
+    /*
+    Certificate found
+    */
 
     const certificate =
       data[0];
@@ -379,23 +439,36 @@ async function verifyCertificate() {
     );
 
 
-  } catch (error) {
+  }
 
-    console.error(error);
+  catch (error) {
+
+    console.error(
+      "Verification error:",
+      error
+    );
+
 
     result.innerHTML = `
+
       <div class="error">
+
         <strong>
           Unable to verify certificate.
         </strong>
+
         <br><br>
+
         Please try again later.
+
       </div>
+
     `;
 
   }
 
 }
+
 
 
 /*
@@ -409,10 +482,13 @@ function displayCertificate(
   result
 ) {
 
+
   let certificateButton = "";
 
 
-  if (certificate.certificate_url) {
+  if (
+    certificate.certificate_url
+  ) {
 
     certificateButton = `
 
@@ -424,7 +500,9 @@ function displayCertificate(
         target="_blank"
         rel="noopener noreferrer"
       >
+
         VIEW CERTIFICATE
+
       </a>
 
     `;
@@ -434,8 +512,11 @@ function displayCertificate(
 
   result.innerHTML = `
 
+
     <div class="verified">
+
       ✓ CERTIFICATE VERIFIED
+
     </div>
 
 
@@ -443,119 +524,155 @@ function displayCertificate(
 
 
       <div class="detail">
+
         <span class="label">
           Certificate ID
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.certificate_id
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Student Name
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.student_name
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Internship
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.internship
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Project
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.project || ""
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Start Date
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.start_date || ""
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           End Date
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.end_date || ""
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Duration
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.duration || ""
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Issue Date
         </span>
 
         <span class="value">
+
           ${escapeHTML(
             certificate.issue_date || ""
           )}
+
         </span>
+
       </div>
 
 
       <div class="detail">
+
         <span class="label">
           Status
         </span>
 
         <span class="value valid">
+
           ✓ ${escapeHTML(
             certificate.status
           )}
+
         </span>
+
       </div>
 
 
@@ -564,9 +681,11 @@ function displayCertificate(
 
     ${certificateButton}
 
+
   `;
 
 }
+
 
 
 /*
@@ -579,22 +698,38 @@ function escapeHTML(value) {
 
   return String(value)
 
-    .replace(/&/g, "&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
+
 /*
 =====================================================
-AUTOMATIC VERIFICATION FROM QR URL
+AUTOMATIC QR VERIFICATION
 
 Example:
 
@@ -603,6 +738,7 @@ Example:
 */
 
 window.onload = function() {
+
 
   const params =
     new URLSearchParams(
@@ -617,8 +753,11 @@ window.onload = function() {
   if (id) {
 
     document
-      .getElementById("certificateId")
+      .getElementById(
+        "certificateId"
+      )
       .value = id;
+
 
     verifyCertificate();
 
@@ -626,7 +765,10 @@ window.onload = function() {
 
 };
 
+
 </script>
 
+
 </body>
+
 </html>
