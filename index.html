@@ -169,8 +169,32 @@
 
 <script>
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwVd3scvJ8QbbeNIrcKl3RUoFmQErWd6XHvx64ekHTuUN7sMEMgN90R8G8L7gX6kOCPhA/exec";
+const certificates = {
+
+  "INIO-2026-000001": {
+
+    certificateId: "INIO-2026-000001",
+
+    studentName: "Test Student",
+
+    internship: "Web Development",
+
+    project: "E-Commerce Website",
+
+    startDate: "01 Aug 2026",
+
+    endDate: "08 Aug 2026",
+
+    duration: "1 Week",
+
+    issueDate: "10 Aug 2026",
+
+    status: "VALID",
+
+    certificateUrl: "https://drive.google.com/file/d/1mN5aLQk_hNu2gfxVOsNh6u1AQL2NGr9M/view?usp=sharing"
+  }
+
+};
 
 
 function verifyCertificate() {
@@ -179,8 +203,9 @@ function verifyCertificate() {
     document
       .getElementById("certificateId")
       .value
-      .trim();
-
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .toUpperCase();
 
   const result =
     document.getElementById("result");
@@ -197,164 +222,83 @@ function verifyCertificate() {
   }
 
 
-  result.innerHTML =
-    '<p style="text-align:center;">' +
-    'Verifying...' +
-    '</p>';
+  const certificate =
+    certificates[id];
 
 
-  const callbackName =
-    "internioCallback_" +
-    Date.now();
-
-
-  window[callbackName] =
-    function(data) {
-
-      delete window[callbackName];
-
-
-      if (!data.valid) {
-
-        result.innerHTML =
-          '<div class="not-found">' +
-          '✕ Certificate Not Found' +
-          '</div>';
-
-        return;
-      }
-
-
-      let certificateButton = "";
-
-
-      if (data.certificateUrl) {
-
-        certificateButton =
-
-          '<a class="certificate-button" ' +
-          'href="' +
-          escapeHtml(data.certificateUrl) +
-          '" ' +
-          'target="_blank">' +
-          'VIEW CERTIFICATE' +
-          '</a>';
-      }
-
-
-      result.innerHTML =
-
-        '<div class="verified">' +
-        '✓ CERTIFICATE VERIFIED' +
-        '</div>' +
-
-        '<div class="details">' +
-
-        detail(
-          "Certificate ID",
-          data.certificateId
-        ) +
-
-        detail(
-          "Student Name",
-          data.studentName
-        ) +
-
-        detail(
-          "Internship",
-          data.internship
-        ) +
-
-        detail(
-          "Project",
-          data.project
-        ) +
-
-        detail(
-          "Duration",
-          data.duration
-        ) +
-
-        detail(
-          "Start Date",
-          data.startDate
-        ) +
-
-        detail(
-          "Completion Date",
-          data.endDate
-        ) +
-
-        detail(
-          "Issue Date",
-          data.issueDate
-        ) +
-
-        detail(
-          "Status",
-          data.status,
-          true
-        ) +
-
-        '</div>' +
-
-        certificateButton;
-    };
-
-
-  const script =
-    document.createElement("script");
-
-
-  script.src =
-    API_URL +
-    "?api=1" +
-    "&id=" +
-    encodeURIComponent(id) +
-    "&callback=" +
-    callbackName;
-
-
-  script.onerror = function() {
-
-    delete window[callbackName];
+  if (!certificate) {
 
     result.innerHTML =
       '<div class="not-found">' +
-      'Unable to connect to InternIO verification server.' +
+      '✕ Certificate Not Found' +
       '</div>';
-  };
+
+    return;
+  }
 
 
-  document.body.appendChild(script);
+  result.innerHTML =
+
+    '<div class="verified">' +
+    '✓ CERTIFICATE VERIFIED' +
+    '</div>' +
+
+    '<div class="details">' +
+
+    detail("Certificate ID",
+           certificate.certificateId) +
+
+    detail("Student Name",
+           certificate.studentName) +
+
+    detail("Internship",
+           certificate.internship) +
+
+    detail("Project",
+           certificate.project) +
+
+    detail("Duration",
+           certificate.duration) +
+
+    detail("Start Date",
+           certificate.startDate) +
+
+    detail("Completion Date",
+           certificate.endDate) +
+
+    detail("Issue Date",
+           certificate.issueDate) +
+
+    detail("Status",
+           certificate.status) +
+
+    '</div>' +
+
+    '<a class="certificate-button" ' +
+    'href="' +
+    certificate.certificateUrl +
+    '" target="_blank">' +
+    'VIEW CERTIFICATE' +
+    '</a>';
 }
 
 
-function detail(label, value, status) {
+function detail(label, value) {
 
   return (
 
     '<div class="detail">' +
 
     '<span class="label">' +
-    escapeHtml(valueLabel(label)) +
+    escapeHtml(label) +
     '</span>' +
 
-    '<span class="value' +
-    (status ? ' status' : '') +
-    '">' +
-
-    escapeHtml(value || "") +
-
+    '<span class="value">' +
+    escapeHtml(value) +
     '</span>' +
 
     '</div>'
   );
-}
-
-
-function valueLabel(value) {
-  return value;
 }
 
 
@@ -369,15 +313,12 @@ function escapeHtml(value) {
 }
 
 
-/* Automatic verification when URL contains ?id= */
-
 window.onload = function() {
 
   const params =
     new URLSearchParams(
       window.location.search
     );
-
 
   const id =
     params.get("id");
@@ -390,10 +331,11 @@ window.onload = function() {
       .value = id;
 
     verifyCertificate();
+
   }
+
 };
 
 </script>
-
 </body>
 </html>
