@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,9 +11,7 @@
 
   <title>InternIO QR Generator</title>
 
-
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -58,8 +55,7 @@
       background: white;
       padding: 35px;
       border-radius: 14px;
-      box-shadow:
-        0 8px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
@@ -115,13 +111,33 @@
       cursor: not-allowed;
     }
 
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .checking {
+      color: #555;
+    }
+
+    .success {
+      color: #16803c;
+      font-weight: 700;
+    }
+
+    .error {
+      color: #c62828;
+      font-weight: 700;
+    }
+
     .qr-area {
       display: none;
       text-align: center;
-      margin-top: 35px;
+      margin-top: 30px;
     }
 
-    .qr-area img {
+    .qr-image {
       width: 280px;
       height: 280px;
       max-width: 100%;
@@ -134,6 +150,11 @@
       font-weight: 700;
     }
 
+    .student-name {
+      margin-top: 8px;
+      color: #555;
+    }
+
     .verification-url {
       margin-top: 10px;
       font-size: 12px;
@@ -142,38 +163,13 @@
     }
 
     .download-button {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-top: 20px;
       background: #d4af37;
       color: #14213d;
-      border: none;
-      border-radius: 7px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 16px;
+      margin-top: 20px;
     }
 
-    .error {
-      color: #c62828;
-      text-align: center;
-      margin-top: 20px;
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    .success {
-      color: #16803c;
-      text-align: center;
-      margin-top: 20px;
-      font-weight: 600;
-    }
-
-    .checking {
-      color: #555;
-      text-align: center;
-      margin-top: 20px;
+    .download-button:hover {
+      background: #c49f2f;
     }
 
     footer {
@@ -183,13 +179,26 @@
       padding: 20px;
     }
 
-  </style>
+    @media (max-width: 600px) {
+      .container {
+        margin: 25px auto;
+        padding: 15px;
+      }
 
+      .card {
+        padding: 25px 20px;
+      }
+
+      .qr-image {
+        width: 250px;
+        height: 250px;
+      }
+    }
+  </style>
 </head>
 
 
 <body>
-
 
 <header>
 
@@ -204,20 +213,15 @@
 </header>
 
 
-
 <div class="container">
 
   <div class="card">
 
-    <h1>
-      QR Code Generator
-    </h1>
+    <h1>QR Code Generator</h1>
 
     <p class="description">
-
       Generate a QR code only for a valid
       InternIO certificate.
-
     </p>
 
 
@@ -244,6 +248,7 @@
 
     <div
       id="message"
+      class="message"
     ></div>
 
 
@@ -254,6 +259,7 @@
 
       <img
         id="qrImage"
+        class="qr-image"
         alt="InternIO Certificate QR Code"
       >
 
@@ -261,6 +267,12 @@
       <div
         id="certificateIdDisplay"
         class="certificate-id"
+      ></div>
+
+
+      <div
+        id="studentNameDisplay"
+        class="student-name"
       ></div>
 
 
@@ -284,27 +296,40 @@
 </div>
 
 
-
 <footer>
-
   © 2026 InternIO — Innovation &amp; Opportunities
-
 </footer>
 
 
 
 <script>
 
-
 /*
 =====================================================
-SUPABASE
+SUPABASE CONNECTION
 =====================================================
 */
 
 const SUPABASE_URL =
   "https://hgodypvijzrvnsfylwdu.supabase.co";
 
+
+/*
+PASTE YOUR SUPABASE PUBLISHABLE KEY BELOW.
+
+Example:
+
+const SUPABASE_KEY =
+  "sb_publishable_xxxxxxxxxxxxx";
+
+DO NOT USE:
+
+sb_secret_...
+
+or
+
+service_role
+*/
 
 const SUPABASE_KEY =
   "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
@@ -329,30 +354,22 @@ GENERATE QR
 
 async function generateQR() {
 
-
   const input =
-    document.getElementById(
-      "certificateId"
-    );
-
+    document.getElementById("certificateId");
 
   const message =
-    document.getElementById(
-      "message"
-    );
-
+    document.getElementById("message");
 
   const qrArea =
-    document.getElementById(
-      "qrArea"
-    );
-
+    document.getElementById("qrArea");
 
   const button =
-    document.getElementById(
-      "generateButton"
-    );
+    document.getElementById("generateButton");
 
+
+  /*
+  Get certificate ID
+  */
 
   const id =
     input.value
@@ -362,49 +379,44 @@ async function generateQR() {
 
 
   /*
-  Reset
+  Reset previous result
   */
 
-  qrArea.style.display =
-    "none";
+  qrArea.style.display = "none";
 
-  message.className =
-    "";
+  message.className = "message";
 
-  message.innerHTML =
-    "";
+  message.innerHTML = "";
 
 
   /*
-  Empty ID
+  Check empty ID
   */
 
   if (!id) {
 
     message.className =
-      "error";
+      "message error";
 
     message.textContent =
       "Please enter a Certificate ID.";
 
     return;
-
   }
 
 
   /*
-  Disable button
+  Start checking
   */
 
-  button.disabled =
-    true;
+  button.disabled = true;
 
   button.textContent =
     "Checking certificate...";
 
 
   message.className =
-    "checking";
+    "message checking";
 
   message.textContent =
     "Checking InternIO certificate database...";
@@ -412,24 +424,18 @@ async function generateQR() {
 
   try {
 
-
     /*
-    Check certificate through
-    the secure Supabase function.
+    Call secure Supabase RPC
     */
 
     const response =
       await fetch(
-
         SUPABASE_URL +
         "/rest/v1/rpc/verify_certificate",
-
         {
-
           method: "POST",
 
           headers: {
-
             "Content-Type":
               "application/json",
 
@@ -437,42 +443,39 @@ async function generateQR() {
               SUPABASE_KEY,
 
             "Authorization":
-              "Bearer " +
-              SUPABASE_KEY
-
+              "Bearer " + SUPABASE_KEY
           },
 
           body: JSON.stringify({
-
             lookup_id: id
-
           })
-
         }
-
       );
 
 
     /*
-    Supabase error
+    Check server response
     */
 
     if (!response.ok) {
 
       throw new Error(
-        "Database error: " +
+        "Supabase request failed: " +
         response.status
       );
-
     }
 
+
+    /*
+    Read result
+    */
 
     const data =
       await response.json();
 
 
     /*
-    Certificate doesn't exist
+    Certificate does not exist
     */
 
     if (
@@ -481,24 +484,17 @@ async function generateQR() {
     ) {
 
       message.className =
-        "error";
+        "message error";
 
-      message.innerHTML = `
-        ✕ Certificate Not Found
-        <br>
-        <small>
-          No InternIO certificate exists
-          with ID ${escapeHTML(id)}.
-        </small>
-      `;
+      message.innerHTML =
+        "✕ Certificate Not Found";
 
       return;
-
     }
 
 
     /*
-    Certificate exists
+    Certificate found
     */
 
     const certificate =
@@ -506,32 +502,32 @@ async function generateQR() {
 
 
     /*
-    Check certificate status
+    Only VALID certificates
+    can generate a QR.
     */
 
-    if (
+    const status =
       String(
-        certificate.status
-      ).toUpperCase() !==
-      "VALID"
-    ) {
+        certificate.status || ""
+      )
+      .trim()
+      .toUpperCase();
+
+
+    if (status !== "VALID") {
 
       message.className =
-        "error";
+        "message error";
 
-      message.innerHTML = `
-        ✕ Certificate Is Not Valid
-        <br>
-        <small>
-          Status:
-          ${escapeHTML(
-            certificate.status
-          )}
-        </small>
-      `;
+      message.innerHTML =
+        "✕ Certificate Is Not Valid" +
+        "<br><small>Status: " +
+        escapeHTML(
+          certificate.status || "UNKNOWN"
+        ) +
+        "</small>";
 
       return;
-
     }
 
 
@@ -548,7 +544,10 @@ async function generateQR() {
 
 
     /*
-    Create QR
+    Create QR image.
+
+    The QR contains ONLY the
+    InternIO verification URL.
     */
 
     const qrUrl =
@@ -561,13 +560,21 @@ async function generateQR() {
 
 
     /*
-    Display QR
+    Put QR into page
     */
 
-    document.getElementById(
-      "qrImage"
-    ).src = qrUrl;
+    const qrImage =
+      document.getElementById(
+        "qrImage"
+      );
 
+    qrImage.src =
+      qrUrl;
+
+
+    /*
+    Display certificate ID
+    */
 
     document.getElementById(
       "certificateIdDisplay"
@@ -575,52 +582,71 @@ async function generateQR() {
       certificate.certificate_id;
 
 
+    /*
+    Display student name
+    */
+
+    document.getElementById(
+      "studentNameDisplay"
+    ).textContent =
+      certificate.student_name;
+
+
+    /*
+    Display verification URL
+    */
+
     document.getElementById(
       "verificationUrl"
     ).textContent =
       verificationUrl;
 
 
+    /*
+    Show QR
+    */
+
     qrArea.style.display =
       "block";
 
 
+    /*
+    Success message
+    */
+
     message.className =
-      "success";
+      "message success";
 
     message.innerHTML =
       "✓ Certificate verified. QR generated.";
 
 
-  }
+  } catch (error) {
 
-
-  catch (error) {
-
-    console.error(error);
+    console.error(
+      "QR generator error:",
+      error
+    );
 
 
     message.className =
-      "error";
+      "message error";
 
-    message.innerHTML = `
-      Unable to check the certificate.
-      <br><br>
-      Please try again.
-    `;
+    message.innerHTML =
+      "Unable to connect to the certificate database." +
+      "<br><small>Please try again.</small>";
 
   }
 
 
-  finally {
+  /*
+  Restore button
+  */
 
-    button.disabled =
-      false;
+  button.disabled = false;
 
-    button.textContent =
-      "Verify & Generate QR";
-
-  }
+  button.textContent =
+    "Verify & Generate QR";
 
 }
 
@@ -634,14 +660,13 @@ DOWNLOAD QR
 
 async function downloadQR() {
 
-
-  const img =
+  const image =
     document.getElementById(
       "qrImage"
     );
 
 
-  const id =
+  const certificateId =
     document.getElementById(
       "certificateIdDisplay"
     )
@@ -649,19 +674,20 @@ async function downloadQR() {
     .trim();
 
 
-  if (!img.src) {
+  if (
+    !image.src ||
+    !certificateId
+  ) {
 
     return;
-
   }
 
 
   try {
 
-
     const response =
       await fetch(
-        img.src
+        image.src
       );
 
 
@@ -687,7 +713,7 @@ async function downloadQR() {
 
     link.download =
       "InternIO-" +
-      id +
+      certificateId +
       "-QR.png";
 
 
@@ -709,13 +735,15 @@ async function downloadQR() {
     );
 
 
-  }
+  } catch (error) {
 
-
-  catch (error) {
+    /*
+    Fallback if browser blocks
+    the direct download.
+    */
 
     window.open(
-      img.src,
+      image.src,
       "_blank"
     );
 
@@ -763,7 +791,6 @@ function escapeHTML(value) {
 }
 
 </script>
-
 
 </body>
 
