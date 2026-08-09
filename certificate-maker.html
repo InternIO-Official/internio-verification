@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>InternIO Certificate Maker</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #eef1f5;
+  color: #17213c;
+}
+
+header {
+  background: #14213d;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+.logo {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.logo span {
+  color: #d4af37;
+}
+
+.tagline {
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 15px;
+}
+
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
+  margin-bottom: 30px;
+}
+
+.form-card h1 {
+  margin-top: 0;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 7px;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccd2da;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 7px;
+  background: #14213d;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d3157;
+}
+
+button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.error {
+  color: #c62828;
+  font-weight: 700;
+}
+
+.success {
+  color: #16803c;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   CERTIFICATE
+========================================= */
+
+.certificate-wrapper {
+  display: none;
+  margin-top: 30px;
+}
+
+.certificate {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 700px;
+  margin: auto;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  border: 12px solid #14213d;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 10px 35px rgba(0,0,0,.12);
+}
+
+.certificate-inner {
+  border: 3px solid #d4af37;
+  min-height: 600px;
+  padding: 45px 50px;
+  position: relative;
+}
+
+.corner {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-color: #d4af37;
+  border-style: solid;
+}
+
+.corner.tl {
+  top: 15px;
+  left: 15px;
+  border-width: 4px 0 0 4px;
+}
+
+.corner.tr {
+  top: 15px;
+  right: 15px;
+  border-width: 4px 4px 0 0;
+}
+
+.corner.bl {
+  bottom: 15px;
+  left: 15px;
+  border-width: 0 0 4px 4px;
+}
+
+.corner.br {
+  bottom: 15px;
+  right: 15px;
+  border-width: 0 4px 4px 0;
+}
+
+.certificate-logo {
+  font-size: 38px;
+  font-weight: 800;
+  color: #14213d;
+}
+
+.certificate-logo span {
+  color: #d4af37;
+}
+
+.certificate-title {
+  margin-top: 20px;
+  font-size: 38px;
+  letter-spacing: 3px;
+  color: #14213d;
+  font-weight: 800;
+}
+
+.certificate-subtitle {
+  margin-top: 8px;
+  color: #777;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.presented {
+  margin-top: 45px;
+  font-size: 15px;
+  color: #555;
+}
+
+.student-name {
+  margin-top: 10px;
+  font-family: Georgia, serif;
+  font-size: 42px;
+  color: #14213d;
+  font-weight: 700;
+  border-bottom: 2px solid #d4af37;
+  display: inline-block;
+  padding: 0 35px 8px;
+}
+
+.certificate-text {
+  max-width: 720px;
+  margin: 25px auto 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.highlight {
+  font-weight: 700;
+  color: #14213d;
+}
+
+.project-box {
+  margin: 22px auto;
+  padding: 13px 20px;
+  max-width: 600px;
+  border-left: 4px solid #d4af37;
+  border-right: 4px solid #d4af37;
+  background: #fafafa;
+}
+
+.project-title {
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+.project-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #14213d;
+  margin-top: 5px;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.detail-item {
+  min-width: 130px;
+}
+
+.detail-label {
+  color: #888;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-value {
+  margin-top: 5px;
+  font-weight: 700;
+  color: #14213d;
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 35px;
+  gap: 20px;
+}
+
+.signature {
+  text-align: center;
+  min-width: 190px;
+}
+
+.signature-line {
+  border-top: 1px solid #333;
+  padding-top: 6px;
+  font-size: 12px;
+}
+
+.qr-section {
+  text-align: center;
+}
+
+.qr-section img {
+  width: 110px;
+  height: 110px;
+}
+
+.qr-label {
+  font-size: 9px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.certificate-id {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  color: #777;
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.actions {
+  max-width: 1000px;
+  margin: 20px auto;
+  display: flex;
+  gap: 12px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.print-button {
+  background: #16803c;
+}
+
+.new-button {
+  background: #777;
+}
+
+
+/* =========================================
+   PRINT
+========================================= */
+
+@media print {
+
+  body {
+    background: white;
+  }
+
+  header,
+  .form-card,
+  .actions,
+  .message {
+    display: none !important;
+  }
+
+  .container {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  .certificate-wrapper {
+    display: block !important;
+    margin: 0;
+  }
+
+  .certificate {
+    width: 297mm;
+    height: 210mm;
+    min-height: 210mm;
+    max-width: none;
+    border: 10px solid #14213d;
+    box-shadow: none;
+    padding: 35px;
+    page-break-after: avoid;
+  }
+
+  .certificate-inner {
+    min-height: 180mm;
+    padding: 35px 45px;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .certificate {
+    padding: 15px;
+    border-width: 7px;
+  }
+
+  .certificate-inner {
+    padding: 25px 15px;
+  }
+
+  .certificate-title {
+    font-size: 25px;
+  }
+
+  .student-name {
+    font-size: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .certificate-text {
+    font-size: 13px;
+  }
+
+  .details {
+    gap: 15px;
+  }
+
+  .bottom-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo">
+    Intern<span>IO</span>
+  </div>
+
+  <div class="tagline">
+    INPUT → OUTPUT | CERTIFICATE MAKER
+  </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<!-- =========================================
+     FORM
+========================================= -->
+
+<div class="form-card">
+
+  <h1>
+    Create InternIO Certificate
+  </h1>
+
+  <p style="text-align:center;color:#666;">
+    Enter the student's real internship details.
+  </p>
+
+
+  <label>
+    Student Name *
+  </label>
+
+  <input
+    id="studentName"
+    type="text"
+    placeholder="Student full name"
+  >
+
+
+  <label>
+    Internship *
+  </label>
+
+  <input
+    id="internship"
+    type="text"
+    placeholder="Web Development"
+  >
+
+
+  <label>
+    Project *
+  </label>
+
+  <input
+    id="project"
+    type="text"
+    placeholder="E-Commerce Website"
+  >
+
+
+  <label>
+    Start Date *
+  </label>
+
+  <input
+    id="startDate"
+    type="date"
+  >
+
+
+  <label>
+    End Date *
+  </label>
+
+  <input
+    id="endDate"
+    type="date"
+  >
+
+
+  <label>
+    Duration *
+  </label>
+
+  <input
+    id="duration"
+    type="text"
+    placeholder="4 Weeks"
+  >
+
+
+  <label>
+    Issue Date *
+  </label>
+
+  <input
+    id="issueDate"
+    type="date"
+  >
+
+
+  <button
+    id="generateButton"
+    onclick="generateCertificate()"
+  >
+    Generate Certificate
+  </button>
+
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
+</div>
+
+
+
+<!-- =========================================
+     CERTIFICATE
+========================================= -->
+
+<div
+  id="certificateWrapper"
+  class="certificate-wrapper"
+>
+
+  <div
+    id="certificate"
+    class="certificate"
+  >
+
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+
+    <div class="certificate-inner">
+
+      <div class="certificate-logo">
+        Intern<span>IO</span>
+      </div>
+
+
+      <div class="certificate-title">
+        CERTIFICATE
+      </div>
+
+
+      <div class="certificate-subtitle">
+        OF INTERNSHIP
+      </div>
+
+
+      <div class="presented">
+        This certificate is proudly presented to
+      </div>
+
+
+      <div
+        id="certificateStudentName"
+        class="student-name"
+      >
+      </div>
+
+
+      <div class="certificate-text">
+
+        for successfully completing the
+
+        <span
+          id="certificateInternship"
+          class="highlight"
+        >
+        </span>
+
+        internship program through practical,
+        project-based learning and successfully
+        delivering the assigned project.
+
+
+      </div>
+
+
+      <div class="project-box">
+
+        <div class="project-title">
+          PROJECT
+        </div>
+
+        <div
+          id="certificateProject"
+          class="project-name"
+        >
+        </div>
+
+      </div>
+
+
+      <div class="details">
+
+
+        <div class="detail-item">
+
+          <div class="detail-label">
+            Start Date
+          </div>
+
+          <div
+            id="certificateStartDate"
+            class="detail-value"
+          >
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-label">
+            End Date
+          </div>
+
+          <div
+            id="certificateEndDate"
+            class="detail-value"
+          >
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-label">
+            Duration
+          </div>
+
+          <div
+            id="certificateDuration"
+            class="detail-value"
+          >
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-label">
+            Issue Date
+          </div>
+
+          <div
+            id="certificateIssueDate"
+            class="detail-value"
+          >
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="bottom-section">
+
+
+        <div class="signature">
+
+          <div style="height:35px;"></div>
+
+          <div class="signature-line">
+            Authorized by InternIO
+          </div>
+
+        </div>
+
+
+        <div class="qr-section">
+
+          <img
+            id="certificateQR"
+            alt="Certificate Verification QR"
+          >
+
+          <div class="qr-label">
+            SCAN TO VERIFY
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div
+        id="certificateId"
+        class="certificate-id"
+      >
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="actions">
+
+    <button
+      class="print-button"
+      onclick="printCertificate()"
+    >
+      🖨 Print / Save as PDF
+    </button>
+
+
+    <button
+      class="new-button"
+      onclick="newCertificate()"
+    >
+      Create Another
+    </button>
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/*
+=====================================================
+SUPABASE
+=====================================================
+*/
+
+const SUPABASE_URL =
+  "https://hgodypvijzrvnsfylwdu.supabase.co";
+
+
+/*
+IMPORTANT:
+
+Use the SAME Supabase publishable key
+you already use in admin.html.
+
+DO NOT use a secret/service-role key.
+*/
+
+const SUPABASE_KEY =
+  "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
+
+
+/*
+=====================================================
+PUBLIC VERIFICATION URL
+=====================================================
+*/
+
+const VERIFICATION_URL =
+  "https://ajaybilonia.github.io/internio-verification/";
+
+
+
+/*
+=====================================================
+GENERATE CERTIFICATE
+=====================================================
+*/
+
+async function generateCertificate() {
+
+  const studentName =
+    document.getElementById(
+      "studentName"
+    ).value.trim();
+
+
+  const internship =
+    document.getElementById(
+      "internship"
+    ).value.trim();
+
+
+  const project =
+    document.getElementById(
+      "project"
+    ).value.trim();
+
+
+  const startDate =
+    document.getElementById(
+      "startDate"
+    ).value;
+
+
+  const endDate =
+    document.getElementById(
+      "endDate"
+    ).value;
+
+
+  const duration =
+    document.getElementById(
+      "duration"
+    ).value.trim();
+
+
+  const issueDate =
+    document.getElementById(
+      "issueDate"
+    ).value;
+
+
+  const message =
+    document.getElementById(
+      "message"
+    );
+
+
+  const button =
+    document.getElementById(
+      "generateButton"
+    );
+
+
+  /*
+  ===============================================
+  VALIDATION
+  ===============================================
+  */
+
+  if (
+    !studentName ||
+    !internship ||
+    !project ||
+    !startDate ||
+    !endDate ||
+    !duration ||
+    !issueDate
+  ) {
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      "Please fill every required field.";
+
+    return;
+
+  }
+
+
+  /*
+  ===============================================
+  LOGIN CHECK
+  ===============================================
+  */
+
+  const token =
+    localStorage.getItem(
+      "internio_access_token"
+    );
+
+
+  if (!token) {
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      "Please login through the InternIO Admin page first.";
+
+    return;
+
+  }
+
+
+  /*
+  ===============================================
+  START
+  ===============================================
+  */
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Creating certificate...";
+
+
+  message.className =
+    "message";
+
+  message.textContent =
+    "Creating secure certificate record...";
+
+
+  try {
+
+
+    /*
+    =============================================
+    CALL SECURE SUPABASE FUNCTION
+    =============================================
+    */
+
+    const response =
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/rpc/create_certificate",
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " + token
+
+          },
+
+          body: JSON.stringify({
+
+            p_student_name:
+              studentName,
+
+            p_internship:
+              internship,
+
+            p_project:
+              project,
+
+            p_start_date:
+              startDate,
+
+            p_end_date:
+              endDate,
+
+            p_duration:
+              duration,
+
+            p_issue_date:
+              issueDate,
+
+            /*
+            PDF will be attached later.
+            */
+
+            p_certificate_url:
+              ""
+
+          })
+
+        }
+
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+
+        data.message ||
+        data.error ||
+        "Certificate creation failed."
+
+      );
+
+    }
+
+
+    /*
+    =============================================
+    GET CREATED CERTIFICATE
+    =============================================
+    */
+
+    const certificate =
+      Array.isArray(data)
+        ? data[0]
+        : data;
+
+
+    if (
+      !certificate ||
+      !certificate.certificate_id
+    ) {
+
+      throw new Error(
+        "Certificate ID was not returned."
+      );
+
+    }
+
+
+    /*
+    =============================================
+    VERIFICATION URL
+    =============================================
+    */
+
+    const verificationUrl =
+      VERIFICATION_URL +
+      "?id=" +
+      encodeURIComponent(
+        certificate.certificate_id
+      );
+
+
+    /*
+    =============================================
+    QR CODE
+    =============================================
+    */
+
+    const qrUrl =
+      "https://api.qrserver.com/v1/create-qr-code/" +
+      "?size=600x600" +
+      "&data=" +
+      encodeURIComponent(
+        verificationUrl
+      );
+
+
+    /*
+    =============================================
+    DISPLAY CERTIFICATE
+    =============================================
+    */
+
+    document.getElementById(
+      "certificateStudentName"
+    ).textContent =
+      certificate.student_name;
+
+
+    document.getElementById(
+      "certificateInternship"
+    ).textContent =
+      certificate.internship;
+
+
+    document.getElementById(
+      "certificateProject"
+    ).textContent =
+      certificate.project;
+
+
+    document.getElementById(
+      "certificateStartDate"
+    ).textContent =
+      formatDisplayDate(
+        certificate.start_date
+      );
+
+
+    document.getElementById(
+      "certificateEndDate"
+    ).textContent =
+      formatDisplayDate(
+        certificate.end_date
+      );
+
+
+    document.getElementById(
+      "certificateDuration"
+    ).textContent =
+      certificate.duration;
+
+
+    document.getElementById(
+      "certificateIssueDate"
+    ).textContent =
+      formatDisplayDate(
+        certificate.issue_date
+      );
+
+
+    document.getElementById(
+      "certificateId"
+    ).textContent =
+      "Certificate ID: " +
+      certificate.certificate_id;
+
+
+    document.getElementById(
+      "certificateQR"
+    ).src =
+      qrUrl;
+
+
+    /*
+    =============================================
+    SHOW
+    =============================================
+    */
+
+    document.getElementById(
+      "certificateWrapper"
+    ).style.display =
+      "block";
+
+
+    message.className =
+      "message success";
+
+    message.textContent =
+      "✓ Certificate created successfully: " +
+      certificate.certificate_id;
+
+
+    /*
+    Scroll to certificate.
+    */
+
+    setTimeout(
+      function() {
+
+        document.getElementById(
+          "certificateWrapper"
+        ).scrollIntoView({
+          behavior: "smooth"
+        });
+
+      },
+      300
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      error.message ||
+      "Unable to create certificate.";
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "Generate Certificate";
+
+}
+
+
+
+/*
+=====================================================
+FORMAT DATE
+=====================================================
+*/
+
+function formatDisplayDate(
+  value
+) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  const date =
+    new Date(
+      value + "T00:00:00"
+    );
+
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+
+/*
+=====================================================
+PRINT / SAVE PDF
+=====================================================
+*/
+
+function printCertificate() {
+
+  window.print();
+
+}
+
+
+
+/*
+=====================================================
+NEW CERTIFICATE
+=====================================================
+*/
+
+function newCertificate() {
+
+  if (
+    !confirm(
+      "Create another certificate?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "certificateWrapper"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "studentName"
+  ).value = "";
+
+
+  document.getElementById(
+    "internship"
+  ).value = "";
+
+
+  document.getElementById(
+    "project"
+  ).value = "";
+
+
+  document.getElementById(
+    "startDate"
+  ).value = "";
+
+
+  document.getElementById(
+    "endDate"
+  ).value = "";
+
+
+  document.getElementById(
+    "duration"
+  ).value = "";
+
+
+  document.getElementById(
+    "issueDate"
+  ).value = "";
+
+
+  document.getElementById(
+    "message"
+  ).textContent =
+    "";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+</script>
+
+
+</body>
+
+</html>
