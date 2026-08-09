@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>InternIO QR Generator</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #17213c;
+    }
+
+    header {
+      background: #14213d;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #d4af37;
+    }
+
+    .tagline {
+      margin-top: 8px;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .description {
+      text-align: center;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #14213d;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 7px;
+      background: #14213d;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d2d50;
+    }
+
+    .qr-area {
+      display: none;
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .qr-area img {
+      width: 280px;
+      height: 280px;
+      max-width: 100%;
+      border: 10px solid white;
+    }
+
+    .certificate-id {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .verification-url {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #777;
+      word-break: break-all;
+    }
+
+    .download-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: #d4af37;
+      color: #14213d;
+      text-decoration: none;
+      border-radius: 7px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
+
+    .error {
+      color: #c62828;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo">
+    Intern<span>IO</span>
+  </div>
+
+  <div class="tagline">
+    INNOVATION &amp; OPPORTUNITIES
+  </div>
+
+</header>
+
+
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>
+      QR Code Generator
+    </h1>
+
+    <p class="description">
+
+      Generate a QR code for an
+      InternIO certificate verification page.
+
+    </p>
+
+
+    <label for="certificateId">
+      Certificate ID
+    </label>
+
+
+    <input
+      id="certificateId"
+      type="text"
+      placeholder="INIO-2026-000001"
+      autocomplete="off"
+    >
+
+
+    <button onclick="generateQR()">
+      Generate QR Code
+    </button>
+
+
+    <div
+      id="error"
+      class="error"
+    ></div>
+
+
+    <div
+      id="qrArea"
+      class="qr-area"
+    >
+
+      <img
+        id="qrImage"
+        alt="InternIO Certificate QR Code"
+      >
+
+
+      <div
+        id="certificateIdDisplay"
+        class="certificate-id"
+      ></div>
+
+
+      <div
+        id="verificationUrl"
+        class="verification-url"
+      ></div>
+
+
+      <button
+        class="download-button"
+        onclick="downloadQR()"
+      >
+        Download QR Code
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<footer>
+
+  © 2026 InternIO — Innovation &amp; Opportunities
+
+</footer>
+
+
+
+<script>
+
+
+/*
+=====================================================
+INTERNIO VERIFICATION WEBSITE
+=====================================================
+*/
+
+const VERIFICATION_URL =
+  "https://ajaybilonia.github.io/internio-verification/";
+
+
+
+/*
+=====================================================
+GENERATE QR
+=====================================================
+*/
+
+function generateQR() {
+
+
+  const input =
+    document.getElementById(
+      "certificateId"
+    );
+
+
+  const error =
+    document.getElementById(
+      "error"
+    );
+
+
+  const qrArea =
+    document.getElementById(
+      "qrArea"
+    );
+
+
+  const id =
+    input.value
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .toUpperCase();
+
+
+  error.textContent = "";
+
+
+  if (!id) {
+
+    qrArea.style.display =
+      "none";
+
+    error.textContent =
+      "Please enter a Certificate ID.";
+
+    return;
+
+  }
+
+
+  /*
+  Create verification URL
+  */
+
+  const verificationUrl =
+    VERIFICATION_URL +
+    "?id=" +
+    encodeURIComponent(id);
+
+
+  /*
+  QR Code image
+  */
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/" +
+    "?size=600x600" +
+    "&data=" +
+    encodeURIComponent(
+      verificationUrl
+    );
+
+
+  /*
+  Display QR
+  */
+
+  document.getElementById(
+    "qrImage"
+  ).src = qrUrl;
+
+
+  document.getElementById(
+    "certificateIdDisplay"
+  ).textContent =
+    id;
+
+
+  document.getElementById(
+    "verificationUrl"
+  ).textContent =
+    verificationUrl;
+
+
+  qrArea.style.display =
+    "block";
+
+}
+
+
+
+/*
+=====================================================
+DOWNLOAD QR
+=====================================================
+*/
+
+async function downloadQR() {
+
+
+  const img =
+    document.getElementById(
+      "qrImage"
+    );
+
+
+  const id =
+    document.getElementById(
+      "certificateId"
+    )
+    .value
+    .trim()
+    .toUpperCase();
+
+
+  try {
+
+
+    const response =
+      await fetch(img.src);
+
+
+    const blob =
+      await response.blob();
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
+
+    link.href =
+      url;
+
+
+    link.download =
+      "InternIO-" +
+      id +
+      "-QR.png";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+      link
+    );
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+
+  } catch (error) {
+
+    /*
+    Fallback:
+    open QR image in a new tab.
+    */
+
+    window.open(
+      img.src,
+      "_blank"
+    );
+
+  }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
