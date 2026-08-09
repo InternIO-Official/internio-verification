@@ -110,6 +110,11 @@
       background: #1d2d50;
     }
 
+    button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
     .qr-area {
       display: none;
       text-align: center;
@@ -143,19 +148,32 @@
       margin-top: 20px;
       background: #d4af37;
       color: #14213d;
-      text-decoration: none;
+      border: none;
       border-radius: 7px;
       font-weight: 700;
       cursor: pointer;
-      border: none;
       font-size: 16px;
     }
 
     .error {
       color: #c62828;
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
       font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .success {
+      color: #16803c;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    .checking {
+      color: #555;
+      text-align: center;
+      margin-top: 20px;
     }
 
     footer {
@@ -197,8 +215,8 @@
 
     <p class="description">
 
-      Generate a QR code for an
-      InternIO certificate verification page.
+      Generate a QR code only for a valid
+      InternIO certificate.
 
     </p>
 
@@ -216,14 +234,16 @@
     >
 
 
-    <button onclick="generateQR()">
-      Generate QR Code
+    <button
+      id="generateButton"
+      onclick="generateQR()"
+    >
+      Verify &amp; Generate QR
     </button>
 
 
     <div
-      id="error"
-      class="error"
+      id="message"
     ></div>
 
 
@@ -278,6 +298,20 @@
 
 /*
 =====================================================
+SUPABASE
+=====================================================
+*/
+
+const SUPABASE_URL =
+  "https://hgodypvijzrvnsfylwdu.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
+
+
+/*
+=====================================================
 INTERNIO VERIFICATION WEBSITE
 =====================================================
 */
@@ -293,7 +327,7 @@ GENERATE QR
 =====================================================
 */
 
-function generateQR() {
+async function generateQR() {
 
 
   const input =
@@ -302,15 +336,21 @@ function generateQR() {
     );
 
 
-  const error =
+  const message =
     document.getElementById(
-      "error"
+      "message"
     );
 
 
   const qrArea =
     document.getElementById(
       "qrArea"
+    );
+
+
+  const button =
+    document.getElementById(
+      "generateButton"
     );
 
 
@@ -321,15 +361,30 @@ function generateQR() {
       .toUpperCase();
 
 
-  error.textContent = "";
+  /*
+  Reset
+  */
 
+  qrArea.style.display =
+    "none";
+
+  message.className =
+    "";
+
+  message.innerHTML =
+    "";
+
+
+  /*
+  Empty ID
+  */
 
   if (!id) {
 
-    qrArea.style.display =
-      "none";
+    message.className =
+      "error";
 
-    error.textContent =
+    message.textContent =
       "Please enter a Certificate ID.";
 
     return;
@@ -338,51 +393,234 @@ function generateQR() {
 
 
   /*
-  Create verification URL
+  Disable button
   */
 
-  const verificationUrl =
-    VERIFICATION_URL +
-    "?id=" +
-    encodeURIComponent(id);
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Checking certificate...";
 
 
-  /*
-  QR Code image
-  */
+  message.className =
+    "checking";
 
-  const qrUrl =
-    "https://api.qrserver.com/v1/create-qr-code/" +
-    "?size=600x600" +
-    "&data=" +
-    encodeURIComponent(
-      verificationUrl
-    );
+  message.textContent =
+    "Checking InternIO certificate database...";
 
 
-  /*
-  Display QR
-  */
-
-  document.getElementById(
-    "qrImage"
-  ).src = qrUrl;
+  try {
 
 
-  document.getElementById(
-    "certificateIdDisplay"
-  ).textContent =
-    id;
+    /*
+    Check certificate through
+    the secure Supabase function.
+    */
+
+    const response =
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/rpc/verify_certificate",
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+
+          },
+
+          body: JSON.stringify({
+
+            lookup_id: id
+
+          })
+
+        }
+
+      );
 
 
-  document.getElementById(
-    "verificationUrl"
-  ).textContent =
-    verificationUrl;
+    /*
+    Supabase error
+    */
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Database error: " +
+        response.status
+      );
+
+    }
 
 
-  qrArea.style.display =
-    "block";
+    const data =
+      await response.json();
+
+
+    /*
+    Certificate doesn't exist
+    */
+
+    if (
+      !data ||
+      data.length === 0
+    ) {
+
+      message.className =
+        "error";
+
+      message.innerHTML = `
+        ✕ Certificate Not Found
+        <br>
+        <small>
+          No InternIO certificate exists
+          with ID ${escapeHTML(id)}.
+        </small>
+      `;
+
+      return;
+
+    }
+
+
+    /*
+    Certificate exists
+    */
+
+    const certificate =
+      data[0];
+
+
+    /*
+    Check certificate status
+    */
+
+    if (
+      String(
+        certificate.status
+      ).toUpperCase() !==
+      "VALID"
+    ) {
+
+      message.className =
+        "error";
+
+      message.innerHTML = `
+        ✕ Certificate Is Not Valid
+        <br>
+        <small>
+          Status:
+          ${escapeHTML(
+            certificate.status
+          )}
+        </small>
+      `;
+
+      return;
+
+    }
+
+
+    /*
+    Create verification URL
+    */
+
+    const verificationUrl =
+      VERIFICATION_URL +
+      "?id=" +
+      encodeURIComponent(
+        certificate.certificate_id
+      );
+
+
+    /*
+    Create QR
+    */
+
+    const qrUrl =
+      "https://api.qrserver.com/v1/create-qr-code/" +
+      "?size=600x600" +
+      "&data=" +
+      encodeURIComponent(
+        verificationUrl
+      );
+
+
+    /*
+    Display QR
+    */
+
+    document.getElementById(
+      "qrImage"
+    ).src = qrUrl;
+
+
+    document.getElementById(
+      "certificateIdDisplay"
+    ).textContent =
+      certificate.certificate_id;
+
+
+    document.getElementById(
+      "verificationUrl"
+    ).textContent =
+      verificationUrl;
+
+
+    qrArea.style.display =
+      "block";
+
+
+    message.className =
+      "success";
+
+    message.innerHTML =
+      "✓ Certificate verified. QR generated.";
+
+
+  }
+
+
+  catch (error) {
+
+    console.error(error);
+
+
+    message.className =
+      "error";
+
+    message.innerHTML = `
+      Unable to check the certificate.
+      <br><br>
+      Please try again.
+    `;
+
+  }
+
+
+  finally {
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Verify & Generate QR";
+
+  }
 
 }
 
@@ -405,18 +643,26 @@ async function downloadQR() {
 
   const id =
     document.getElementById(
-      "certificateId"
+      "certificateIdDisplay"
     )
-    .value
-    .trim()
-    .toUpperCase();
+    .textContent
+    .trim();
+
+
+  if (!img.src) {
+
+    return;
+
+  }
 
 
   try {
 
 
     const response =
-      await fetch(img.src);
+      await fetch(
+        img.src
+      );
 
 
     const blob =
@@ -424,11 +670,15 @@ async function downloadQR() {
 
 
     const url =
-      URL.createObjectURL(blob);
+      URL.createObjectURL(
+        blob
+      );
 
 
     const link =
-      document.createElement("a");
+      document.createElement(
+        "a"
+      );
 
 
     link.href =
@@ -459,12 +709,10 @@ async function downloadQR() {
     );
 
 
-  } catch (error) {
+  }
 
-    /*
-    Fallback:
-    open QR image in a new tab.
-    */
+
+  catch (error) {
 
     window.open(
       img.src,
@@ -472,6 +720,45 @@ async function downloadQR() {
     );
 
   }
+
+}
+
+
+
+/*
+=====================================================
+ESCAPE HTML
+=====================================================
+*/
+
+function escapeHTML(value) {
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
