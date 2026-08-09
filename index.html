@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>InternIO Certificate Verification</title>
 
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: #f4f6f8;
       color: #17213c;
     }
+
+    /* HEADER */
 
     header {
       background: #14213d;
       color: white;
       text-align: center;
-      padding: 35px 20px;
+      padding: 38px 20px;
     }
 
     .logo {
-      font-size: 34px;
-      font-weight: bold;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
     }
 
     .logo span {
@@ -31,311 +44,705 @@
     }
 
     .tagline {
-      margin-top: 6px;
+      margin-top: 8px;
       font-size: 14px;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: #e5e7eb;
     }
 
+    /* MAIN */
+
     .container {
-      max-width: 650px;
-      margin: 50px auto;
+      width: 100%;
+      max-width: 700px;
+      margin: 55px auto;
       padding: 20px;
     }
 
     .card {
       background: white;
-      padding: 35px;
-      border-radius: 12px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+      padding: 40px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
       text-align: center;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 32px;
     }
 
-    p {
+    .description {
+      text-align: center;
       color: #666;
       line-height: 1.6;
+      margin-bottom: 30px;
     }
+
+    /* INPUT */
 
     input {
       width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
       font-size: 16px;
+      outline: none;
     }
+
+    input:focus {
+      border-color: #14213d;
+    }
+
+    /* BUTTON */
 
     button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 12px;
       border: none;
-      border-radius: 6px;
+      border-radius: 7px;
       background: #14213d;
       color: white;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
     }
+
+    button:hover {
+      background: #1d2d50;
+    }
+
+    /* RESULT */
 
     .result {
       margin-top: 30px;
     }
 
     .verified {
-      color: #16803c;
       text-align: center;
-      font-size: 22px;
-      font-weight: bold;
+      color: #16803c;
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 25px;
     }
 
     .not-found {
-      color: #c62828;
       text-align: center;
+      color: #c62828;
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 700;
+      padding: 20px;
     }
 
+    /* DETAILS */
+
     .details {
-      margin-top: 25px;
-      border-top: 1px solid #ddd;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 10px;
     }
 
     .detail {
       display: flex;
       justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid #eee;
       gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eeeeee;
     }
 
     .label {
       color: #777;
+      font-weight: 500;
     }
 
     .value {
-      font-weight: bold;
+      color: #17213c;
+      font-weight: 600;
       text-align: right;
     }
 
+    .valid {
+      color: #16803c;
+    }
+
+    /* CERTIFICATE BUTTON */
+
     .certificate-button {
       display: block;
+      width: 100%;
       text-align: center;
-      margin-top: 20px;
-      padding: 14px;
+      margin-top: 25px;
+      padding: 15px;
       background: #d4af37;
       color: #14213d;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
+      border-radius: 7px;
+      font-weight: 700;
     }
+
+    .certificate-button:hover {
+      background: #c49f2f;
+    }
+
+    /* FOOTER */
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 30px 15px;
+      }
+
+      .logo {
+        font-size: 30px;
+      }
+
+      .container {
+        margin: 25px auto;
+        padding: 15px;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .detail {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .value {
+        text-align: left;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
-<header>
-  <div class="logo">Intern<span>IO</span></div>
-  <div class="tagline">INNOVATION & OPPORTUNITIES</div>
-</header>
 
-<div class="container">
+  <!-- HEADER -->
 
-  <div class="card">
+  <header>
 
-    <h1>Certificate Verification</h1>
+    <div class="logo">
+      Intern<span>IO</span>
+    </div>
 
-    <p style="text-align:center;">
-      Verify the authenticity of an internship certificate
-      issued by InternIO.
-    </p>
+    <div class="tagline">
+      INNOVATION &amp; OPPORTUNITIES
+    </div>
 
-    <input
-      id="certificateId"
-      placeholder="Enter Certificate ID"
-    >
+  </header>
 
-    <button onclick="verifyCertificate()">
-      Verify Certificate
-    </button>
 
-    <div id="result" class="result"></div>
+  <!-- MAIN -->
+
+  <div class="container">
+
+    <div class="card">
+
+      <h1>
+        Certificate Verification
+      </h1>
+
+      <p class="description">
+        Verify the authenticity of an internship
+        certificate issued by InternIO.
+      </p>
+
+
+      <!-- CERTIFICATE INPUT -->
+
+      <input
+        id="certificateId"
+        type="text"
+        placeholder="Enter Certificate ID"
+        autocomplete="off"
+      >
+
+
+      <button
+        onclick="verifyCertificate()"
+      >
+        Verify Certificate
+      </button>
+
+
+      <!-- RESULT -->
+
+      <div
+        id="result"
+        class="result"
+      ></div>
+
+    </div>
 
   </div>
 
-</div>
 
-<script>
+  <!-- FOOTER -->
 
-const certificates = {
+  <footer>
+    © 2026 InternIO — Innovation &amp; Opportunities
+  </footer>
 
-  "INIO-2026-000001": {
 
-    certificateId: "INIO-2026-000001",
 
-    studentName: "Test Student",
+  <script>
 
-    internship: "Web Development",
 
-    project: "E-Commerce Website",
+    /*
+    =====================================================
+    INTERNIO CERTIFICATE DATABASE
+    =====================================================
 
-    startDate: "01 Aug 2026",
+    FOR NOW WE ARE TESTING ONE CERTIFICATE.
 
-    endDate: "08 Aug 2026",
+    Later we will connect this to your certificate
+    database so you don't have to manually add students.
+    */
 
-    duration: "1 Week",
 
-    issueDate: "10 Aug 2026",
+    const certificates = {
 
-    status: "VALID",
 
-    certificateUrl: "https://drive.google.com/file/d/1mN5aLQk_hNu2gfxVOsNh6u1AQL2NGr9M/view?usp=sharing"
-  }
+      "INIO-2026-000001": {
 
-};
+        certificateId:
+          "INIO-2026-000001",
 
+        studentName:
+          "Test Student",
 
-function verifyCertificate() {
+        internship:
+          "Web Development",
 
-  const id =
-    document
-      .getElementById("certificateId")
-      .value
-      .trim()
-      .replace(/^["']|["']$/g, "")
-      .toUpperCase();
+        project:
+          "E-Commerce Website",
 
-  const result =
-    document.getElementById("result");
+        startDate:
+          "01 Aug 2026",
 
+        endDate:
+          "08 Aug 2026",
 
-  if (!id) {
+        duration:
+          "1 Week",
 
-    result.innerHTML =
-      '<div class="not-found">' +
-      'Please enter a Certificate ID.' +
-      '</div>';
+        issueDate:
+          "10 Aug 2026",
 
-    return;
-  }
+        status:
+          "VALID",
 
 
-  const certificate =
-    certificates[id];
+        /*
+        =================================================
+        IMPORTANT
 
+        REPLACE THE TEXT BELOW WITH YOUR GOOGLE DRIVE
+        CERTIFICATE PDF LINK.
+        =================================================
+        */
 
-  if (!certificate) {
+        certificateUrl:
+          "https://drive.google.com/file/d/1mN5aLQk_hNu2gfxVOsNh6u1AQL2NGr9M/view?usp=sharing"
 
-    result.innerHTML =
-      '<div class="not-found">' +
-      '✕ Certificate Not Found' +
-      '</div>';
+      }
 
-    return;
-  }
+    };
 
 
-  result.innerHTML =
 
-    '<div class="verified">' +
-    '✓ CERTIFICATE VERIFIED' +
-    '</div>' +
+    /*
+    =====================================================
+    VERIFY CERTIFICATE
+    =====================================================
+    */
 
-    '<div class="details">' +
+    function verifyCertificate() {
 
-    detail("Certificate ID",
-           certificate.certificateId) +
 
-    detail("Student Name",
-           certificate.studentName) +
+      const input =
+        document.getElementById(
+          "certificateId"
+        );
 
-    detail("Internship",
-           certificate.internship) +
 
-    detail("Project",
-           certificate.project) +
+      const result =
+        document.getElementById(
+          "result"
+        );
 
-    detail("Duration",
-           certificate.duration) +
 
-    detail("Start Date",
-           certificate.startDate) +
+      /*
+      Get entered certificate ID
+      */
 
-    detail("Completion Date",
-           certificate.endDate) +
+      const id =
+        input.value
+          .trim()
+          .replace(/^["']|["']$/g, "")
+          .toUpperCase();
 
-    detail("Issue Date",
-           certificate.issueDate) +
 
-    detail("Status",
-           certificate.status) +
+      /*
+      Empty input
+      */
 
-    '</div>' +
+      if (!id) {
 
-    '<a class="certificate-button" ' +
-    'href="' +
-    certificate.certificateUrl +
-    '" target="_blank">' +
-    'VIEW CERTIFICATE' +
-    '</a>';
-}
+        result.innerHTML = `
 
+          <div class="not-found">
 
-function detail(label, value) {
+            Please enter a Certificate ID.
 
-  return (
+          </div>
 
-    '<div class="detail">' +
+        `;
 
-    '<span class="label">' +
-    escapeHtml(label) +
-    '</span>' +
+        return;
 
-    '<span class="value">' +
-    escapeHtml(value) +
-    '</span>' +
+      }
 
-    '</div>'
-  );
-}
 
+      /*
+      Search certificate
+      */
 
-function escapeHtml(value) {
+      const certificate =
+        certificates[id];
 
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
+      /*
+      Certificate not found
+      */
 
-window.onload = function() {
+      if (!certificate) {
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+        result.innerHTML = `
 
-  const id =
-    params.get("id");
+          <div class="not-found">
 
+            ✕ Certificate Not Found
 
-  if (id) {
+          </div>
 
-    document
-      .getElementById("certificateId")
-      .value = id;
+        `;
 
-    verifyCertificate();
+        return;
 
-  }
+      }
 
-};
 
-</script>
+      /*
+      Certificate found
+      */
+
+      result.innerHTML = `
+
+
+        <div class="verified">
+
+          ✓ CERTIFICATE VERIFIED
+
+        </div>
+
+
+        <div class="details">
+
+
+          <div class="detail">
+
+            <span class="label">
+              Certificate ID
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.certificateId
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Student Name
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.studentName
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Internship
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.internship
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Project
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.project
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Start Date
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.startDate
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              End Date
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.endDate
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Duration
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.duration
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Issue Date
+            </span>
+
+            <span class="value">
+              ${escapeHTML(
+                certificate.issueDate
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="detail">
+
+            <span class="label">
+              Status
+            </span>
+
+            <span class="value valid">
+              ✓ ${escapeHTML(
+                certificate.status
+              )}
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+        ${
+          certificate.certificateUrl &&
+          certificate.certificateUrl !==
+          "PASTE_YOUR_GOOGLE_DRIVE_PDF_LINK_HERE"
+
+          ?
+
+          `
+
+          <a
+            class="certificate-button"
+            href="${certificate.certificateUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            VIEW CERTIFICATE
+
+          </a>
+
+          `
+
+          :
+
+          `
+
+          <p
+            style="
+              text-align:center;
+              color:#777;
+              margin-top:25px;
+            "
+          >
+
+            Certificate PDF link not added yet.
+
+          </p>
+
+          `
+        }
+
+
+      `;
+
+    }
+
+
+
+    /*
+    =====================================================
+    SECURITY HELPER
+    =====================================================
+    */
+
+    function escapeHTML(value) {
+
+      return String(value)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+
+    /*
+    =====================================================
+    AUTOMATIC VERIFICATION
+
+    If someone opens:
+
+    ?id=INIO-2026-000001
+
+    the certificate automatically verifies.
+    =====================================================
+    */
+
+    window.onload = function() {
+
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const id =
+        params.get("id");
+
+
+      if (id) {
+
+
+        document
+          .getElementById(
+            "certificateId"
+          )
+          .value = id;
+
+
+        verifyCertificate();
+
+      }
+
+    };
+
+
+  </script>
+
+
 </body>
+
 </html>
