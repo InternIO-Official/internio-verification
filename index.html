@@ -3,16 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>InternIO Certificate Verification</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -24,8 +19,6 @@
       color: #17213c;
     }
 
-    /* HEADER */
-
     header {
       background: #14213d;
       color: white;
@@ -36,7 +29,6 @@
     .logo {
       font-size: 36px;
       font-weight: 700;
-      letter-spacing: -1px;
     }
 
     .logo span {
@@ -48,10 +40,7 @@
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 1.5px;
-      color: #e5e7eb;
     }
-
-    /* MAIN */
 
     .container {
       width: 100%;
@@ -81,8 +70,6 @@
       margin-bottom: 30px;
     }
 
-    /* INPUT */
-
     input {
       width: 100%;
       padding: 15px;
@@ -95,8 +82,6 @@
     input:focus {
       border-color: #14213d;
     }
-
-    /* BUTTON */
 
     button {
       width: 100%;
@@ -114,8 +99,6 @@
     button:hover {
       background: #1d2d50;
     }
-
-    /* RESULT */
 
     .result {
       margin-top: 30px;
@@ -137,7 +120,12 @@
       padding: 20px;
     }
 
-    /* DETAILS */
+    .error {
+      text-align: center;
+      color: #c62828;
+      padding: 20px;
+      line-height: 1.5;
+    }
 
     .details {
       border-top: 1px solid #e5e7eb;
@@ -167,8 +155,6 @@
       color: #16803c;
     }
 
-    /* CERTIFICATE BUTTON */
-
     .certificate-button {
       display: block;
       width: 100%;
@@ -182,12 +168,6 @@
       font-weight: 700;
     }
 
-    .certificate-button:hover {
-      background: #c49f2f;
-    }
-
-    /* FOOTER */
-
     footer {
       text-align: center;
       color: #777;
@@ -196,10 +176,7 @@
       margin-bottom: 20px;
     }
 
-    /* MOBILE */
-
     @media (max-width: 600px) {
-
       header {
         padding: 30px 15px;
       }
@@ -229,520 +206,427 @@
       .value {
         text-align: left;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
+<header>
+  <div class="logo">Intern<span>IO</span></div>
 
-  <!-- HEADER -->
-
-  <header>
-
-    <div class="logo">
-      Intern<span>IO</span>
-    </div>
-
-    <div class="tagline">
-      INNOVATION &amp; OPPORTUNITIES
-    </div>
-
-  </header>
+  <div class="tagline">
+    INNOVATION &amp; OPPORTUNITIES
+  </div>
+</header>
 
 
-  <!-- MAIN -->
+<div class="container">
 
-  <div class="container">
+  <div class="card">
 
-    <div class="card">
+    <h1>Certificate Verification</h1>
 
-      <h1>
-        Certificate Verification
-      </h1>
+    <p class="description">
+      Verify the authenticity of an internship
+      certificate issued by InternIO.
+    </p>
 
-      <p class="description">
-        Verify the authenticity of an internship
-        certificate issued by InternIO.
-      </p>
+    <input
+      id="certificateId"
+      type="text"
+      placeholder="Enter Certificate ID"
+      autocomplete="off"
+    >
 
+    <button onclick="verifyCertificate()">
+      Verify Certificate
+    </button>
 
-      <!-- CERTIFICATE INPUT -->
-
-      <input
-        id="certificateId"
-        type="text"
-        placeholder="Enter Certificate ID"
-        autocomplete="off"
-      >
-
-
-      <button
-        onclick="verifyCertificate()"
-      >
-        Verify Certificate
-      </button>
-
-
-      <!-- RESULT -->
-
-      <div
-        id="result"
-        class="result"
-      ></div>
-
-    </div>
+    <div id="result" class="result"></div>
 
   </div>
 
-
-  <!-- FOOTER -->
-
-  <footer>
-    © 2026 InternIO — Innovation &amp; Opportunities
-  </footer>
+</div>
 
 
-
-  <script>
-
-
-    /*
-    =====================================================
-    INTERNIO CERTIFICATE DATABASE
-    =====================================================
-
-    FOR NOW WE ARE TESTING ONE CERTIFICATE.
-
-    Later we will connect this to your certificate
-    database so you don't have to manually add students.
-    */
+<footer>
+  © 2026 InternIO — Innovation &amp; Opportunities
+</footer>
 
 
-    const certificates = {
+<script>
+
+/*
+=====================================================
+SUPABASE CONNECTION
+=====================================================
+*/
+
+const SUPABASE_URL =
+  "https://hgodypvijzrvnsfylwdu.supabase.co";
 
 
-      "INIO-2026-000001": {
+/*
+PASTE YOUR SUPABASE PUBLISHABLE KEY BETWEEN
+THE QUOTES BELOW.
 
-        certificateId:
-          "INIO-2026-000001",
+Example:
 
-        studentName:
-          "Test Student",
+const SUPABASE_KEY = "sb_publishable_xxxxx";
 
-        internship:
-          "Web Development",
+DO NOT USE sb_secret_ OR service_role.
+*/
 
-        project:
-          "E-Commerce Website",
-
-        startDate:
-          "01 Aug 2026",
-
-        endDate:
-          "08 Aug 2026",
-
-        duration:
-          "1 Week",
-
-        issueDate:
-          "10 Aug 2026",
-
-        status:
-          "VALID",
+const SUPABASE_KEY =
+  "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
 
 
-        /*
-        =================================================
-        IMPORTANT
+/*
+=====================================================
+VERIFY CERTIFICATE
+=====================================================
+*/
 
-        REPLACE THE TEXT BELOW WITH YOUR GOOGLE DRIVE
-        CERTIFICATE PDF LINK.
-        =================================================
-        */
+async function verifyCertificate() {
 
-        certificateUrl:
-          "https://drive.google.com/file/d/1mN5aLQk_hNu2gfxVOsNh6u1AQL2NGr9M/view?usp=sharing"
+  const input =
+    document.getElementById("certificateId");
 
+  const result =
+    document.getElementById("result");
+
+
+  const id =
+    input.value
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .toUpperCase();
+
+
+  if (!id) {
+
+    result.innerHTML = `
+      <div class="not-found">
+        Please enter a Certificate ID.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  result.innerHTML = `
+    <p style="text-align:center;">
+      Verifying certificate...
+    </p>
+  `;
+
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/certificates" +
+      "?certificate_id=eq." +
+      encodeURIComponent(id) +
+      "&select=certificate_id,student_name,internship,project,start_date,end_date,duration,issue_date,status,certificate_url",
+      {
+        method: "GET",
+
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_KEY
+        }
       }
-
-    };
-
+    );
 
 
-    /*
-    =====================================================
-    VERIFY CERTIFICATE
-    =====================================================
-    */
+    if (!response.ok) {
 
-    function verifyCertificate() {
+      throw new Error(
+        "Supabase request failed: " +
+        response.status
+      );
 
-
-      const input =
-        document.getElementById(
-          "certificateId"
-        );
+    }
 
 
-      const result =
-        document.getElementById(
-          "result"
-        );
+    const data =
+      await response.json();
 
 
-      /*
-      Get entered certificate ID
-      */
-
-      const id =
-        input.value
-          .trim()
-          .replace(/^["']|["']$/g, "")
-          .toUpperCase();
-
-
-      /*
-      Empty input
-      */
-
-      if (!id) {
-
-        result.innerHTML = `
-
-          <div class="not-found">
-
-            Please enter a Certificate ID.
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      /*
-      Search certificate
-      */
-
-      const certificate =
-        certificates[id];
-
-
-      /*
-      Certificate not found
-      */
-
-      if (!certificate) {
-
-        result.innerHTML = `
-
-          <div class="not-found">
-
-            ✕ Certificate Not Found
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      /*
-      Certificate found
-      */
+    if (!data || data.length === 0) {
 
       result.innerHTML = `
-
-
-        <div class="verified">
-
-          ✓ CERTIFICATE VERIFIED
-
+        <div class="not-found">
+          ✕ Certificate Not Found
         </div>
-
-
-        <div class="details">
-
-
-          <div class="detail">
-
-            <span class="label">
-              Certificate ID
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.certificateId
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Student Name
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.studentName
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Internship
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.internship
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Project
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.project
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Start Date
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.startDate
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              End Date
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.endDate
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Duration
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.duration
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Issue Date
-            </span>
-
-            <span class="value">
-              ${escapeHTML(
-                certificate.issueDate
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="detail">
-
-            <span class="label">
-              Status
-            </span>
-
-            <span class="value valid">
-              ✓ ${escapeHTML(
-                certificate.status
-              )}
-            </span>
-
-          </div>
-
-
-        </div>
-
-
-        ${
-          certificate.certificateUrl &&
-          certificate.certificateUrl !==
-          "PASTE_YOUR_GOOGLE_DRIVE_PDF_LINK_HERE"
-
-          ?
-
-          `
-
-          <a
-            class="certificate-button"
-            href="${certificate.certificateUrl}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-
-            VIEW CERTIFICATE
-
-          </a>
-
-          `
-
-          :
-
-          `
-
-          <p
-            style="
-              text-align:center;
-              color:#777;
-              margin-top:25px;
-            "
-          >
-
-            Certificate PDF link not added yet.
-
-          </p>
-
-          `
-        }
-
-
       `;
 
+      return;
     }
 
 
-
-    /*
-    =====================================================
-    SECURITY HELPER
-    =====================================================
-    */
-
-    function escapeHTML(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
+    const certificate =
+      data[0];
 
 
-
-    /*
-    =====================================================
-    AUTOMATIC VERIFICATION
-
-    If someone opens:
-
-    ?id=INIO-2026-000001
-
-    the certificate automatically verifies.
-    =====================================================
-    */
-
-    window.onload = function() {
+    displayCertificate(
+      certificate,
+      result
+    );
 
 
-      const params =
-        new URLSearchParams(
-          window.location.search
-        );
+  } catch (error) {
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="error">
+        <strong>
+          Unable to verify certificate.
+        </strong>
+        <br><br>
+        Please try again later.
+      </div>
+    `;
+
+  }
+
+}
 
 
-      const id =
-        params.get("id");
+/*
+=====================================================
+DISPLAY CERTIFICATE
+=====================================================
+*/
+
+function displayCertificate(
+  certificate,
+  result
+) {
+
+  let certificateButton = "";
 
 
-      if (id) {
+  if (certificate.certificate_url) {
+
+    certificateButton = `
+
+      <a
+        class="certificate-button"
+        href="${escapeHTML(
+          certificate.certificate_url
+        )}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        VIEW CERTIFICATE
+      </a>
+
+    `;
+
+  }
 
 
-        document
-          .getElementById(
-            "certificateId"
-          )
-          .value = id;
+  result.innerHTML = `
+
+    <div class="verified">
+      ✓ CERTIFICATE VERIFIED
+    </div>
 
 
-        verifyCertificate();
-
-      }
-
-    };
+    <div class="details">
 
 
-  </script>
+      <div class="detail">
+        <span class="label">
+          Certificate ID
+        </span>
 
+        <span class="value">
+          ${escapeHTML(
+            certificate.certificate_id
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Student Name
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.student_name
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Internship
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.internship
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Project
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.project || ""
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Start Date
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.start_date || ""
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          End Date
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.end_date || ""
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Duration
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.duration || ""
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Issue Date
+        </span>
+
+        <span class="value">
+          ${escapeHTML(
+            certificate.issue_date || ""
+          )}
+        </span>
+      </div>
+
+
+      <div class="detail">
+        <span class="label">
+          Status
+        </span>
+
+        <span class="value valid">
+          ✓ ${escapeHTML(
+            certificate.status
+          )}
+        </span>
+      </div>
+
+
+    </div>
+
+
+    ${certificateButton}
+
+  `;
+
+}
+
+
+/*
+=====================================================
+ESCAPE HTML
+=====================================================
+*/
+
+function escapeHTML(value) {
+
+  return String(value)
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+=====================================================
+AUTOMATIC VERIFICATION FROM QR URL
+
+Example:
+
+?id=INIO-2026-000001
+=====================================================
+*/
+
+window.onload = function() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const id =
+    params.get("id");
+
+
+  if (id) {
+
+    document
+      .getElementById("certificateId")
+      .value = id;
+
+    verifyCertificate();
+
+  }
+
+};
+
+</script>
 
 </body>
-
 </html>
