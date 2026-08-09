@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>InternIO Certificate Dashboard</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #17213c;
+    }
+
+    header {
+      background: #14213d;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #d4af37;
+    }
+
+    .tagline {
+      margin-top: 8px;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #14213d;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 7px;
+      background: #14213d;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d2d50;
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .logout {
+      background: #777;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 18px;
+      line-height: 1.5;
+    }
+
+    .success {
+      color: #16803c;
+      font-weight: 700;
+    }
+
+    .error {
+      color: #c62828;
+      font-weight: 700;
+    }
+
+    .checking {
+      color: #555;
+    }
+
+    #loginSection,
+    #dashboardSection {
+      display: none;
+    }
+
+    .certificate {
+      border: 1px solid #e1e5ea;
+      border-radius: 10px;
+      padding: 22px;
+      margin-top: 20px;
+      background: #fafbfc;
+    }
+
+    .certificate-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .certificate-id {
+      font-size: 20px;
+      font-weight: 700;
+      color: #14213d;
+    }
+
+    .status {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .valid {
+      background: #dff5e7;
+      color: #16803c;
+    }
+
+    .revoked {
+      background: #fde2e2;
+      color: #c62828;
+    }
+
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 11px 0;
+      border-bottom: 1px solid #e8eaed;
+    }
+
+    .detail:last-child {
+      border-bottom: none;
+    }
+
+    .label-small {
+      color: #777;
+    }
+
+    .value {
+      text-align: right;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .actions a,
+    .actions button {
+      margin: 0;
+      text-align: center;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 7px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .open-button {
+      background: #14213d;
+      color: white;
+    }
+
+    .pdf-button {
+      background: #16803c;
+      color: white;
+    }
+
+    .qr-button {
+      background: #d4af37;
+      color: #14213d;
+      border: none;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .detail {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .value {
+        text-align: left;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo">
+    Intern<span>IO</span>
+  </div>
+
+  <div class="tagline">
+    CERTIFICATE MANAGEMENT DASHBOARD
+  </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<!-- =========================================
+     LOGIN
+========================================= -->
+
+<div
+  id="loginSection"
+  class="card"
+>
+
+  <h1>
+    InternIO Admin Login
+  </h1>
+
+  <p>
+    Authorized InternIO administrators only.
+  </p>
+
+
+  <label>
+    Email
+  </label>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="admin@example.com"
+  >
+
+
+  <label style="margin-top:18px;">
+    Password
+  </label>
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+  >
+
+
+  <button onclick="login()">
+    Login
+  </button>
+
+
+  <div
+    id="loginMessage"
+    class="message"
+  ></div>
+
+</div>
+
+
+
+<!-- =========================================
+     DASHBOARD
+========================================= -->
+
+<div
+  id="dashboardSection"
+>
+
+
+  <div class="card">
+
+    <h1>
+      Certificate Dashboard
+    </h1>
+
+    <p>
+      Logged in as:
+      <strong id="adminEmail"></strong>
+    </p>
+
+
+    <label>
+      Search Certificate ID or Student Name
+    </label>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="INIO-2026-000001 or student name"
+      onkeydown="if(event.key === 'Enter') searchCertificates()"
+    >
+
+
+    <button
+      id="searchButton"
+      onclick="searchCertificates()"
+    >
+      Search Certificates
+    </button>
+
+
+    <div
+      id="searchMessage"
+      class="message"
+    ></div>
+
+
+    <div
+      id="results"
+    ></div>
+
+
+    <button
+      class="logout"
+      onclick="logout()"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+  © 2026 InternIO — Innovation &amp; Opportunities
+
+</footer>
+
+
+
+<script>
+
+
+/*
+=====================================================
+SUPABASE
+=====================================================
+*/
+
+const SUPABASE_URL =
+  "https://hgodypvijzrvnsfylwdu.supabase.co";
+
+
+/*
+Use your existing SUPABASE PUBLISHABLE KEY.
+Do NOT use a secret/service-role key.
+*/
+
+const SUPABASE_KEY =
+  "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
+
+
+/*
+=====================================================
+VERIFICATION WEBSITE
+=====================================================
+*/
+
+const VERIFICATION_URL =
+  "https://ajaybilonia.github.io/internio-verification/";
+
+
+
+/*
+=====================================================
+LOGIN
+=====================================================
+*/
+
+async function login() {
+
+  const email =
+    document.getElementById("email")
+      .value
+      .trim();
+
+  const password =
+    document.getElementById("password")
+      .value;
+
+
+  const message =
+    document.getElementById(
+      "loginMessage"
+    );
+
+
+  message.className =
+    "message";
+
+  message.textContent =
+    "Logging in...";
+
+
+  try {
+
+    const response =
+      await fetch(
+
+        SUPABASE_URL +
+        "/auth/v1/token?grant_type=password",
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY
+
+          },
+
+          body: JSON.stringify({
+
+            email: email,
+
+            password: password
+
+          })
+
+        }
+
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+
+        data.error_description ||
+        data.msg ||
+        "Login failed"
+
+      );
+
+    }
+
+
+    localStorage.setItem(
+      "internio_access_token",
+      data.access_token
+    );
+
+
+    localStorage.setItem(
+      "internio_refresh_token",
+      data.refresh_token
+    );
+
+
+    localStorage.setItem(
+      "internio_email",
+      email
+    );
+
+
+    showDashboard();
+
+
+  } catch (error) {
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
+
+
+
+/*
+=====================================================
+SHOW DASHBOARD
+=====================================================
+*/
+
+function showDashboard() {
+
+  document.getElementById(
+    "loginSection"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "dashboardSection"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "adminEmail"
+  ).textContent =
+    localStorage.getItem(
+      "internio_email"
+    ) || "";
+
+}
+
+
+
+/*
+=====================================================
+SEARCH CERTIFICATES
+=====================================================
+*/
+
+async function searchCertificates() {
+
+  const token =
+    localStorage.getItem(
+      "internio_access_token"
+    );
+
+
+  if (!token) {
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .trim();
+
+
+  const message =
+    document.getElementById(
+      "searchMessage"
+    );
+
+
+  const results =
+    document.getElementById(
+      "results"
+    );
+
+
+  const button =
+    document.getElementById(
+      "searchButton"
+    );
+
+
+  if (!search) {
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      "Enter a Certificate ID or student name.";
+
+    results.innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Searching...";
+
+
+  message.className =
+    "message checking";
+
+  message.textContent =
+    "Searching certificate database...";
+
+
+  results.innerHTML =
+    "";
+
+
+  try {
+
+    /*
+    IMPORTANT:
+    This query is made with the authenticated
+    admin token. The public anonymous role
+    does NOT have direct table access.
+    */
+
+    const encodedSearch =
+      encodeURIComponent(
+        "%" + search + "%"
+      );
+
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/certificates" +
+      "?or=" +
+      "(certificate_id.ilike." +
+      encodedSearch +
+      ",student_name.ilike." +
+      encodedSearch +
+      ")" +
+      "&select=certificate_id,student_name,internship,project,start_date,end_date,duration,issue_date,status,certificate_url" +
+      "&order=certificate_id.desc";
+
+
+    const response =
+      await fetch(
+        url,
+        {
+
+          method: "GET",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " + token
+
+          }
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+
+        data.message ||
+        data.error ||
+        "Search failed."
+
+      );
+
+    }
+
+
+    if (
+      !data ||
+      data.length === 0
+    ) {
+
+      message.className =
+        "message error";
+
+      message.textContent =
+        "No certificates found.";
+
+      return;
+
+    }
+
+
+    message.className =
+      "message success";
+
+    message.textContent =
+      data.length +
+      " certificate(s) found.";
+
+
+    data.forEach(
+      certificate => {
+
+        results.appendChild(
+          createCertificateCard(
+            certificate
+          )
+        );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      error.message ||
+      "Unable to search certificates.";
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "Search Certificates";
+
+}
+
+
+
+/*
+=====================================================
+CREATE CERTIFICATE CARD
+=====================================================
+*/
+
+function createCertificateCard(
+  certificate
+) {
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+
+  card.className =
+    "certificate";
+
+
+  const status =
+    String(
+      certificate.status || ""
+    )
+    .toUpperCase();
+
+
+  const statusClass =
+    status === "VALID"
+      ? "valid"
+      : "revoked";
+
+
+  const verificationUrl =
+    VERIFICATION_URL +
+    "?id=" +
+    encodeURIComponent(
+      certificate.certificate_id
+    );
+
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/" +
+    "?size=600x600" +
+    "&data=" +
+    encodeURIComponent(
+      verificationUrl
+    );
+
+
+  card.innerHTML = `
+
+    <div class="certificate-header">
+
+      <div class="certificate-id">
+
+        ${escapeHTML(
+          certificate.certificate_id
+        )}
+
+      </div>
+
+      <div
+        class="status ${statusClass}"
+      >
+
+        ${escapeHTML(
+          certificate.status || ""
+        )}
+
+      </div>
+
+    </div>
+
+
+    <div class="detail">
+
+      <span class="label-small">
+        Student
+      </span>
+
+      <span class="value">
+        ${escapeHTML(
+          certificate.student_name
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="detail">
+
+      <span class="label-small">
+        Internship
+      </span>
+
+      <span class="value">
+        ${escapeHTML(
+          certificate.internship
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="detail">
+
+      <span class="label-small">
+        Project
+      </span>
+
+      <span class="value">
+        ${escapeHTML(
+          certificate.project || ""
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="detail">
+
+      <span class="label-small">
+        Duration
+      </span>
+
+      <span class="value">
+        ${escapeHTML(
+          certificate.duration || ""
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="detail">
+
+      <span class="label-small">
+        Issue Date
+      </span>
+
+      <span class="value">
+        ${escapeHTML(
+          certificate.issue_date || ""
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="actions">
+
+      <a
+        class="open-button"
+        href="${verificationUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open Verification
+      </a>
+
+
+      ${
+        certificate.certificate_url
+        ?
+
+        `
+        <a
+          class="pdf-button"
+          href="${escapeHTML(
+            certificate.certificate_url
+          )}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open PDF
+        </a>
+        `
+
+        :
+
+        `
+        <button
+          disabled
+        >
+          No PDF
+        </button>
+        `
+
+      }
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="qr-button"
+        onclick='openQR(
+          ${JSON.stringify(
+            certificate.certificate_id
+          )}
+        )'
+      >
+        View QR
+      </button>
+
+
+      <button
+        onclick='copyVerificationURL(
+          ${JSON.stringify(
+            verificationUrl
+          )}
+        )'
+      >
+        Copy Verification URL
+      </button>
+
+    </div>
+
+  `;
+
+
+  return card;
+
+}
+
+
+
+/*
+=====================================================
+OPEN QR
+=====================================================
+*/
+
+function openQR(
+  certificateId
+) {
+
+  const verificationUrl =
+    VERIFICATION_URL +
+    "?id=" +
+    encodeURIComponent(
+      certificateId
+    );
+
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/" +
+    "?size=800x800" +
+    "&data=" +
+    encodeURIComponent(
+      verificationUrl
+    );
+
+
+  window.open(
+    qrUrl,
+    "_blank"
+  );
+
+}
+
+
+
+/*
+=====================================================
+COPY URL
+=====================================================
+*/
+
+async function copyVerificationURL(
+  url
+) {
+
+  try {
+
+    await navigator.clipboard.writeText(
+      url
+    );
+
+    alert(
+      "Verification URL copied."
+    );
+
+  } catch (error) {
+
+    prompt(
+      "Copy this verification URL:",
+      url
+    );
+
+  }
+
+}
+
+
+
+/*
+=====================================================
+ESCAPE HTML
+=====================================================
+*/
+
+function escapeHTML(
+  value
+) {
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+/*
+=====================================================
+LOGOUT
+=====================================================
+*/
+
+function logout() {
+
+  localStorage.removeItem(
+    "internio_access_token"
+  );
+
+  localStorage.removeItem(
+    "internio_refresh_token"
+  );
+
+  localStorage.removeItem(
+    "internio_email"
+  );
+
+
+  location.reload();
+
+}
+
+
+
+/*
+=====================================================
+CHECK LOGIN
+=====================================================
+*/
+
+window.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    const token =
+      localStorage.getItem(
+        "internio_access_token"
+      );
+
+
+    if (token) {
+
+      showDashboard();
+
+    } else {
+
+      document.getElementById(
+        "loginSection"
+      ).style.display =
+        "block";
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
