@@ -48,7 +48,7 @@ header {
 }
 
 .container {
-  max-width: 650px;
+  max-width: 680px;
   margin: 40px auto;
   padding: 20px;
 }
@@ -62,6 +62,7 @@ header {
 
 h1 {
   text-align: center;
+  margin-top: 0;
 }
 
 label {
@@ -77,6 +78,11 @@ input {
   border: 1px solid #d1d5db;
   border-radius: 7px;
   font-size: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #14213d;
 }
 
 button {
@@ -96,7 +102,12 @@ button:hover {
   background: #1d2d50;
 }
 
-button.logout {
+button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.logout {
   background: #777;
 }
 
@@ -116,26 +127,59 @@ button.logout {
   font-weight: 700;
 }
 
-#loginSection,
-#adminSection {
-  display: none;
-}
-
 .result {
-  margin-top: 25px;
-  padding: 20px;
+  display: none;
+  margin-top: 30px;
+  padding: 25px;
   background: #f5f7fa;
   border-radius: 10px;
+  text-align: center;
 }
 
-.result strong {
+.result h2 {
+  color: #16803c;
+}
+
+.certificate-id {
+  font-size: 22px;
+  font-weight: 700;
   color: #14213d;
+  margin: 15px 0;
 }
 
 .verification-url {
   word-break: break-all;
   font-size: 13px;
+  color: #555;
   margin-top: 10px;
+}
+
+.qr-container {
+  margin-top: 25px;
+}
+
+.qr-container img {
+  width: 280px;
+  height: 280px;
+  max-width: 100%;
+  border: 10px solid white;
+}
+
+.download-button {
+  background: #d4af37;
+  color: #14213d;
+}
+
+.open-button {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px;
+  margin-top: 12px;
+  background: #16803c;
+  color: white;
+  border-radius: 7px;
+  font-weight: 600;
 }
 
 footer {
@@ -143,6 +187,11 @@ footer {
   color: #777;
   font-size: 13px;
   padding: 20px;
+}
+
+#loginSection,
+#adminSection {
+  display: none;
 }
 
 </style>
@@ -169,220 +218,270 @@ footer {
 
 <div class="container">
 
-  <!-- LOGIN -->
 
-  <div
-    id="loginSection"
-    class="card"
+<!-- =========================================
+     LOGIN
+========================================= -->
+
+<div
+  id="loginSection"
+  class="card"
+>
+
+  <h1>
+    InternIO Admin Login
+  </h1>
+
+  <p>
+    Only authorized InternIO administrators
+    should use this page.
+  </p>
+
+
+  <label>
+    Email
+  </label>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="admin@example.com"
   >
 
-    <h1>
-      InternIO Admin Login
-    </h1>
+
+  <label>
+    Password
+  </label>
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+  >
+
+
+  <button onclick="login()">
+    Login
+  </button>
+
+
+  <div
+    id="loginMessage"
+    class="message"
+  ></div>
+
+</div>
+
+
+
+<!-- =========================================
+     ADMIN
+========================================= -->
+
+<div
+  id="adminSection"
+  class="card"
+>
+
+  <h1>
+    Create InternIO Certificate
+  </h1>
+
+
+  <p>
+    Logged in as:
+    <strong id="adminEmail"></strong>
+  </p>
+
+
+  <label>
+    Student Name *
+  </label>
+
+  <input
+    id="studentName"
+    type="text"
+    placeholder="Student full name"
+  >
+
+
+  <label>
+    Internship *
+  </label>
+
+  <input
+    id="internship"
+    type="text"
+    placeholder="Web Development"
+  >
+
+
+  <label>
+    Project
+  </label>
+
+  <input
+    id="project"
+    type="text"
+    placeholder="E-Commerce Website"
+  >
+
+
+  <label>
+    Start Date *
+  </label>
+
+  <input
+    id="startDate"
+    type="date"
+  >
+
+
+  <label>
+    End Date *
+  </label>
+
+  <input
+    id="endDate"
+    type="date"
+  >
+
+
+  <label>
+    Duration *
+  </label>
+
+  <input
+    id="duration"
+    type="text"
+    placeholder="2 Weeks"
+  >
+
+
+  <label>
+    Issue Date *
+  </label>
+
+  <input
+    id="issueDate"
+    type="date"
+  >
+
+
+  <label>
+    Certificate PDF URL
+  </label>
+
+  <input
+    id="certificateUrl"
+    type="url"
+    placeholder="Google Drive certificate link"
+  >
+
+
+  <button
+    id="createButton"
+    onclick="createCertificate()"
+  >
+    Create Certificate
+  </button>
+
+
+  <div
+    id="createMessage"
+    class="message"
+  ></div>
+
+
+
+  <!-- =====================================
+       RESULT
+  ====================================== -->
+
+  <div
+    id="result"
+    class="result"
+  >
+
+    <h2>
+      ✓ Certificate Created
+    </h2>
+
+
+    <div
+      id="newCertificateId"
+      class="certificate-id"
+    ></div>
+
 
     <p>
-      Only authorized InternIO administrators
-      should use this page.
+      Student:
+      <strong id="newStudent"></strong>
     </p>
 
 
-    <label>
-      Email
-    </label>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="admin@example.com"
-    >
-
-
-    <label>
-      Password
-    </label>
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
-
-
-    <button onclick="login()">
-      Login
-    </button>
-
-
-    <div
-      id="loginMessage"
-      class="message"
-    ></div>
-
-  </div>
-
-
-
-  <!-- ADMIN -->
-
-  <div
-    id="adminSection"
-    class="card"
-  >
-
-    <h1>
-      Create Certificate
-    </h1>
-
-
     <p>
-      Logged in as:
-      <strong id="adminEmail"></strong>
+      Verification URL:
     </p>
 
 
-    <label>
-      Student Name
-    </label>
-
-    <input
-      id="studentName"
-      type="text"
-      placeholder="Student full name"
-    >
-
-
-    <label>
-      Internship
-    </label>
-
-    <input
-      id="internship"
-      type="text"
-      placeholder="Web Development"
-    >
-
-
-    <label>
-      Project
-    </label>
-
-    <input
-      id="project"
-      type="text"
-      placeholder="E-Commerce Website"
-    >
-
-
-    <label>
-      Start Date
-    </label>
-
-    <input
-      id="startDate"
-      type="date"
-    >
-
-
-    <label>
-      End Date
-    </label>
-
-    <input
-      id="endDate"
-      type="date"
-    >
-
-
-    <label>
-      Duration
-    </label>
-
-    <input
-      id="duration"
-      type="text"
-      placeholder="2 Weeks"
-    >
-
-
-    <label>
-      Issue Date
-    </label>
-
-    <input
-      id="issueDate"
-      type="date"
-    >
-
-
-    <label>
-      Certificate PDF URL
-    </label>
-
-    <input
-      id="certificateUrl"
-      type="url"
-      placeholder="Google Drive certificate link"
-    >
-
-
-    <button onclick="createCertificate()">
-      Create Certificate
-    </button>
-
-
     <div
-      id="createMessage"
-      class="message"
+      id="verificationUrl"
+      class="verification-url"
     ></div>
 
 
-    <div
-      id="result"
-      class="result"
-      style="display:none;"
-    >
 
-      <strong>
-        Certificate Created
-      </strong>
+    <!-- QR -->
 
-      <p>
-        Certificate ID:
-        <strong id="newCertificateId"></strong>
-      </p>
+    <div class="qr-container">
 
-      <p>
-        Student:
-        <span id="newStudent"></span>
-      </p>
-
-      <p>
-        Verification URL:
-      </p>
-
-      <div
-        id="verificationUrl"
-        class="verification-url"
-      ></div>
+      <img
+        id="qrImage"
+        alt="InternIO Certificate QR Code"
+      >
 
     </div>
 
 
     <button
-      class="logout"
-      onclick="logout()"
+      class="download-button"
+      onclick="downloadQR()"
     >
-      Logout
+      Download QR Code
     </button>
 
+
+    <a
+      id="openVerification"
+      class="open-button"
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Open Verification Page
+    </a>
+
   </div>
+
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    Logout
+  </button>
+
+</div>
 
 </div>
 
 
 
 <footer>
-  © 2026 InternIO
+
+  © 2026 InternIO — Innovation &amp; Opportunities
+
 </footer>
 
 
@@ -401,11 +500,22 @@ const SUPABASE_URL =
 
 /*
 PASTE YOUR SAME SUPABASE PUBLISHABLE KEY
-USED IN YOUR QR GENERATOR.
+THAT YOU USED IN YOUR WORKING QR GENERATOR.
 */
 
 const SUPABASE_KEY =
   "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
+
+
+/*
+=====================================================
+VERIFICATION WEBSITE
+=====================================================
+*/
+
+const VERIFICATION_URL =
+  "https://ajaybilonia.github.io/internio-verification/";
+
 
 
 /*
@@ -417,14 +527,15 @@ LOGIN
 async function login() {
 
   const email =
-    document.getElementById(
-      "email"
-    ).value.trim();
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
   const password =
-    document.getElementById(
-      "password"
-    ).value;
+    document
+      .getElementById("password")
+      .value;
 
 
   const message =
@@ -444,24 +555,34 @@ async function login() {
 
     const response =
       await fetch(
+
         SUPABASE_URL +
         "/auth/v1/token?grant_type=password",
+
         {
+
           method: "POST",
 
           headers: {
+
             "Content-Type":
               "application/json",
 
             "apikey":
               SUPABASE_KEY
+
           },
 
           body: JSON.stringify({
+
             email: email,
+
             password: password
+
           })
+
         }
+
       );
 
 
@@ -472,16 +593,18 @@ async function login() {
     if (!response.ok) {
 
       throw new Error(
+
         data.error_description ||
         data.msg ||
         "Login failed"
+
       );
 
     }
 
 
     /*
-    Store access token temporarily.
+    Save session locally.
     */
 
     localStorage.setItem(
@@ -489,10 +612,12 @@ async function login() {
       data.access_token
     );
 
+
     localStorage.setItem(
       "internio_refresh_token",
       data.refresh_token
     );
+
 
     localStorage.setItem(
       "internio_email",
@@ -527,12 +652,14 @@ function showAdmin() {
 
   document.getElementById(
     "loginSection"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   document.getElementById(
     "adminSection"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 
 
   document.getElementById(
@@ -567,55 +694,61 @@ async function createCertificate() {
     );
 
     return;
+
   }
 
 
   const studentName =
-    document.getElementById(
-      "studentName"
-    ).value.trim();
+    document
+      .getElementById("studentName")
+      .value
+      .trim();
 
 
   const internship =
-    document.getElementById(
-      "internship"
-    ).value.trim();
+    document
+      .getElementById("internship")
+      .value
+      .trim();
 
 
   const project =
-    document.getElementById(
-      "project"
-    ).value.trim();
+    document
+      .getElementById("project")
+      .value
+      .trim();
 
 
   const startDate =
-    document.getElementById(
-      "startDate"
-    ).value;
+    document
+      .getElementById("startDate")
+      .value;
 
 
   const endDate =
-    document.getElementById(
-      "endDate"
-    ).value;
+    document
+      .getElementById("endDate")
+      .value;
 
 
   const duration =
-    document.getElementById(
-      "duration"
-    ).value.trim();
+    document
+      .getElementById("duration")
+      .value
+      .trim();
 
 
   const issueDate =
-    document.getElementById(
-      "issueDate"
-    ).value;
+    document
+      .getElementById("issueDate")
+      .value;
 
 
   const certificateUrl =
-    document.getElementById(
-      "certificateUrl"
-    ).value.trim();
+    document
+      .getElementById("certificateUrl")
+      .value
+      .trim();
 
 
   const message =
@@ -624,8 +757,14 @@ async function createCertificate() {
     );
 
 
+  const button =
+    document.getElementById(
+      "createButton"
+    );
+
+
   /*
-  Basic validation.
+  Validate required fields.
   */
 
   if (
@@ -644,23 +783,52 @@ async function createCertificate() {
       "Please fill all required fields.";
 
     return;
+
   }
+
+
+  /*
+  Disable button.
+  */
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Creating certificate...";
 
 
   message.className =
     "message";
 
   message.textContent =
-    "Creating certificate...";
+    "Creating InternIO certificate...";
+
+
+  /*
+  Hide old result.
+  */
+
+  document.getElementById(
+    "result"
+  ).style.display =
+    "none";
 
 
   try {
 
+    /*
+    Call secure database function.
+    */
+
     const response =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/rpc/create_certificate",
+
         {
+
           method: "POST",
 
           headers: {
@@ -673,6 +841,7 @@ async function createCertificate() {
 
             "Authorization":
               "Bearer " + token
+
           },
 
           body: JSON.stringify({
@@ -702,7 +871,9 @@ async function createCertificate() {
               certificateUrl
 
           })
+
         }
+
       );
 
 
@@ -710,19 +881,25 @@ async function createCertificate() {
       await response.json();
 
 
+    /*
+    Check error.
+    */
+
     if (!response.ok) {
 
       throw new Error(
+
         data.message ||
         data.error ||
         "Unable to create certificate."
+
       );
 
     }
 
 
     /*
-    RPC returns the created row.
+    Get created certificate.
     */
 
     const certificate =
@@ -731,9 +908,12 @@ async function createCertificate() {
         : data;
 
 
+    /*
+    Create verification URL.
+    */
+
     const verificationUrl =
-      "https://ajaybilonia.github.io/" +
-      "internio-verification/" +
+      VERIFICATION_URL +
       "?id=" +
       encodeURIComponent(
         certificate.certificate_id
@@ -741,14 +921,21 @@ async function createCertificate() {
 
 
     /*
-    Show result.
+    Create QR code.
     */
 
-    document.getElementById(
-      "result"
-    ).style.display =
-      "block";
+    const qrUrl =
+      "https://api.qrserver.com/v1/create-qr-code/" +
+      "?size=600x600" +
+      "&data=" +
+      encodeURIComponent(
+        verificationUrl
+      );
 
+
+    /*
+    Put result on screen.
+    */
 
     document.getElementById(
       "newCertificateId"
@@ -766,6 +953,24 @@ async function createCertificate() {
       "verificationUrl"
     ).textContent =
       verificationUrl;
+
+
+    document.getElementById(
+      "qrImage"
+    ).src =
+      qrUrl;
+
+
+    document.getElementById(
+      "openVerification"
+    ).href =
+      verificationUrl;
+
+
+    document.getElementById(
+      "result"
+    ).style.display =
+      "block";
 
 
     message.className =
@@ -816,12 +1021,127 @@ async function createCertificate() {
 
     console.error(error);
 
+
     message.className =
       "message error";
+
 
     message.textContent =
       error.message ||
       "Unable to create certificate.";
+
+  }
+
+
+  /*
+  Re-enable button.
+  */
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "Create Certificate";
+
+}
+
+
+
+/*
+=====================================================
+DOWNLOAD QR
+=====================================================
+*/
+
+async function downloadQR() {
+
+  const image =
+    document.getElementById(
+      "qrImage"
+    );
+
+
+  const certificateId =
+    document.getElementById(
+      "newCertificateId"
+    )
+    .textContent
+    .trim();
+
+
+  if (
+    !image.src ||
+    !certificateId
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        image.src
+      );
+
+
+    const blob =
+      await response.blob();
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+
+    link.download =
+      "InternIO-" +
+      certificateId +
+      "-QR.png";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+      link
+    );
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+
+  } catch (error) {
+
+    /*
+    Fallback if direct download
+    is blocked by the browser.
+    */
+
+    window.open(
+      image.src,
+      "_blank"
+    );
 
   }
 
@@ -858,7 +1178,7 @@ function logout() {
 
 /*
 =====================================================
-CHECK LOGIN WHEN PAGE OPENS
+CHECK EXISTING LOGIN
 =====================================================
 */
 
@@ -890,6 +1210,6 @@ window.addEventListener(
 
 </script>
 
-
 </body>
+
 </html>
