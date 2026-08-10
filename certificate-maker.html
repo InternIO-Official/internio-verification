@@ -2,760 +2,1006 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>InternIO Certificate Maker</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-*{box-sizing:border-box}
-
-:root{
-  --navy:#071a38;
-  --navy2:#10294f;
-  --gold:#c99724;
-  --gold2:#e4bb55;
-  --cream:#fbfaf5;
-  --text:#14213d;
-  --muted:#697386;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  background:#f1f3f6;
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+:root {
+  --navy: #071a38;
+  --navy2: #10294f;
+  --gold: #c99a2e;
+  --gold-light: #e5c36a;
+  --cream: #fcfaf3;
+  --text: #14213d;
+  --muted: #687386;
+  --border: #dfe3e8;
 }
 
-/* HEADER */
-
-.header{
-  height:76px;
-  background:linear-gradient(100deg,#06162f,#10294f);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 30px;
+body {
+  margin: 0;
+  background: #eef1f5;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.header-brand{
-  display:flex;
-  align-items:center;
-  gap:24px;
+/* ================= HEADER ================= */
+
+.header {
+  height: 76px;
+  padding: 0 30px;
+  background: linear-gradient(110deg, #06152e, #10294f);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header-logo{
-  font-size:36px;
-  font-weight:900;
-  letter-spacing:-2px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
 
-.header-logo span{
-  color:#e0a928;
+.brand-name {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -2px;
 }
 
-.header-divider{
-  height:28px;
-  width:1px;
-  background:rgba(255,255,255,.25);
+.brand-name span {
+  color: var(--gold-light);
 }
 
-.header-meaning{
-  font-size:13px;
-  letter-spacing:2px;
-  font-weight:700;
+.brand-divider {
+  height: 28px;
+  width: 1px;
+  background: rgba(255,255,255,.25);
 }
 
-.header-title{
-  font-size:16px;
-  font-weight:700;
+.brand-meaning {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
-/* MAIN */
-
-.main{
-  display:grid;
-  grid-template-columns:390px minmax(700px,1fr);
-  gap:18px;
-  max-width:1550px;
-  margin:18px auto;
-  padding:0 18px;
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
 }
 
-/* FORM */
+/* ================= MAIN ================= */
 
-.form-card{
-  background:#fff;
-  border:1px solid #e1e5ea;
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.05);
+.main {
+  max-width: 1550px;
+  margin: 18px auto;
+  padding: 0 18px;
+
+  display: grid;
+  grid-template-columns: 390px minmax(700px, 1fr);
+  gap: 18px;
 }
 
-.section-title{
-  font-size:16px;
-  font-weight:800;
-  margin:0 0 13px;
+/* ================= FORM ================= */
+
+.form-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.05);
 }
 
-.field{
-  margin-bottom:14px;
+.form-title {
+  font-size: 19px;
+  font-weight: 900;
+  margin-bottom: 5px;
 }
 
-.field label{
-  display:block;
-  font-size:13px;
-  font-weight:800;
-  margin-bottom:6px;
+.form-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
-input{
-  width:100%;
-  height:43px;
-  border:1px solid #d6dce4;
-  border-radius:6px;
-  padding:0 12px;
-  font-size:14px;
-  color:var(--text);
-  background:#fff;
+.field {
+  margin-bottom: 14px;
 }
 
-input:focus{
-  outline:none;
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(201,151,36,.12);
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 800;
 }
 
-/* TYPES */
-
-.type{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:13px;
-  border:1px solid #dfe4ea;
-  border-radius:8px;
-  margin-bottom:9px;
-  cursor:pointer;
-  transition:.15s;
+input,
+select {
+  width: 100%;
+  height: 43px;
+  border: 1px solid #d3d9e1;
+  border-radius: 6px;
+  padding: 0 11px;
+  font-size: 14px;
+  color: var(--text);
+  background: white;
 }
 
-.type:hover{
-  border-color:var(--gold);
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,154,46,.12);
 }
 
-.type.active{
-  border:2px solid var(--gold);
-  background:#fffaf0;
+/* ================= TYPE ================= */
+
+.type-title {
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 9px;
 }
 
-.type-radio{
-  width:19px;
-  height:19px;
-  border:2px solid #bdc5cf;
-  border-radius:50%;
-  flex:none;
+.type-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px;
+  margin-bottom: 8px;
+
+  border: 1px solid #dfe4ea;
+  border-radius: 7px;
+
+  cursor: pointer;
+  transition: .15s;
 }
 
-.type.active .type-radio{
-  border:6px solid var(--navy);
+.type-card:hover {
+  border-color: var(--gold);
 }
 
-.type-icon{
-  color:#a97710;
-  font-size:20px;
+.type-card.active {
+  border: 2px solid var(--gold);
+  background: #fffaf0;
 }
 
-.type-name{
-  font-size:13px;
-  font-weight:800;
+.radio {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 2px solid #b9c1cc;
+  flex: none;
 }
 
-.type-help{
-  font-size:11px;
-  color:#7a8391;
-  margin-top:3px;
+.type-card.active .radio {
+  border: 5px solid var(--navy);
 }
 
-.project-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:6px;
+.type-main {
+  font-size: 12px;
+  font-weight: 800;
 }
 
-.switch{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:11px;
-  color:#667085;
+.type-help {
+  margin-top: 3px;
+  color: #7b8491;
+  font-size: 10px;
 }
 
-.switch input{
-  width:auto;
-  height:auto;
+/* ================= PROJECT ================= */
+
+.project-settings {
+  display: none;
 }
 
-.dates{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.project-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-button{
-  border:0;
-  border-radius:7px;
-  cursor:pointer;
-  font-weight:800;
+.project-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #6b7280;
 }
 
-.generate{
-  width:100%;
-  height:50px;
-  background:var(--navy);
-  color:#fff;
-  font-size:15px;
-  margin-top:4px;
+.project-toggle input {
+  width: auto;
+  height: auto;
 }
 
-.generate:hover{
-  background:#0e2850;
+/* ================= DATES ================= */
+
+.date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.message{
-  min-height:20px;
-  text-align:center;
-  font-size:12px;
-  font-weight:700;
-  margin-top:10px;
+/* ================= BUTTON ================= */
+
+.generate-btn {
+  width: 100%;
+  height: 49px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: var(--navy);
+  color: white;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
 }
 
-.success{color:#16803c}
-.error{color:#c62828}
-
-.security-note{
-  display:flex;
-  gap:7px;
-  align-items:center;
-  margin-top:12px;
-  font-size:10px;
-  color:#7b8490;
+.generate-btn:hover {
+  background: #0e2850;
 }
 
-/* PREVIEW */
-
-.preview-card{
-  background:#fff;
-  border:1px solid #e1e5ea;
-  border-radius:10px;
-  padding:12px;
-  box-shadow:0 5px 20px rgba(0,0,0,.05);
+.generate-btn:disabled {
+  opacity: .65;
+  cursor: wait;
 }
 
-.preview-top{
-  height:45px;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  gap:8px;
+.message {
+  min-height: 20px;
+  margin-top: 10px;
+
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
 }
 
-.preview-button{
-  height:38px;
-  padding:0 17px;
-  color:#fff;
-  background:var(--navy);
-  font-size:12px;
+.success {
+  color: #16803c;
 }
 
-.preview-button.gold{
-  background:#bd8517;
+.error {
+  color: #c62828;
 }
 
-/* CERTIFICATE */
+/* ================= PREVIEW ================= */
 
-.certificate{
-  position:relative;
-  width:100%;
-  aspect-ratio:1.4142;
-  overflow:hidden;
+.preview-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  padding: 12px;
+
+  box-shadow: 0 5px 20px rgba(0,0,0,.05);
+
+  overflow: auto;
+}
+
+.preview-actions {
+  height: 45px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.action-btn {
+  height: 37px;
+  padding: 0 17px;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: var(--navy);
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.action-btn.gold {
+  background: #b57d13;
+}
+
+/* ================= CERTIFICATE ================= */
+
+.certificate {
+  width: 100%;
+  min-width: 800px;
+
+  aspect-ratio: 1.4142;
+
+  padding: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #06172f,
+      #122c53,
+      #06172f
+    );
+
+  box-shadow: 0 15px 45px rgba(0,0,0,.2);
+}
+
+.certificate-inner {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
   background:
     radial-gradient(
-      ellipse at center,
-      #fffefb 0%,
-      #faf8f0 70%,
-      #f7f3e7 100%
-    );
-  border:8px solid var(--navy);
-  padding:14px;
+      circle at center,
+      rgba(201,154,46,.04),
+      transparent 45%
+    ),
+    var(--cream);
+
+  border: 2px solid var(--gold);
 }
 
-.cert-inner{
-  height:100%;
-  position:relative;
-  overflow:hidden;
-  border:2px solid var(--gold);
+/* ================= CORNERS ================= */
+
+.corner {
+  position: absolute;
+  z-index: 3;
+
+  width: 150px;
+  height: 150px;
+
+  border-color: var(--gold);
+}
+
+.corner.tl {
+  top: 17px;
+  left: 17px;
+
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+
+.corner.tr {
+  top: 17px;
+  right: 17px;
+
+  border-top: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+.corner.bl {
+  bottom: 17px;
+  left: 17px;
+
+  border-bottom: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+
+.corner.br {
+  bottom: 17px;
+  right: 17px;
+
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+/* ================= WATERMARK ================= */
+
+.watermark {
+  position: absolute;
+  z-index: 1;
+
+  left: 50%;
+  top: 52%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-8deg);
+
+  font-size: 280px;
+  font-weight: 900;
+
+  letter-spacing: -30px;
+
+  color: rgba(20,33,61,.025);
+
+  pointer-events: none;
+}
+
+.watermark span {
+  color: rgba(201,154,46,.035);
+}
+
+/* ================= CERTIFICATE ID ================= */
+
+.cert-id {
+  position: absolute;
+  z-index: 5;
+
+  top: 30px;
+  right: 42px;
+
+  text-align: center;
+}
+
+.cert-id-label {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #697386;
+}
+
+.cert-id-value {
+  margin-top: 4px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  color: var(--navy);
+}
+
+.cert-id-line {
+  width: 80px;
+  height: 1px;
+
+  margin: 5px auto;
+
+  background: var(--gold);
+}
+
+/* ================= BRAND ================= */
+
+.cert-brand {
+  position: relative;
+  z-index: 4;
+
+  text-align: center;
+
+  padding-top: 26px;
+}
+
+.cert-logo {
+  font-size: 52px;
+  font-weight: 900;
+
+  letter-spacing: -4px;
+
+  color: var(--navy);
+}
+
+.cert-logo span {
+  color: #d49a1d;
+}
+
+.cert-meaning {
+  margin-top: 5px;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color: #4e596a;
+}
+
+.brand-rule {
+  width: 190px;
+  height: 1px;
+
+  margin: 8px auto 0;
+
+  background: var(--gold);
+}
+
+/* ================= TITLE ================= */
+
+.cert-title {
+  position: relative;
+  z-index: 4;
+
+  margin-top: 15px;
+
+  text-align: center;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 39px;
+  font-weight: 500;
+
+  letter-spacing: 7px;
+
+  color: var(--navy);
+}
+
+.cert-subtitle {
+  position: relative;
+  z-index: 4;
+
+  margin-top: 2px;
+
+  text-align: center;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 15px;
+
+  letter-spacing: 4px;
+
+  color: #9b7118;
+}
+
+/* ================= STUDENT ================= */
+
+.cert-presented {
+  position: relative;
+  z-index: 4;
+
+  margin-top: 17px;
+
+  text-align: center;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color: #6d7480;
+}
+
+.student-name {
+  position: relative;
+  z-index: 4;
+
+  margin-top: 4px;
+
+  text-align: center;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+
+  font-size: 42px;
+
+  color: var(--navy);
+}
+
+.student-line {
+  width: 245px;
+  height: 1px;
+
+  margin: 3px auto;
+
+  background: var(--gold);
+}
+
+/* ================= DESCRIPTION ================= */
+
+.description {
+  position: relative;
+  z-index: 4;
+
+  max-width: 720px;
+
+  margin: 10px auto 0;
+
+  text-align: center;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 11px;
+  line-height: 1.5;
+
+  color: #3e4a5c;
+}
+
+.description strong {
+  color: var(--navy);
+}
+
+/* ================= PROJECT ================= */
+
+.project-display {
+  position: relative;
+  z-index: 4;
+
+  display: none;
+
+  max-width: 570px;
+
+  margin: 9px auto 0;
+
+  padding: 7px 15px;
+
+  text-align: center;
+
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+}
+
+.project-label {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #8a6b1c;
+}
+
+.project-value {
+  margin-top: 3px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  color: var(--navy);
+}
+
+/* ================= DETAILS ================= */
+
+.details {
+  position: relative;
+  z-index: 4;
+
+  max-width: 720px;
+
+  margin: 12px auto 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.detail {
+  text-align: center;
+
+  padding: 0 7px;
+
+  border-right: 1px solid #d7c38f;
+}
+
+.detail:last-child {
+  border-right: 0;
+}
+
+.detail-label {
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  color: #7d8490;
+}
+
+.detail-value {
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  color: var(--navy);
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom {
+  position: absolute;
+  z-index: 5;
+
+  left: 7%;
+  right: 7%;
+  bottom: 24px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 130px 1.25fr;
+
+  align-items: end;
+
+  gap: 15px;
+}
+
+/* ================= SIGNATURE ================= */
+
+.signature {
+  text-align: center;
+}
+
+/*
+The signature image is loaded from:
+amar-singh-signature.png
+*/
+
+.signature-image {
+  display: block;
+
+  width: 170px;
+  height: 48px;
+
+  object-fit: contain;
+  object-position: center;
+
+  margin: 0 auto 2px;
+
+  mix-blend-mode: multiply;
+}
+
+.signature-fallback {
+  display: none;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+
+  font-size: 27px;
+
+  color: #13294d;
+
+  transform: rotate(-3deg);
+}
+
+.signature-line {
+  width: 160px;
+  height: 1px;
+
+  margin: 2px auto;
+
+  background: #253149;
+}
+
+.signature-name {
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.6px;
+
+  color: var(--navy);
+}
+
+.signature-title {
+  margin-top: 2px;
+
+  font-size: 7px;
+
+  color: #697386;
+}
+
+/* ================= SEAL ================= */
+
+.seal {
+  width: 105px;
+  height: 105px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  position: relative;
+
+  color: white;
+
   background:
     radial-gradient(
-      circle at 50% 48%,
-      rgba(201,151,36,.025),
-      transparent 42%
+      circle,
+      #17345e,
+      #071a38 70%
     );
-}
 
-/* GOLD CORNERS */
+  border: 5px solid var(--gold);
 
-.corner{
-  position:absolute;
-  z-index:5;
-  width:22%;
-  height:23%;
-  background:var(--navy);
-}
-
-.corner.tl{
-  top:0;
-  left:0;
-  clip-path:polygon(0 0,100% 0,38% 58%,0 100%);
-}
-
-.corner.br{
-  right:0;
-  bottom:0;
-  clip-path:polygon(62% 42%,100% 0,100% 100%,0 100%);
-}
-
-.corner-line{
-  position:absolute;
-  z-index:6;
-  height:5px;
-  background:linear-gradient(90deg,#fff,#e5bd60,#b98218);
-  transform:rotate(-40deg);
-  width:220px;
-}
-
-.corner-line.tl{
-  left:-45px;
-  top:55px;
-}
-
-.corner-line.br{
-  right:-45px;
-  bottom:55px;
-  transform:rotate(-40deg);
-}
-
-/* WATERMARK */
-
-.watermark{
-  position:absolute;
-  z-index:1;
-  left:50%;
-  top:53%;
-  transform:translate(-50%,-50%);
-  font-size:280px;
-  font-weight:900;
-  letter-spacing:-30px;
-  color:rgba(20,33,61,.025);
-  pointer-events:none;
-}
-
-.watermark span{
-  color:rgba(201,151,36,.035);
-}
-
-/* CERT TOP */
-
-.cert-id{
-  position:absolute;
-  z-index:8;
-  top:30px;
-  right:36px;
-  text-align:center;
-}
-
-.cert-id-label{
-  font-size:9px;
-  letter-spacing:1.7px;
-  font-weight:800;
-}
-
-.cert-id-value{
-  font-size:13px;
-  font-weight:900;
-  margin-top:5px;
-}
-
-.id-line{
-  width:100px;
-  height:1px;
-  background:var(--gold);
-  margin:7px auto;
-}
-
-.stars{
-  color:#a87612;
-  letter-spacing:4px;
-  font-size:10px;
-}
-
-/* BRAND */
-
-.cert-brand{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  padding-top:28px;
-}
-
-.cert-logo{
-  font-size:58px;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:-4px;
-  color:var(--navy);
-}
-
-.cert-logo span{
-  color:#d59a17;
-}
-
-.cert-meaning{
-  margin-top:7px;
-  font-size:10px;
-  letter-spacing:3px;
-  font-weight:800;
-}
-
-.meaning-rule{
-  width:230px;
-  margin:9px auto 0;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.meaning-rule:before,
-.meaning-rule:after{
-  content:"";
-  height:1px;
-  flex:1;
-  background:var(--gold);
-}
-
-.diamond{
-  width:6px;
-  height:6px;
-  background:var(--gold);
-  transform:rotate(45deg);
-}
-
-/* TITLE */
-
-.cert-title{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  margin-top:14px;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:45px;
-  letter-spacing:8px;
-  font-weight:500;
-  color:var(--navy);
-}
-
-.cert-subtitle{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  margin-top:2px;
-  color:#966d13;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:20px;
-  letter-spacing:5px;
-}
-
-/* PERSON */
-
-.cert-intro{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  margin-top:19px;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1px;
-}
-
-.student{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  margin:4px auto 0;
-  color:var(--navy);
-  font-family:"Brush Script MT","Segoe Script",cursive;
-  font-size:47px;
-  line-height:1.05;
-}
-
-.student-line{
-  width:280px;
-  height:1px;
-  background:var(--gold);
-  margin:5px auto;
-}
-
-/* DESCRIPTION */
-
-.cert-description{
-  position:relative;
-  z-index:4;
-  text-align:center;
-  max-width:760px;
-  margin:9px auto 0;
-  font-size:12px;
-  line-height:1.48;
-  color:#26344c;
-}
-
-.cert-description strong{
-  font-weight:900;
-  color:var(--navy);
-}
-
-/* DETAILS */
-
-.details{
-  position:relative;
-  z-index:4;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  max-width:780px;
-  margin:16px auto 0;
-}
-
-.detail{
-  text-align:center;
-  border-right:1px solid #d8c28c;
-  padding:0 8px;
-}
-
-.detail:last-child{
-  border-right:0;
-}
-
-.detail-icon{
-  color:#9b711b;
-  font-size:20px;
-}
-
-.detail-label{
-  font-size:8px;
-  font-weight:900;
-  letter-spacing:1px;
-  margin-top:2px;
-}
-
-.detail-value{
-  font-size:10px;
-  margin-top:4px;
-}
-
-/* BOTTOM */
-
-.cert-bottom{
-  position:absolute;
-  z-index:5;
-  left:6%;
-  right:6%;
-  bottom:20px;
-  display:grid;
-  grid-template-columns:1fr 160px 1.25fr;
-  align-items:end;
-  gap:15px;
-}
-
-/* SIGNATURE */
-
-.signature{
-  text-align:center;
-}
-
-.signature-img{
-  display:block;
-  width:180px;
-  height:55px;
-  object-fit:contain;
-  object-position:center;
-  margin:0 auto -2px;
-  mix-blend-mode:multiply;
-}
-
-.signature-line{
-  width:180px;
-  height:1px;
-  background:#263246;
-  margin:auto;
-}
-
-.sign-name{
-  margin-top:5px;
-  font-size:10px;
-  letter-spacing:2px;
-  font-weight:900;
-}
-
-.sign-title{
-  margin-top:3px;
-  font-size:9px;
-  color:#566071;
-}
-
-/* SEAL */
-
-.seal{
-  width:115px;
-  height:115px;
-  border-radius:50%;
-  margin:auto;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:
-    radial-gradient(circle,#12294e 0%,#071a38 68%,#0c2042 69%);
-  border:7px solid #d5a53b;
   box-shadow:
-    0 0 0 2px #987019,
-    0 5px 10px rgba(0,0,0,.15);
-  color:#fff;
+    0 0 0 2px #96701c;
 }
 
-.seal:before{
-  content:"";
-  position:absolute;
-  inset:7px;
-  border:1px solid #e0b84d;
-  border-radius:50%;
+.seal::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 7px;
+
+  border: 1px solid var(--gold-light);
+
+  border-radius: 50%;
 }
 
-.seal-text{
-  position:relative;
-  z-index:2;
-  font-weight:900;
-  font-size:11px;
-  line-height:1.35;
+.seal-content {
+  position: relative;
+  z-index: 2;
+
+  font-size: 9px;
+
+  line-height: 1.3;
+
+  font-weight: 900;
 }
 
-.seal-io{
-  font-size:30px;
-  color:#e0ad35;
-  line-height:1;
+.seal-io {
+  font-size: 25px;
+
+  color: var(--gold-light);
+
+  line-height: 1;
 }
 
-.seal-small{
-  font-size:6px;
-  letter-spacing:1.5px;
+.seal-small {
+  font-size: 5px;
+
+  letter-spacing: 1.3px;
+
+  color: #ead28b;
 }
 
-/* QR */
+/* ================= QR ================= */
 
-.verify{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.verify {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 
-.qr{
-  width:88px;
-  height:88px;
-  border:1px solid #ad7b18;
-  padding:4px;
-  background:#fff;
+.qr {
+  width: 78px;
+  height: 78px;
+
+  padding: 3px;
+
+  background: white;
+
+  border: 1px solid var(--gold);
 }
 
-.verify-title{
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.5px;
+.verify-title {
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: .6px;
+
+  color: var(--navy);
 }
 
-.verify-text{
-  margin-top:5px;
-  font-size:8px;
-  line-height:1.4;
-  color:#4e5868;
+.verify-text {
+  margin-top: 3px;
+
+  font-size: 7px;
+
+  line-height: 1.35;
+
+  color: #697386;
 }
 
-.verify-url{
-  display:inline-block;
-  margin-top:4px;
-  padding:4px 7px;
-  border-radius:3px;
-  background:var(--navy);
-  color:#fff;
-  font-size:7px;
-  font-weight:700;
+.verify-url {
+  margin-top: 3px;
+
+  display: inline-block;
+
+  padding: 3px 5px;
+
+  background: var(--navy);
+
+  color: white;
+
+  font-size: 6px;
+
+  border-radius: 2px;
 }
 
-/* PRINT */
+/* ================= FOOTER ================= */
 
-@media print{
+.footer {
+  position: absolute;
+  z-index: 5;
 
-  body{
-    background:#fff;
+  bottom: 7px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  white-space: nowrap;
+
+  font-size: 6px;
+
+  color: #8a8f98;
+
+  letter-spacing: .6px;
+}
+
+.footer strong {
+  color: var(--navy);
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+  body {
+    background: white;
   }
 
   .header,
   .form-card,
-  .preview-top{
-    display:none!important;
+  .preview-actions {
+    display: none !important;
   }
 
-  .main{
-    display:block;
-    margin:0;
-    padding:0;
-    max-width:none;
+  .main {
+    display: block;
+
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
   }
 
-  .preview-card{
-    border:0;
-    box-shadow:none;
-    padding:0;
+  .preview-card {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
   }
 
-  .certificate{
-    width:297mm;
-    height:210mm;
-    aspect-ratio:auto;
-    border:8px solid var(--navy);
+  .certificate {
+    width: 297mm;
+    height: 210mm;
+
+    min-width: 0;
+
+    aspect-ratio: auto;
+
+    box-shadow: none;
   }
 
-  @page{
-    size:A4 landscape;
-    margin:0;
+  @page {
+    size: A4 landscape;
+    margin: 0;
   }
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
-@media(max-width:1100px){
+@media(max-width:1050px) {
 
-  .main{
-    grid-template-columns:1fr;
+  .main {
+    grid-template-columns: 1fr;
   }
 
-  .certificate{
-    min-width:700px;
+  .certificate {
+    min-width: 850px;
   }
 
-  .preview-card{
-    overflow:auto;
+  .preview-card {
+    overflow-x: auto;
   }
 }
 </style>
@@ -765,22 +1011,22 @@ button{
 
 <header class="header">
 
-  <div class="header-brand">
+  <div class="brand">
 
-    <div class="header-logo">
+    <div class="brand-name">
       Intern<span>IO</span>
     </div>
 
-    <div class="header-divider"></div>
+    <div class="brand-divider"></div>
 
-    <div class="header-meaning">
+    <div class="brand-meaning">
       INNOVATION &amp; OPPORTUNITIES
     </div>
 
   </div>
 
   <div class="header-title">
-    InternIO Certificate Maker
+    Certificate Maker
   </div>
 
 </header>
@@ -790,80 +1036,89 @@ button{
 
 
 <!-- =================================================
-     LEFT FORM
+     FORM
 ================================================== -->
 
 <section class="form-card">
 
-  <div class="section-title">
-    1. Certificate Type <span style="color:#c62828">*</span>
+  <div class="form-title">
+    Create Certificate
+  </div>
+
+  <div class="form-subtitle">
+    Create and verify an InternIO internship certificate.
+  </div>
+
+
+  <div class="type-title">
+    Certificate Type *
   </div>
 
 
   <div
-    class="type active"
-    id="typeProjectNamed"
+    id="typeNamed"
+    class="type-card active"
     onclick="selectType('PROJECT_NAMED')"
   >
 
-    <div class="type-radio"></div>
-
-    <div class="type-icon">▣</div>
+    <div class="radio"></div>
 
     <div>
-      <div class="type-name">
-        Project-Based (with Project Name)
+
+      <div class="type-main">
+        Project-Based — Project Name
       </div>
 
       <div class="type-help">
-        Include the student's specific project
+        Show the student's specific project.
       </div>
+
     </div>
 
   </div>
 
 
   <div
-    class="type"
-    id="typeProjectNoName"
+    id="typeNoProject"
+    class="type-card"
     onclick="selectType('PROJECT_NO_NAME')"
   >
 
-    <div class="type-radio"></div>
-
-    <div class="type-icon">▣</div>
+    <div class="radio"></div>
 
     <div>
-      <div class="type-name">
-        Project-Based (without Project Name)
+
+      <div class="type-main">
+        Project-Based — No Project Name
       </div>
 
       <div class="type-help">
-        Project-based internship without naming a project
+        Project-based internship without naming a project.
       </div>
+
     </div>
 
   </div>
 
 
   <div
-    class="type"
     id="typeCompletion"
+    class="type-card"
     onclick="selectType('COMPLETION')"
   >
 
-    <div class="type-radio"></div>
-
-    <div class="type-icon">♙</div>
+    <div class="radio"></div>
 
     <div>
-      <div class="type-name">
+
+      <div class="type-main">
         Internship Completion
       </div>
 
       <div class="type-help">
-        Internship certificate without project details
+        No project information appears.
       </div>
+
     </div>
 
   </div>
@@ -872,12 +1127,12 @@ button{
   <div class="field">
 
     <label>
-      2. Student Name *
+      Student Name *
     </label>
 
     <input
       id="studentName"
-      value="Kalu Yadav"
+      placeholder="Enter student full name"
       oninput="updatePreview()"
     >
 
@@ -887,12 +1142,12 @@ button{
   <div class="field">
 
     <label>
-      3. Internship / Program *
+      Internship / Program *
     </label>
 
     <input
       id="internship"
-      value="Web Development Internship"
+      placeholder="Example: Web Development Internship"
       oninput="updatePreview()"
     >
 
@@ -900,17 +1155,17 @@ button{
 
 
   <div
-    class="field"
-    id="projectField"
+    id="projectSettings"
+    class="project-settings"
   >
 
     <div class="project-row">
 
-      <label style="margin:0">
-        4. Project Name
+      <label>
+        Project Name
       </label>
 
-      <label class="switch">
+      <label class="project-toggle">
 
         <input
           id="projectToggle"
@@ -919,7 +1174,7 @@ button{
           onchange="toggleProject()"
         >
 
-        Include Project Name
+        Include project
 
       </label>
 
@@ -927,25 +1182,24 @@ button{
 
     <input
       id="projectName"
-      value="Personal Portfolio Website"
+      placeholder="Example: E-Commerce Website"
       oninput="updatePreview()"
     >
 
   </div>
 
 
-  <div class="dates">
+  <div class="date-grid">
 
     <div class="field">
 
       <label>
-        5. Start Date *
+        Start Date *
       </label>
 
       <input
         id="startDate"
         type="date"
-        value="2026-08-01"
         onchange="updatePreview()"
       >
 
@@ -955,13 +1209,12 @@ button{
     <div class="field">
 
       <label>
-        6. End Date *
+        End Date *
       </label>
 
       <input
         id="endDate"
         type="date"
-        value="2026-08-15"
         onchange="updatePreview()"
       >
 
@@ -970,17 +1223,17 @@ button{
   </div>
 
 
-  <div class="dates">
+  <div class="date-grid">
 
     <div class="field">
 
       <label>
-        7. Duration *
+        Duration *
       </label>
 
       <input
         id="duration"
-        value="2 Weeks"
+        placeholder="Example: 4 Weeks"
         oninput="updatePreview()"
       >
 
@@ -990,13 +1243,12 @@ button{
     <div class="field">
 
       <label>
-        8. Issue Date *
+        Issue Date *
       </label>
 
       <input
         id="issueDate"
         type="date"
-        value="2026-08-15"
         onchange="updatePreview()"
       >
 
@@ -1006,10 +1258,11 @@ button{
 
 
   <button
-    class="generate"
+    id="generateButton"
+    class="generate-btn"
     onclick="generateCertificate()"
   >
-    ◉ &nbsp; Generate Certificate
+    Generate Certificate
   </button>
 
 
@@ -1018,34 +1271,29 @@ button{
     class="message"
   ></div>
 
-
-  <div class="security-note">
-    ✓ Certificate will be saved securely and can be verified online.
-  </div>
-
 </section>
 
 
 <!-- =================================================
-     RIGHT PREVIEW
+     PREVIEW
 ================================================== -->
 
 <section class="preview-card">
 
-  <div class="preview-top">
+  <div class="preview-actions">
 
     <button
-      class="preview-button"
-      onclick="window.print()"
+      class="action-btn"
+      onclick="printCertificate()"
     >
       🖨 Print
     </button>
 
     <button
-      class="preview-button gold"
-      onclick="window.print()"
+      class="action-btn gold"
+      onclick="printCertificate()"
     >
-      ↓ Save as PDF
+      Save as PDF
     </button>
 
   </div>
@@ -1053,13 +1301,13 @@ button{
 
   <div class="certificate">
 
-    <div class="cert-inner">
+    <div class="certificate-inner">
+
 
       <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
       <div class="corner br"></div>
-
-      <div class="corner-line tl"></div>
-      <div class="corner-line br"></div>
 
 
       <div class="watermark">
@@ -1077,14 +1325,10 @@ button{
           id="previewId"
           class="cert-id-value"
         >
-          INIO-2026-PREVIEW
+          PENDING
         </div>
 
-        <div class="id-line"></div>
-
-        <div class="stars">
-          ★ ★ ★
-        </div>
+        <div class="cert-id-line"></div>
 
       </div>
 
@@ -1099,10 +1343,7 @@ button{
           INNOVATION &amp; OPPORTUNITIES
         </div>
 
-        <div class="meaning-rule">
-          <div class="diamond"></div>
-          <div class="diamond"></div>
-        </div>
+        <div class="brand-rule"></div>
 
       </div>
 
@@ -1111,53 +1352,68 @@ button{
         CERTIFICATE
       </div>
 
+
       <div
         id="previewSubtitle"
         class="cert-subtitle"
       >
-        OF INTERNSHIP
+        OF PROJECT-BASED INTERNSHIP
       </div>
 
 
-      <div class="cert-intro">
+      <div class="cert-presented">
         THIS IS TO CERTIFY THAT
       </div>
 
 
       <div
         id="previewStudent"
-        class="student"
+        class="student-name"
       >
-        Kalu Yadav
+        Student Name
       </div>
+
 
       <div class="student-line"></div>
 
 
       <div
         id="previewDescription"
-        class="cert-description"
+        class="description"
       >
         has successfully completed the
         <br>
+
         <strong>
-          INTERNSHIP PROGRAM in WEB DEVELOPMENT INTERNSHIP
+          PROJECT-BASED INTERNSHIP
         </strong>
+
         at InternIO.
-        <br>
-        During the internship, the intern demonstrated dedication,
-        enthusiasm,<br>
-        and a strong commitment to learning and contributing.
-        <br>
-        We wish the intern all the best for future endeavours.
+      </div>
+
+
+      <div
+        id="projectDisplay"
+        class="project-display"
+      >
+
+        <div class="project-label">
+          PROJECT
+        </div>
+
+        <div
+          id="previewProject"
+          class="project-value"
+        >
+        </div>
+
       </div>
 
 
       <div class="details">
 
-        <div class="detail">
 
-          <div class="detail-icon">▣</div>
+        <div class="detail">
 
           <div class="detail-label">
             START DATE
@@ -1167,15 +1423,13 @@ button{
             id="previewStart"
             class="detail-value"
           >
-            01 August 2026
+            —
           </div>
 
         </div>
 
 
         <div class="detail">
-
-          <div class="detail-icon">▣</div>
 
           <div class="detail-label">
             END DATE
@@ -1185,15 +1439,13 @@ button{
             id="previewEnd"
             class="detail-value"
           >
-            15 August 2026
+            —
           </div>
 
         </div>
 
 
         <div class="detail">
-
-          <div class="detail-icon">◷</div>
 
           <div class="detail-label">
             DURATION
@@ -1203,15 +1455,13 @@ button{
             id="previewDuration"
             class="detail-value"
           >
-            2 Weeks
+            —
           </div>
 
         </div>
 
 
         <div class="detail">
-
-          <div class="detail-icon">♙</div>
 
           <div class="detail-label">
             ISSUE DATE
@@ -1221,7 +1471,7 @@ button{
             id="previewIssue"
             class="detail-value"
           >
-            15 August 2026
+            —
           </div>
 
         </div>
@@ -1229,44 +1479,46 @@ button{
       </div>
 
 
-      <div class="cert-bottom">
+      <div class="bottom">
 
 
         <!-- SIGNATURE -->
 
         <div class="signature">
 
-          <!--
-          Your supplied signature can be connected here.
-          Put the image in your GitHub repository as:
-          amar-singh-signature.png
-          -->
-
           <img
-            class="signature-img"
+            id="signatureImage"
+            class="signature-image"
             src="amar-singh-signature.png"
             alt="Amar Singh signature"
-            onerror="this.style.display='none'"
+            onerror="showSignatureFallback()"
           >
+
+          <div
+            id="signatureFallback"
+            class="signature-fallback"
+          >
+            Amar Singh
+          </div>
 
           <div class="signature-line"></div>
 
-          <div class="sign-name">
+          <div class="signature-name">
             AMAR SINGH
           </div>
 
-          <div class="sign-title">
+          <div class="signature-title">
             Founder &amp; CEO, InternIO
           </div>
 
         </div>
 
 
-        <!-- SEAL -->
+        <!-- VERIFIED SEAL -->
 
         <div class="seal">
 
-          <div class="seal-text">
+          <div class="seal-content">
 
             <div class="seal-small">
               OFFICIAL
@@ -1310,24 +1562,38 @@ button{
             </div>
 
             <div class="verify-text">
-              Scan the QR code or visit
+              Scan this QR code to verify
+              the certificate online.
             </div>
 
             <div class="verify-url">
               internio-verification
             </div>
 
-            <div class="verify-text">
-              Enter Certificate ID to verify
-              the authenticity.
-            </div>
-
           </div>
 
         </div>
 
+      </div>
+
+
+      <div class="footer">
+
+        Certificate ID:
+        <strong id="footerCertificateId">
+          PENDING
+        </strong>
+
+        &nbsp; • &nbsp;
+
+        Issued by InternIO
+
+        &nbsp; • &nbsp;
+
+        Innovation &amp; Opportunities
 
       </div>
+
 
     </div>
 
@@ -1341,7 +1607,7 @@ button{
 <script>
 
 /* =====================================================
-   SUPABASE
+   CONFIGURATION
 ===================================================== */
 
 const SUPABASE_URL =
@@ -1350,27 +1616,15 @@ const SUPABASE_URL =
 
 /*
 IMPORTANT:
+Replace this with the SAME publishable/anon key
+used by your working InternIO Admin page.
 
-Paste the SAME publishable key used
-by your working InternIO Admin page.
-
-Do not use service_role.
+NEVER put a service_role/secret key here.
 */
 
 const SUPABASE_KEY =
   "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
 
-
-const supabase =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =====================================================
-   VERIFICATION URL
-===================================================== */
 
 const VERIFICATION_URL =
   "https://ajaybilonia.github.io/internio-verification/";
@@ -1381,61 +1635,125 @@ let certificateType =
 
 
 /* =====================================================
-   TYPE
+   SIGNATURE FALLBACK
 ===================================================== */
 
-function selectType(type){
+function showSignatureFallback() {
 
-  certificateType = type;
+  const image =
+    document.getElementById(
+      "signatureImage"
+    );
 
-
-  document
-    .querySelectorAll(".type")
-    .forEach(
-      element =>
-        element.classList.remove("active")
+  const fallback =
+    document.getElementById(
+      "signatureFallback"
     );
 
 
-  if(type === "PROJECT_NAMED"){
+  image.style.display =
+    "none";
+
+  fallback.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   SELECT CERTIFICATE TYPE
+===================================================== */
+
+function selectType(type) {
+
+  certificateType =
+    type;
+
+
+  document
+    .querySelectorAll(".type-card")
+    .forEach(function(card) {
+
+      card.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  if (
+    type ===
+    "PROJECT_NAMED"
+  ) {
 
     document
-      .getElementById("typeProjectNamed")
-      .classList.add("active");
+      .getElementById(
+        "typeNamed"
+      )
+      .classList.add(
+        "active"
+      );
+
 
     document
-      .getElementById("projectField")
-      .style.display = "block";
+      .getElementById(
+        "projectSettings"
+      )
+      .style.display =
+      "block";
+
 
     document
-      .getElementById("projectToggle")
-      .checked = true;
+      .getElementById(
+        "projectToggle"
+      )
+      .checked =
+      true;
 
   }
 
 
-  if(type === "PROJECT_NO_NAME"){
+  else if (
+    type ===
+    "PROJECT_NO_NAME"
+  ) {
 
     document
-      .getElementById("typeProjectNoName")
-      .classList.add("active");
+      .getElementById(
+        "typeNoProject"
+      )
+      .classList.add(
+        "active"
+      );
+
 
     document
-      .getElementById("projectField")
-      .style.display = "none";
+      .getElementById(
+        "projectSettings"
+      )
+      .style.display =
+      "none";
 
   }
 
 
-  if(type === "COMPLETION"){
+  else {
 
     document
-      .getElementById("typeCompletion")
-      .classList.add("active");
+      .getElementById(
+        "typeCompletion"
+      )
+      .classList.add(
+        "active"
+      );
+
 
     document
-      .getElementById("projectField")
-      .style.display = "none";
+      .getElementById(
+        "projectSettings"
+      )
+      .style.display =
+      "none";
 
   }
 
@@ -1446,10 +1764,10 @@ function selectType(type){
 
 
 /* =====================================================
-   PROJECT
+   PROJECT TOGGLE
 ===================================================== */
 
-function toggleProject(){
+function toggleProject() {
 
   updatePreview();
 
@@ -1457,24 +1775,28 @@ function toggleProject(){
 
 
 /* =====================================================
-   DATE FORMAT
+   FORMAT DATE
 ===================================================== */
 
-function formatDate(value){
+function formatDate(value) {
 
-  if(!value){
-    return "";
+  if (!value) {
+    return "—";
   }
+
 
   const date =
-    new Date(value + "T00:00:00");
+    new Date(
+      value + "T00:00:00"
+    );
+
 
   return date.toLocaleDateString(
     "en-GB",
     {
-      day:"2-digit",
-      month:"long",
-      year:"numeric"
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
     }
   );
 
@@ -1482,124 +1804,170 @@ function formatDate(value){
 
 
 /* =====================================================
-   ESCAPE
+   ESCAPE HTML
 ===================================================== */
 
-function escapeHTML(value){
+function escapeHTML(value) {
 
   return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 /* =====================================================
-   PREVIEW
+   UPDATE PREVIEW
 ===================================================== */
 
-function updatePreview(){
+function updatePreview() {
 
   const student =
     document
-      .getElementById("studentName")
+      .getElementById(
+        "studentName"
+      )
       .value
       .trim() ||
-    "Your Name";
+    "Student Name";
 
 
   const internship =
     document
-      .getElementById("internship")
+      .getElementById(
+        "internship"
+      )
       .value
       .trim() ||
-    "Your Internship";
+    "Internship Program";
 
 
   const start =
     document
-      .getElementById("startDate")
+      .getElementById(
+        "startDate"
+      )
       .value;
 
 
   const end =
     document
-      .getElementById("endDate")
+      .getElementById(
+        "endDate"
+      )
       .value;
 
 
   const duration =
     document
-      .getElementById("duration")
+      .getElementById(
+        "duration"
+      )
       .value
       .trim() ||
-    "Duration";
+    "—";
 
 
   const issue =
     document
-      .getElementById("issueDate")
+      .getElementById(
+        "issueDate"
+      )
       .value;
 
 
+  const project =
+    document
+      .getElementById(
+        "projectName"
+      )
+      .value
+      .trim();
+
+
   document
-    .getElementById("previewStudent")
+    .getElementById(
+      "previewStudent"
+    )
     .textContent =
     student;
 
 
   document
-    .getElementById("previewStart")
+    .getElementById(
+      "previewStart"
+    )
     .textContent =
     formatDate(start);
 
 
   document
-    .getElementById("previewEnd")
+    .getElementById(
+      "previewEnd"
+    )
     .textContent =
     formatDate(end);
 
 
   document
-    .getElementById("previewDuration")
+    .getElementById(
+      "previewDuration"
+    )
     .textContent =
     duration;
 
 
   document
-    .getElementById("previewIssue")
+    .getElementById(
+      "previewIssue"
+    )
     .textContent =
     formatDate(issue);
 
 
   const subtitle =
-    document
-      .getElementById("previewSubtitle");
+    document.getElementById(
+      "previewSubtitle"
+    );
 
 
   const description =
-    document
-      .getElementById("previewDescription");
+    document.getElementById(
+      "previewDescription"
+    );
 
 
-  if(
+  const projectDisplay =
+    document.getElementById(
+      "projectDisplay"
+    );
+
+
+  if (
     certificateType ===
     "PROJECT_NAMED"
-  ){
+  ) {
 
     subtitle.textContent =
       "OF PROJECT-BASED INTERNSHIP";
-
-
-    const project =
-      document
-        .getElementById("projectName")
-        .value
-        .trim() ||
-      "PROJECT NAME";
 
 
     description.innerHTML =
@@ -1607,26 +1975,56 @@ function updatePreview(){
       "<br>" +
       "<strong>" +
       "PROJECT-BASED INTERNSHIP in " +
-      escapeHTML(internship) +
+      escapeHTML(
+        internship
+      ) +
       "</strong>" +
       " at InternIO." +
       "<br>" +
-      "The internship included practical learning," +
-      " technical development and hands-on experience" +
-      "<br>" +
-      "through the successful completion of the assigned project:" +
-      "<br>" +
-      "<strong>" +
-      escapeHTML(project) +
-      "</strong>";
+      "The internship provided practical learning," +
+      " technical development and hands-on experience.";
+
+
+    const includeProject =
+      document
+        .getElementById(
+          "projectToggle"
+        )
+        .checked;
+
+
+    if (
+      includeProject &&
+      project
+    ) {
+
+      projectDisplay.style.display =
+        "block";
+
+
+      document
+        .getElementById(
+          "previewProject"
+        )
+        .textContent =
+        project;
+
+    }
+
+    else {
+
+      projectDisplay.style.display =
+        "none";
+
+    }
 
   }
 
 
-  else if(
+  else if (
     certificateType ===
     "PROJECT_NO_NAME"
-  ){
+  ) {
 
     subtitle.textContent =
       "OF PROJECT-BASED INTERNSHIP";
@@ -1637,18 +2035,23 @@ function updatePreview(){
       "<br>" +
       "<strong>" +
       "PROJECT-BASED INTERNSHIP in " +
-      escapeHTML(internship) +
+      escapeHTML(
+        internship
+      ) +
       "</strong>" +
       " at InternIO." +
       "<br>" +
-      "During the internship, the intern demonstrated dedication," +
-      " enthusiasm,<br>" +
-      "and a strong commitment to practical learning and development.";
+      "The internship provided practical learning," +
+      " technical development and hands-on experience.";
+
+
+    projectDisplay.style.display =
+      "none";
 
   }
 
 
-  else{
+  else {
 
     subtitle.textContent =
       "OF INTERNSHIP COMPLETION";
@@ -1659,15 +2062,18 @@ function updatePreview(){
       "<br>" +
       "<strong>" +
       "INTERNSHIP PROGRAM in " +
-      escapeHTML(internship) +
+      escapeHTML(
+        internship
+      ) +
       "</strong>" +
       " at InternIO." +
       "<br>" +
-      "During the internship, the intern demonstrated dedication," +
-      " enthusiasm,<br>" +
-      "and a strong commitment to learning and contributing." +
-      "<br>" +
-      "We wish the intern all the best for future endeavours.";
+      "The intern demonstrated commitment to learning," +
+      " professional development and practical exposure.";
+
+
+    projectDisplay.style.display =
+      "none";
 
   }
 
@@ -1675,32 +2081,18 @@ function updatePreview(){
 
 
 /* =====================================================
-   AUTHENTICATION
+   GET EXISTING ADMIN JWT
 ===================================================== */
 
-async function getFreshSession(){
+function getAccessToken() {
 
-  /*
-  Supabase automatically manages
-  refresh tokens when the session exists.
-  */
-
-  const {
-    data,
-    error
-  } =
-    await supabase.auth.getSession();
+  const token =
+    localStorage.getItem(
+      "internio_access_token"
+    );
 
 
-  if(error){
-    throw error;
-  }
-
-
-  if(
-    !data ||
-    !data.session
-  ){
+  if (!token) {
 
     throw new Error(
       "Please login to InternIO Admin first."
@@ -1709,7 +2101,7 @@ async function getFreshSession(){
   }
 
 
-  return data.session;
+  return token;
 
 }
 
@@ -1718,131 +2110,192 @@ async function getFreshSession(){
    GENERATE CERTIFICATE
 ===================================================== */
 
-async function generateCertificate(){
+async function generateCertificate() {
 
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
 
 
   const button =
-    document.querySelector(".generate");
+    document.getElementById(
+      "generateButton"
+    );
 
 
   const student =
     document
-      .getElementById("studentName")
+      .getElementById(
+        "studentName"
+      )
       .value
       .trim();
 
 
   const internship =
     document
-      .getElementById("internship")
+      .getElementById(
+        "internship"
+      )
       .value
       .trim();
 
 
   const start =
     document
-      .getElementById("startDate")
+      .getElementById(
+        "startDate"
+      )
       .value;
 
 
   const end =
     document
-      .getElementById("endDate")
+      .getElementById(
+        "endDate"
+      )
       .value;
 
 
   const duration =
     document
-      .getElementById("duration")
+      .getElementById(
+        "duration"
+      )
       .value
       .trim();
 
 
   const issue =
     document
-      .getElementById("issueDate")
+      .getElementById(
+        "issueDate"
+      )
       .value;
 
 
   let project = "";
 
 
-  if(
+  if (
     certificateType ===
     "PROJECT_NAMED"
-  ){
+  ) {
 
-    project =
+    const includeProject =
       document
-        .getElementById("projectName")
-        .value
-        .trim();
+        .getElementById(
+          "projectToggle"
+        )
+        .checked;
+
+
+    if (includeProject) {
+
+      project =
+        document
+          .getElementById(
+            "projectName"
+          )
+          .value
+          .trim();
+
+
+      if (!project) {
+
+        showError(
+          "Please enter the project name."
+        );
+
+        return;
+
+      }
+
+    }
 
   }
 
 
-  if(!student){
+  if (!student) {
 
-    showError("Please enter the student name.");
+    showError(
+      "Please enter the student name."
+    );
 
     return;
 
   }
 
 
-  if(!internship){
+  if (!internship) {
 
-    showError("Please enter the internship/program.");
-
-    return;
-
-  }
-
-
-  if(!start || !end){
-
-    showError("Please enter the start and end dates.");
+    showError(
+      "Please enter the internship/program."
+    );
 
     return;
 
   }
 
 
-  if(!duration){
+  if (!start || !end) {
 
-    showError("Please enter the duration.");
-
-    return;
-
-  }
-
-
-  if(!issue){
-
-    showError("Please enter the issue date.");
+    showError(
+      "Please enter both dates."
+    );
 
     return;
 
   }
 
 
-  if(
-    certificateType ===
-    "PROJECT_NAMED" &&
-    !project
-  ){
+  if (!duration) {
 
-    showError("Please enter the project name.");
+    showError(
+      "Please enter the duration."
+    );
 
     return;
 
   }
 
 
-  button.disabled = true;
+  if (!issue) {
+
+    showError(
+      "Please enter the issue date."
+    );
+
+    return;
+
+  }
+
+
+  let token;
+
+
+  try {
+
+    token =
+      getAccessToken();
+
+  }
+
+  catch(error) {
+
+    showError(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
 
   button.textContent =
     "Creating Certificate...";
@@ -1851,227 +2304,213 @@ async function generateCertificate(){
   message.className =
     "message";
 
+
   message.textContent =
-    "Checking secure Admin session...";
+    "Connecting to InternIO...";
 
 
-  try{
+  try {
 
-    const session =
-      await getFreshSession();
-
-
-    message.textContent =
-      "Creating certificate...";
-
-
-    const {
-      data,
-      error
-    } =
-      await supabase.rpc(
-        "create_certificate",
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/rpc/create_certificate",
         {
-          p_student_name:
-            student,
 
-          p_internship:
-            internship,
+          method:
+            "POST",
 
-          p_project:
-            project,
+          headers: {
 
-          p_start_date:
-            start,
+            "Content-Type":
+              "application/json",
 
-          p_end_date:
-            end,
+            "apikey":
+              SUPABASE_KEY,
 
-          p_duration:
-            duration,
+            "Authorization":
+              "Bearer " +
+              token
 
-          p_issue_date:
-            issue,
+          },
 
-          p_certificate_url:
-            ""
+          body:
+            JSON.stringify({
+
+              p_student_name:
+                student,
+
+              p_internship:
+                internship,
+
+              p_project:
+                project,
+
+              p_start_date:
+                start,
+
+              p_end_date:
+                end,
+
+              p_duration:
+                duration,
+
+              p_issue_date:
+                issue,
+
+              p_certificate_url:
+                ""
+
+            })
+
         }
       );
 
 
-    if(error){
-
-      /*
-      If the access token has expired,
-      try refreshing the session once.
-      */
-
-      if(
-        String(error.message)
-          .toLowerCase()
-          .includes("jwt")
-      ){
-
-        const {
-          data: refreshed
-        } =
-          await supabase.auth.refreshSession();
+    const text =
+      await response.text();
 
 
-        if(
-          refreshed &&
-          refreshed.session
-        ){
-
-          const retry =
-            await supabase.rpc(
-              "create_certificate",
-              {
-                p_student_name:
-                  student,
-
-                p_internship:
-                  internship,
-
-                p_project:
-                  project,
-
-                p_start_date:
-                  start,
-
-                p_end_date:
-                  end,
-
-                p_duration:
-                  duration,
-
-                p_issue_date:
-                  issue,
-
-                p_certificate_url:
-                  ""
-              }
-            );
+    let data;
 
 
-          if(retry.error){
-            throw retry.error;
-          }
+    try {
 
+      data =
+        JSON.parse(
+          text
+        );
 
-          await showGeneratedCertificate(
-            retry.data
-          );
+    }
 
-          return;
+    catch {
 
-        }
-
-      }
-
-
-      throw error;
+      data =
+        text;
 
     }
 
 
-    await showGeneratedCertificate(
+    console.log(
+      "InternIO certificate response:",
+      response.status,
       data
     );
 
 
-  }catch(error){
+    if (!response.ok) {
 
-    console.error(error);
+      throw new Error(
+        data?.message ||
+        data?.error ||
+        data?.details ||
+        "Supabase rejected the certificate request."
+      );
+
+    }
+
+
+    const certificate =
+      Array.isArray(data)
+        ? data[0]
+        : data;
+
+
+    if (
+      !certificate ||
+      !certificate.certificate_id
+    ) {
+
+      throw new Error(
+        "The database did not return a Certificate ID."
+      );
+
+    }
+
+
+    const certificateId =
+      certificate.certificate_id;
+
+
+    const verificationUrl =
+      VERIFICATION_URL +
+      "?id=" +
+      encodeURIComponent(
+        certificateId
+      );
+
+
+    const qrUrl =
+      "https://api.qrserver.com/v1/create-qr-code/" +
+      "?size=700x700" +
+      "&data=" +
+      encodeURIComponent(
+        verificationUrl
+      );
+
+
+    document
+      .getElementById(
+        "previewId"
+      )
+      .textContent =
+      certificateId;
+
+
+    document
+      .getElementById(
+        "footerCertificateId"
+      )
+      .textContent =
+      certificateId;
+
+
+    document
+      .getElementById(
+        "previewQR"
+      )
+      .src =
+      qrUrl;
+
+
+    updatePreview();
+
+
+    message.className =
+      "message success";
+
+
+    message.textContent =
+      "✓ Certificate created successfully: " +
+      certificateId;
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "InternIO certificate error:",
+      error
+    );
+
 
     showError(
       error.message ||
       "Certificate creation failed."
     );
 
-  }finally{
+  }
 
-    button.disabled = false;
+  finally {
+
+    button.disabled =
+      false;
+
 
     button.textContent =
-      "◉   Generate Certificate";
+      "Generate Certificate";
 
   }
-
-}
-
-
-/* =====================================================
-   SHOW GENERATED
-===================================================== */
-
-async function showGeneratedCertificate(data){
-
-  const certificate =
-    Array.isArray(data)
-      ? data[0]
-      : data;
-
-
-  if(
-    !certificate ||
-    !certificate.certificate_id
-  ){
-
-    throw new Error(
-      "Certificate ID was not returned."
-    );
-
-  }
-
-
-  const id =
-    certificate.certificate_id;
-
-
-  const verification =
-    VERIFICATION_URL +
-    "?id=" +
-    encodeURIComponent(id);
-
-
-  const qr =
-    "https://api.qrserver.com/v1/create-qr-code/" +
-    "?size=600x600&data=" +
-    encodeURIComponent(verification);
-
-
-  document
-    .getElementById("previewId")
-    .textContent =
-    id;
-
-
-  document
-    .getElementById("previewQR")
-    .src =
-    qr;
-
-
-  updatePreview();
-
-
-  const message =
-    document.getElementById("message");
-
-
-  message.className =
-    "message success";
-
-
-  message.textContent =
-    "✓ Certificate created successfully: " + id;
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
 
 }
 
@@ -2080,10 +2519,12 @@ async function showGeneratedCertificate(data){
    ERROR
 ===================================================== */
 
-function showError(text){
+function showError(text) {
 
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
 
 
   message.className =
@@ -2097,10 +2538,23 @@ function showError(text){
 
 
 /* =====================================================
-   INITIAL PREVIEW
+   PRINT
 ===================================================== */
 
-selectType("PROJECT_NAMED");
+function printCertificate() {
+
+  window.print();
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+selectType(
+  "PROJECT_NAMED"
+);
 
 updatePreview();
 
