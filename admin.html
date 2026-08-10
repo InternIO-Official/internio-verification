@@ -2,196 +2,445 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>InternIO Admin</title>
+<title>InternIO Admin Login</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
 
 <style>
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #071a38;
+    --navy2: #102d54;
+    --gold: #c49732;
+    --gold-light: #e2c46c;
+    --cream: #faf8f1;
+    --text: #17243c;
+    --muted: #707987;
+    --red: #c62828;
+    --green: #16803c;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f8;
-  color: #17213c;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    font-family: "Montserrat", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(196,151,50,.13),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #edf0f4,
+            #f8f9fb
+        );
+
+    color: var(--text);
 }
 
-header {
-  background: #14213d;
-  color: white;
-  text-align: center;
-  padding: 30px 20px;
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.login-card {
+
+    width: 100%;
+    max-width: 470px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 42px;
+
+    box-shadow:
+        0 25px 70px rgba(7,26,56,.13);
+
+    border:
+        1px solid rgba(7,26,56,.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Gold top line */
+
+.login-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold-dark),
+            var(--gold-light),
+            var(--gold-dark)
+        );
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.brand {
+
+    text-align: center;
+
+    margin-bottom: 30px;
 }
 
 .logo {
-  font-size: 34px;
-  font-weight: 700;
+
+    font-size: 46px;
+
+    font-weight: 700;
+
+    letter-spacing: -3px;
+
+    color: var(--navy);
 }
 
 .logo span {
-  color: #d4af37;
+
+    color: var(--gold);
 }
 
 .tagline {
-  margin-top: 8px;
-  font-size: 13px;
-  letter-spacing: 1.5px;
+
+    margin-top: 7px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: #596477;
 }
 
-.container {
-  max-width: 680px;
-  margin: 40px auto;
-  padding: 20px;
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.divider {
+
+    width: 90px;
+
+    height: 1px;
+
+    margin: 22px auto;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
 }
 
-.card {
-  background: white;
-  padding: 35px;
-  border-radius: 14px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-}
+
+/* =====================================================
+   HEADING
+===================================================== */
 
 h1 {
-  text-align: center;
-  margin-top: 0;
+
+    margin: 0;
+
+    text-align: center;
+
+    color: var(--navy);
+
+    font-size: 22px;
+
+    font-weight: 700;
 }
 
+.subtitle {
+
+    margin: 9px 0 27px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    color: var(--muted);
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
 label {
-  display: block;
-  margin-top: 18px;
-  margin-bottom: 7px;
-  font-weight: 600;
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+    color: var(--navy);
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.input-group {
+
+    margin-bottom: 18px;
 }
 
 input {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #d1d5db;
-  border-radius: 7px;
-  font-size: 15px;
+
+    width: 100%;
+
+    height: 47px;
+
+    padding: 0 14px;
+
+    border:
+        1px solid #d8dde5;
+
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition: .15s ease;
 }
 
 input:focus {
-  outline: none;
-  border-color: #14213d;
+
+    outline: none;
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px rgba(196,151,50,.12);
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 7px;
-  background: #14213d;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+.login-button {
+
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 5px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071a38,
+            #17365d
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .3px;
+
+    cursor: pointer;
+
+    transition: .2s ease;
 }
 
-button:hover {
-  background: #1d2d50;
+.login-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(7,26,56,.18);
 }
 
-button:disabled {
-  background: #999;
-  cursor: not-allowed;
+.login-button:disabled {
+
+    opacity: .6;
+
+    cursor: wait;
+
+    transform: none;
 }
 
-.logout {
-  background: #777;
-}
+
+/* =====================================================
+   MESSAGE
+===================================================== */
 
 .message {
-  margin-top: 20px;
-  text-align: center;
-  line-height: 1.5;
+
+    min-height: 20px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
 }
 
-.success {
-  color: #16803c;
-  font-weight: 700;
+.message.error {
+
+    color: var(--red);
 }
 
-.error {
-  color: #c62828;
-  font-weight: 700;
+.message.success {
+
+    color: var(--green);
 }
 
-.result {
-  display: none;
-  margin-top: 30px;
-  padding: 25px;
-  background: #f5f7fa;
-  border-radius: 10px;
-  text-align: center;
+
+/* =====================================================
+   SECURITY NOTE
+===================================================== */
+
+.security {
+
+    margin-top: 25px;
+
+    padding: 12px 14px;
+
+    background: var(--cream);
+
+    border-left:
+        3px solid var(--gold);
+
+    border-radius: 4px;
+
+    font-size: 9px;
+
+    line-height: 1.55;
+
+    color: #737b88;
 }
 
-.result h2 {
-  color: #16803c;
+.security strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--navy);
+
+    font-size: 9px;
 }
 
-.certificate-id {
-  font-size: 22px;
-  font-weight: 700;
-  color: #14213d;
-  margin: 15px 0;
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    margin-top: 25px;
+
+    text-align: center;
+
+    font-size: 9px;
+
+    color: #8a919c;
 }
 
-.verification-url {
-  word-break: break-all;
-  font-size: 13px;
-  color: #555;
-  margin-top: 10px;
+.footer strong {
+
+    color: var(--navy);
 }
 
-.qr-container {
-  margin-top: 25px;
-}
 
-.qr-container img {
-  width: 280px;
-  height: 280px;
-  max-width: 100%;
-  border: 10px solid white;
-}
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
-.download-button {
-  background: #d4af37;
-  color: #14213d;
-}
+@media(max-width:520px) {
 
-.open-button {
-  display: block;
-  text-decoration: none;
-  text-align: center;
-  padding: 14px;
-  margin-top: 12px;
-  background: #16803c;
-  color: white;
-  border-radius: 7px;
-  font-weight: 600;
-}
+    body {
+        padding: 15px;
+    }
 
-footer {
-  text-align: center;
-  color: #777;
-  font-size: 13px;
-  padding: 20px;
-}
+    .login-card {
+        padding: 30px 22px;
+    }
 
-#loginSection,
-#adminSection {
-  display: none;
+    .logo {
+        font-size: 40px;
+    }
+
 }
 
 </style>
@@ -202,1013 +451,407 @@ footer {
 <body>
 
 
-<header>
+<div class="login-card">
 
-  <div class="logo">
-    Intern<span>IO</span>
-  </div>
 
-  <div class="tagline">
-    ADMIN CERTIFICATE SYSTEM
-  </div>
+    <!-- BRAND -->
 
-</header>
+    <div class="brand">
 
+        <div class="logo">
+            Intern<span>IO</span>
+        </div>
 
-
-<div class="container">
-
-
-<!-- =========================================
-     LOGIN
-========================================= -->
-
-<div
-  id="loginSection"
-  class="card"
->
-
-  <h1>
-    InternIO Admin Login
-  </h1>
-
-  <p>
-    Only authorized InternIO administrators
-    should use this page.
-  </p>
-
-
-  <label>
-    Email
-  </label>
-
-  <input
-    id="email"
-    type="email"
-    placeholder="admin@example.com"
-  >
-
-
-  <label>
-    Password
-  </label>
-
-  <input
-    id="password"
-    type="password"
-    placeholder="Password"
-  >
-
-
-  <button onclick="login()">
-    Login
-  </button>
-
-
-  <div
-    id="loginMessage"
-    class="message"
-  ></div>
-
-</div>
-
-
-
-<!-- =========================================
-     ADMIN
-========================================= -->
-
-<div
-  id="adminSection"
-  class="card"
->
-
-  <h1>
-    Create InternIO Certificate
-  </h1>
-
-
-  <p>
-    Logged in as:
-    <strong id="adminEmail"></strong>
-  </p>
-
-
-  <label>
-    Student Name *
-  </label>
-
-  <input
-    id="studentName"
-    type="text"
-    placeholder="Student full name"
-  >
-
-
-  <label>
-    Internship *
-  </label>
-
-  <input
-    id="internship"
-    type="text"
-    placeholder="Web Development"
-  >
-
-
-  <label>
-    Project
-  </label>
-
-  <input
-    id="project"
-    type="text"
-    placeholder="E-Commerce Website"
-  >
-
-
-  <label>
-    Start Date *
-  </label>
-
-  <input
-    id="startDate"
-    type="date"
-  >
-
-
-  <label>
-    End Date *
-  </label>
-
-  <input
-    id="endDate"
-    type="date"
-  >
-
-
-  <label>
-    Duration *
-  </label>
-
-  <input
-    id="duration"
-    type="text"
-    placeholder="2 Weeks"
-  >
-
-
-  <label>
-    Issue Date *
-  </label>
-
-  <input
-    id="issueDate"
-    type="date"
-  >
-
-
-  <label>
-    Certificate PDF URL
-  </label>
-
-  <input
-    id="certificateUrl"
-    type="url"
-    placeholder="Google Drive certificate link"
-  >
-
-
-  <button
-    id="createButton"
-    onclick="createCertificate()"
-  >
-    Create Certificate
-  </button>
-
-
-  <div
-    id="createMessage"
-    class="message"
-  ></div>
-
-
-
-  <!-- =====================================
-       RESULT
-  ====================================== -->
-
-  <div
-    id="result"
-    class="result"
-  >
-
-    <h2>
-      ✓ Certificate Created
-    </h2>
-
-
-    <div
-      id="newCertificateId"
-      class="certificate-id"
-    ></div>
-
-
-    <p>
-      Student:
-      <strong id="newStudent"></strong>
-    </p>
-
-
-    <p>
-      Verification URL:
-    </p>
-
-
-    <div
-      id="verificationUrl"
-      class="verification-url"
-    ></div>
-
-
-
-    <!-- QR -->
-
-    <div class="qr-container">
-
-      <img
-        id="qrImage"
-        alt="InternIO Certificate QR Code"
-      >
+        <div class="tagline">
+            INNOVATION &amp; OPPORTUNITIES
+        </div>
 
     </div>
 
 
-    <button
-      class="download-button"
-      onclick="downloadQR()"
-    >
-      Download QR Code
-    </button>
+    <div class="divider"></div>
 
 
-    <a
-      id="openVerification"
-      class="open-button"
-      href="#"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Open Verification Page
-    </a>
+    <!-- TITLE -->
 
-  </div>
+    <h1>
+        Admin Login
+    </h1>
+
+    <div class="subtitle">
+
+        Authorized InternIO administrators only.
+        Sign in to access the certificate generation system.
+
+    </div>
 
 
-  <button
-    class="logout"
-    onclick="logout()"
-  >
-    Logout
-  </button>
+    <!-- LOGIN FORM -->
+
+    <form id="loginForm">
+
+
+        <div class="input-group">
+
+            <label for="email">
+                ADMIN EMAIL
+            </label>
+
+            <input
+                id="email"
+                type="email"
+                autocomplete="username"
+                placeholder="admin@example.com"
+                required
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="password">
+                PASSWORD
+            </label>
+
+            <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            id="loginButton"
+            class="login-button"
+            type="submit"
+        >
+            LOGIN TO INTERNIO ADMIN
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="message"
+        class="message"
+    ></div>
+
+
+    <div class="security">
+
+        <strong>
+            Secure Administrator Access
+        </strong>
+
+        Your session is managed through
+        Supabase authentication.
+        Only authorized InternIO administrators
+        should use this system.
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026
+        <strong>InternIO</strong>
+        — Innovation &amp; Opportunities
+
+    </div>
+
 
 </div>
 
-</div>
 
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<footer>
-
-  © 2026 InternIO — Innovation &amp; Opportunities
-
-</footer>
-
+<script src="auth.js"></script>
 
 
 <script>
 
-/*
-=====================================================
-SUPABASE
-=====================================================
-*/
+/* =====================================================
+   LOGIN
+===================================================== */
 
-const SUPABASE_URL =
-  "https://hgodypvijzrvnsfylwdu.supabase.co";
+const loginForm =
+    document.getElementById("loginForm");
 
+const loginButton =
+    document.getElementById("loginButton");
 
-/*
-PASTE YOUR SAME SUPABASE PUBLISHABLE KEY
-THAT YOU USED IN YOUR WORKING QR GENERATOR.
-*/
-
-const SUPABASE_KEY =
-  "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
+const message =
+    document.getElementById("message");
 
 
-/*
-=====================================================
-VERIFICATION WEBSITE
-=====================================================
-*/
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
 
-const VERIFICATION_URL =
-  "https://ajaybilonia.github.io/internio-verification/";
+        event.preventDefault();
 
 
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
 
-/*
-=====================================================
-LOGIN
-=====================================================
-*/
-
-async function login() {
-
-  const email =
-    document
-      .getElementById("email")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("password")
-      .value;
+        const password =
+            document
+                .getElementById("password")
+                .value;
 
 
-  const message =
-    document.getElementById(
-      "loginMessage"
-    );
+        if(!email || !password) {
+
+            showMessage(
+                "Please enter your email and password.",
+                "error"
+            );
+
+            return;
+        }
 
 
-  message.className =
-    "message";
+        loginButton.disabled =
+            true;
 
-  message.textContent =
-    "Logging in...";
+        loginButton.textContent =
+            "AUTHENTICATING...";
 
 
-  try {
+        showMessage(
+            "Signing in securely...",
+            ""
+        );
 
-    const response =
-      await fetch(
 
-        SUPABASE_URL +
-        "/auth/v1/token?grant_type=password",
+        try {
 
-        {
 
-          method: "POST",
+            /*
+             * IMPORTANT:
+             * Use Supabase Auth directly.
+             * This creates the same session that
+             * certificate-maker.html will read.
+             */
 
-          headers: {
+            const {
+                data,
+                error
+            } =
+            await internioSupabase
+                .auth
+                .signInWithPassword({
 
-            "Content-Type":
-              "application/json",
+                    email: email,
 
-            "apikey":
-              SUPABASE_KEY
+                    password: password
 
-          },
+                });
 
-          body: JSON.stringify({
 
-            email: email,
+            if(error) {
 
-            password: password
+                throw error;
 
-          })
+            }
+
+
+            if(!data || !data.session) {
+
+                throw new Error(
+                    "Login succeeded but no session was created."
+                );
+
+            }
+
+
+            showMessage(
+                "Login successful. Opening certificate maker...",
+                "success"
+            );
+
+
+            /*
+             * Read requested redirect.
+             */
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const redirect =
+                params.get("redirect");
+
+
+            /*
+             * Only allow local page redirects.
+             * This prevents an external redirect.
+             */
+
+            let destination =
+                "certificate-maker.html";
+
+
+            if(
+                redirect &&
+                !redirect.includes("://") &&
+                !redirect.startsWith("//")
+            ) {
+
+                destination =
+                    redirect;
+
+            }
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        destination;
+
+                },
+                500
+            );
+
 
         }
 
-      );
+        catch(error) {
 
+            console.error(
+                "InternIO login error:",
+                error
+            );
 
-    const data =
-      await response.json();
 
+            showMessage(
+                error.message ||
+                "Login failed. Please check your credentials.",
+                "error"
+            );
 
-    if (!response.ok) {
 
-      throw new Error(
+            loginButton.disabled =
+                false;
 
-        data.error_description ||
-        data.msg ||
-        "Login failed"
-
-      );
-
-    }
-
-
-    /*
-    Save session locally.
-    */
-
-    localStorage.setItem(
-      "internio_access_token",
-      data.access_token
-    );
-
-
-    localStorage.setItem(
-      "internio_refresh_token",
-      data.refresh_token
-    );
-
-
-    localStorage.setItem(
-      "internio_email",
-      email
-    );
-
-
-    showAdmin();
-
-
-  } catch (error) {
-
-    message.className =
-      "message error";
-
-    message.textContent =
-      error.message;
-
-  }
-
-}
-
-
-
-/*
-=====================================================
-SHOW ADMIN
-=====================================================
-*/
-
-function showAdmin() {
-
-  document.getElementById(
-    "loginSection"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "adminSection"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "adminEmail"
-  ).textContent =
-    localStorage.getItem(
-      "internio_email"
-    ) || "";
-
-}
-
-
-
-/*
-=====================================================
-CREATE CERTIFICATE
-=====================================================
-*/
-
-async function createCertificate() {
-
-  const token =
-    localStorage.getItem(
-      "internio_access_token"
-    );
-
-
-  if (!token) {
-
-    alert(
-      "Please login first."
-    );
-
-    return;
-
-  }
-
-
-  const studentName =
-    document
-      .getElementById("studentName")
-      .value
-      .trim();
-
-
-  const internship =
-    document
-      .getElementById("internship")
-      .value
-      .trim();
-
-
-  const project =
-    document
-      .getElementById("project")
-      .value
-      .trim();
-
-
-  const startDate =
-    document
-      .getElementById("startDate")
-      .value;
-
-
-  const endDate =
-    document
-      .getElementById("endDate")
-      .value;
-
-
-  const duration =
-    document
-      .getElementById("duration")
-      .value
-      .trim();
-
-
-  const issueDate =
-    document
-      .getElementById("issueDate")
-      .value;
-
-
-  const certificateUrl =
-    document
-      .getElementById("certificateUrl")
-      .value
-      .trim();
-
-
-  const message =
-    document.getElementById(
-      "createMessage"
-    );
-
-
-  const button =
-    document.getElementById(
-      "createButton"
-    );
-
-
-  /*
-  Validate required fields.
-  */
-
-  if (
-    !studentName ||
-    !internship ||
-    !startDate ||
-    !endDate ||
-    !duration ||
-    !issueDate
-  ) {
-
-    message.className =
-      "message error";
-
-    message.textContent =
-      "Please fill all required fields.";
-
-    return;
-
-  }
-
-
-  /*
-  Disable button.
-  */
-
-  button.disabled =
-    true;
-
-  button.textContent =
-    "Creating certificate...";
-
-
-  message.className =
-    "message";
-
-  message.textContent =
-    "Creating InternIO certificate...";
-
-
-  /*
-  Hide old result.
-  */
-
-  document.getElementById(
-    "result"
-  ).style.display =
-    "none";
-
-
-  try {
-
-    /*
-    Call secure database function.
-    */
-
-    const response =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/rpc/create_certificate",
-
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + token
-
-          },
-
-          body: JSON.stringify({
-
-            p_student_name:
-              studentName,
-
-            p_internship:
-              internship,
-
-            p_project:
-              project,
-
-            p_start_date:
-              startDate,
-
-            p_end_date:
-              endDate,
-
-            p_duration:
-              duration,
-
-            p_issue_date:
-              issueDate,
-
-            p_certificate_url:
-              certificateUrl
-
-          })
+            loginButton.textContent =
+                "LOGIN TO INTERNIO ADMIN";
 
         }
 
-      );
-
-
-    const data =
-      await response.json();
-
-
-    /*
-    Check error.
-    */
-
-    if (!response.ok) {
-
-      throw new Error(
-
-        data.message ||
-        data.error ||
-        "Unable to create certificate."
-
-      );
-
     }
-
-
-    /*
-    Get created certificate.
-    */
-
-    const certificate =
-      Array.isArray(data)
-        ? data[0]
-        : data;
-
-
-    /*
-    Create verification URL.
-    */
-
-    const verificationUrl =
-      VERIFICATION_URL +
-      "?id=" +
-      encodeURIComponent(
-        certificate.certificate_id
-      );
-
-
-    /*
-    Create QR code.
-    */
-
-    const qrUrl =
-      "https://api.qrserver.com/v1/create-qr-code/" +
-      "?size=600x600" +
-      "&data=" +
-      encodeURIComponent(
-        verificationUrl
-      );
-
-
-    /*
-    Put result on screen.
-    */
-
-    document.getElementById(
-      "newCertificateId"
-    ).textContent =
-      certificate.certificate_id;
-
-
-    document.getElementById(
-      "newStudent"
-    ).textContent =
-      certificate.student_name;
-
-
-    document.getElementById(
-      "verificationUrl"
-    ).textContent =
-      verificationUrl;
-
-
-    document.getElementById(
-      "qrImage"
-    ).src =
-      qrUrl;
-
-
-    document.getElementById(
-      "openVerification"
-    ).href =
-      verificationUrl;
-
-
-    document.getElementById(
-      "result"
-    ).style.display =
-      "block";
-
-
-    message.className =
-      "message success";
-
-    message.textContent =
-      "✓ Certificate created successfully.";
-
-
-    /*
-    Clear form.
-    */
-
-    document.getElementById(
-      "studentName"
-    ).value = "";
-
-    document.getElementById(
-      "internship"
-    ).value = "";
-
-    document.getElementById(
-      "project"
-    ).value = "";
-
-    document.getElementById(
-      "startDate"
-    ).value = "";
-
-    document.getElementById(
-      "endDate"
-    ).value = "";
-
-    document.getElementById(
-      "duration"
-    ).value = "";
-
-    document.getElementById(
-      "issueDate"
-    ).value = "";
-
-    document.getElementById(
-      "certificateUrl"
-    ).value = "";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-
-    message.className =
-      "message error";
-
-
-    message.textContent =
-      error.message ||
-      "Unable to create certificate.";
-
-  }
-
-
-  /*
-  Re-enable button.
-  */
-
-  button.disabled =
-    false;
-
-  button.textContent =
-    "Create Certificate";
-
-}
-
-
-
-/*
-=====================================================
-DOWNLOAD QR
-=====================================================
-*/
-
-async function downloadQR() {
-
-  const image =
-    document.getElementById(
-      "qrImage"
-    );
-
-
-  const certificateId =
-    document.getElementById(
-      "newCertificateId"
-    )
-    .textContent
-    .trim();
-
-
-  if (
-    !image.src ||
-    !certificateId
-  ) {
-
-    return;
-
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        image.src
-      );
-
-
-    const blob =
-      await response.blob();
-
-
-    const url =
-      URL.createObjectURL(
-        blob
-      );
-
-
-    const link =
-      document.createElement(
-        "a"
-      );
-
-
-    link.href =
-      url;
-
-
-    link.download =
-      "InternIO-" +
-      certificateId +
-      "-QR.png";
-
-
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    document.body.removeChild(
-      link
-    );
-
-
-    URL.revokeObjectURL(
-      url
-    );
-
-
-  } catch (error) {
-
-    /*
-    Fallback if direct download
-    is blocked by the browser.
-    */
-
-    window.open(
-      image.src,
-      "_blank"
-    );
-
-  }
-
-}
-
-
-
-/*
-=====================================================
-LOGOUT
-=====================================================
-*/
-
-function logout() {
-
-  localStorage.removeItem(
-    "internio_access_token"
-  );
-
-  localStorage.removeItem(
-    "internio_refresh_token"
-  );
-
-  localStorage.removeItem(
-    "internio_email"
-  );
-
-
-  location.reload();
-
-}
-
-
-
-/*
-=====================================================
-CHECK EXISTING LOGIN
-=====================================================
-*/
-
-window.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    const token =
-      localStorage.getItem(
-        "internio_access_token"
-      );
-
-
-    if (token) {
-
-      showAdmin();
-
-    } else {
-
-      document.getElementById(
-        "loginSection"
-      ).style.display =
-        "block";
-
-    }
-
-  }
 );
 
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message";
+
+    if(type) {
+
+        message.classList.add(
+            type
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   IF ALREADY LOGGED IN
+===================================================== */
+
+(async function() {
+
+    try {
+
+        const {
+            data
+        } =
+        await internioSupabase
+            .auth
+            .getSession();
+
+
+        if(
+            data &&
+            data.session
+        ) {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const redirect =
+                params.get("redirect");
+
+
+            let destination =
+                "certificate-maker.html";
+
+
+            if(
+                redirect &&
+                !redirect.includes("://") &&
+                !redirect.startsWith("//")
+            ) {
+
+                destination =
+                    redirect;
+
+            }
+
+
+            window.location.href =
+                destination;
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Session check failed:",
+            error
+        );
+
+    }
+
+})();
+
 </script>
+
 
 </body>
 
