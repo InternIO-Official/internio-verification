@@ -1,5 +1,11 @@
 /* =====================================================
    INTERNIO SHARED ADMIN AUTHENTICATION
+   InternIO = Innovation & Opportunities
+===================================================== */
+
+
+/* =====================================================
+   SUPABASE CONFIGURATION
 ===================================================== */
 
 const SUPABASE_URL =
@@ -9,10 +15,34 @@ const SUPABASE_KEY =
     "sb_publishable_4oTVR9f73fDNrMFXyxl2IA_A7As8VMv";
 
 
+/* =====================================================
+   CREATE SHARED SUPABASE CLIENT
+===================================================== */
+
+if (!window.supabase) {
+
+    console.error(
+        "InternIO: Supabase JavaScript library was not loaded."
+    );
+
+    throw new Error(
+        "Supabase library missing. Load Supabase JS before auth.js."
+    );
+}
+
+
 const internioSupabase =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true,
+                storage: window.localStorage
+            }
+        }
     );
 
 
@@ -25,29 +55,36 @@ async function requireAdmin() {
     try {
 
         const {
-            data: {
-                session
-            }
+            data,
+            error
         } =
         await internioSupabase
             .auth
             .getSession();
 
 
+        if (error) {
+
+            console.error(
+                "InternIO session error:",
+                error
+            );
+
+            redirectToAdminLogin();
+
+            return false;
+        }
+
+
+        const session =
+            data
+                ? data.session
+                : null;
+
+
         if (!session) {
 
-            const currentPage =
-                window.location.pathname
-                    .split("/")
-                    .pop();
-
-
-            window.location.href =
-                "admin.html?redirect=" +
-                encodeURIComponent(
-                    currentPage
-                );
-
+            redirectToAdminLogin();
 
             return false;
         }
@@ -57,21 +94,61 @@ async function requireAdmin() {
 
     }
 
-    catch(error) {
+    catch (error) {
 
         console.error(
             "InternIO authentication error:",
             error
         );
 
+        redirectToAdminLogin();
+
+        return false;
+    }
+}
+
+
+/* =====================================================
+   REDIRECT TO ADMIN LOGIN
+===================================================== */
+
+function redirectToAdminLogin() {
+
+    const currentPage =
+        window.location.pathname
+            .split("/")
+            .pop();
+
+
+    /*
+     * Don't redirect admin.html to itself.
+     */
+
+    if (
+        !currentPage ||
+        currentPage === "admin.html"
+    ) {
 
         window.location.href =
             "admin.html";
 
-
-        return false;
+        return;
     }
 
+
+    /*
+     * Remember which page the admin wanted.
+     */
+
+    const loginURL =
+        "admin.html?redirect=" +
+        encodeURIComponent(
+            currentPage
+        );
+
+
+    window.location.href =
+        loginURL;
 }
 
 
@@ -81,18 +158,89 @@ async function requireAdmin() {
 
 async function getAdminSession() {
 
-    const {
-        data: {
-            session
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await internioSupabase
+            .auth
+            .getSession();
+
+
+        if (error) {
+
+            console.error(
+                "InternIO session error:",
+                error
+            );
+
+            return null;
         }
-    } =
-    await internioSupabase
-        .auth
-        .getSession();
 
 
-    return session;
+        return data
+            ? data.session
+            : null;
 
+    }
+
+    catch (error) {
+
+        console.error(
+            "InternIO session error:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+/* =====================================================
+   GET CURRENT ADMIN USER
+===================================================== */
+
+async function getAdminUser() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await internioSupabase
+            .auth
+            .getUser();
+
+
+        if (error) {
+
+            console.error(
+                "InternIO user error:",
+                error
+            );
+
+            return null;
+        }
+
+
+        return data
+            ? data.user
+            : null;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "InternIO user error:",
+            error
+        );
+
+        return null;
+    }
 }
 
 
@@ -102,12 +250,55 @@ async function getAdminSession() {
 
 async function internioLogout() {
 
-    await internioSupabase
-        .auth
-        .signOut();
+    try {
+
+        const {
+            error
+        } =
+        await internioSupabase
+            .auth
+            .signOut();
 
 
-    window.location.href =
-        "admin.html";
+        if (error) {
 
+            console.error(
+                "InternIO logout error:",
+                error
+            );
+
+        }
+
+    }
+
+    finally {
+
+        window.location.href =
+            "admin.html";
+
+    }
 }
+
+
+/* =====================================================
+   AUTH STATE LISTENER
+===================================================== */
+
+internioSupabase
+    .auth
+    .onAuthStateChange(
+        function (
+            event,
+            session
+        ) {
+
+            console.log(
+                "InternIO Auth:",
+                event,
+                session
+                    ? "Session active"
+                    : "No active session"
+            );
+
+        }
+    );
