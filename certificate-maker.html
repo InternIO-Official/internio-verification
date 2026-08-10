@@ -1,665 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>InternIO — Certificate Maker</title>
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+rel="stylesheet"
 >
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="auth.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-
 <style>
 
-/* =========================================================
-   INTERNIO CERTIFICATE MAKER
-   FINAL DESIGN
-   CERTIFICATE SIZE: 1400 × 990 PX
-   RATIO: 1.414 : 1
-========================================================= */
-
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
+html,body{
+    margin:0;
+    padding:0;
 }
 
-body {
-    min-height: 100vh;
-
-    background: #eef2f7;
-
-    color: #071a38;
-
-    font-family:
-        "Montserrat",
-        Arial,
-        sans-serif;
+body{
+    min-height:100vh;
+    background:#eef2f7;
+    color:#071a38;
+    font-family:"Montserrat",Arial,sans-serif;
 }
 
-
-/* =========================================================
-   COLORS
-========================================================= */
-
-:root {
-
-    --navy:
-        #071a38;
-
-    --navy-light:
-        #173b68;
-
-    --gold:
-        #b88720;
-
-    --gold-light:
-        #e0bd58;
-
-    --gold-dark:
-        #8e681c;
-
-    --cream:
-        #fdfbf7;
-
-    --border:
-        #dce2ea;
-
-    --muted:
-        #747e8d;
+:root{
+    --navy:#071a38;
+    --navy2:#17365e;
+    --gold:#b88720;
+    --gold-light:#e0bd58;
+    --border:#dce2ea;
+    --muted:#747e8d;
+    --cream:#fdfbf7;
 }
 
+/* ================= HEADER ================= */
 
-/* =========================================================
-   TOP HEADER
-========================================================= */
+.topbar{
+    height:70px;
+    padding:0 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--navy);
+    color:white;
+}
 
-.topbar {
+.logo{
+    color:white;
+    font-size:31px;
+    font-weight:700;
+    line-height:1;
+    letter-spacing:-2.5px;
+}
 
-    height: 70px;
+.logo span{
+    color:var(--gold-light);
+}
 
-    padding:
-        0 30px;
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
 
-    display:
-        flex;
+.top-label{
+    color:#dbe2ed;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:2px;
+}
 
-    align-items:
-        center;
+.logout{
+    height:36px;
+    padding:0 16px;
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:5px;
+    background:rgba(255,255,255,.06);
+    color:white;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:700;
+}
 
-    justify-content:
-        space-between;
+/* ================= PAGE ================= */
 
+.page{
+    width:calc(100% - 32px);
+    max-width:1500px;
+    margin:20px auto 40px;
+}
+
+.form-layout{
+    display:grid;
+    grid-template-columns:400px minmax(600px,1fr);
+    gap:20px;
+}
+
+/* ================= FORM ================= */
+
+.form-panel{
+    background:white;
+    padding:25px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    box-shadow:0 12px 35px rgba(7,26,56,.07);
+}
+
+.form-title{
+    color:var(--navy);
+    font-size:23px;
+    font-weight:700;
+}
+
+.form-description{
+    margin:7px 0 22px;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.65;
+}
+
+.field{
+    margin-bottom:14px;
+}
+
+label{
+    display:block;
+    margin-bottom:7px;
+    color:var(--navy);
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.7px;
+}
+
+input{
+    width:100%;
+    height:43px;
+    padding:0 12px;
+    border:1px solid #d4dae2;
+    border-radius:6px;
+    outline:none;
+    background:white;
+    color:#26344a;
+    font-family:inherit;
+    font-size:12px;
+}
+
+input:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(184,135,32,.1);
+}
+
+.two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+/* ================= TYPE ================= */
+
+.type-option{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    margin-bottom:8px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.type-option.active{
+    border-color:var(--gold);
+    background:#fffaf0;
+}
+
+.type-radio{
+    width:17px;
+    height:17px;
+    flex:0 0 17px;
+    margin-top:1px;
+    border:2px solid #aeb7c4;
+    border-radius:50%;
+}
+
+.type-option.active .type-radio{
+    border:5px solid var(--navy);
+}
+
+.type-title{
+    color:var(--navy);
+    font-size:10px;
+    font-weight:700;
+}
+
+.type-description{
+    margin-top:3px;
+    color:#7b8491;
+    font-size:8px;
+    line-height:1.45;
+}
+
+/* ================= INFO ================= */
+
+.info{
+    padding:11px 12px;
+    margin:2px 0 16px;
+    border-left:3px solid var(--gold);
+    background:#faf8f1;
+}
+
+.info-title{
+    color:var(--navy);
+    font-size:9px;
+    font-weight:700;
+}
+
+.info-text{
+    margin-top:3px;
+    color:#7a8492;
+    font-size:8px;
+    line-height:1.5;
+}
+
+/* ================= BUTTON ================= */
+
+.generate{
+    width:100%;
+    height:50px;
+    border:0;
+    border-radius:6px;
+    background:linear-gradient(135deg,#071a38,#17365e);
+    color:white;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:700;
+}
+
+.generate:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
+.message{
+    min-height:18px;
+    margin-top:9px;
+    text-align:center;
+    font-size:9px;
+    font-weight:700;
+}
+
+.message.error{
+    color:#c62828;
+}
+
+.message.success{
+    color:#16763b;
+}
+
+/* ================= PREVIEW ================= */
+
+.form-preview{
+    min-height:650px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    border-radius:11px;
     background:
-        var(--navy);
-
-    color:
-        white;
-}
-
-.logo {
-
-    color:
-        white;
-
-    font-size:
-        31px;
-
-    font-weight:
-        700;
-
-    line-height:
-        1;
-
-    letter-spacing:
-        -2.5px;
-}
-
-.logo span {
-
-    color:
-        var(--gold-light);
-}
-
-.top-right {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        18px;
-}
-
-.top-label {
-
-    color:
-        #dbe2ed;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        2px;
-}
-
-.logout {
-
-    height:
-        36px;
-
-    padding:
-        0 16px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.30);
-
-    border-radius:
-        5px;
-
-    background:
-        rgba(255,255,255,.06);
-
-    color:
-        white;
-
-    cursor:
-        pointer;
-
-    font-family:
-        inherit;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-}
-
-
-/* =========================================================
-   MAIN PAGE
-========================================================= */
-
-.page {
-
-    width:
-        calc(100% - 32px);
-
-    max-width:
-        1500px;
-
-    margin:
-        20px auto 40px;
-}
-
-
-/* =========================================================
-   FORM LAYOUT
-========================================================= */
-
-.form-layout {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        400px
-        minmax(600px, 1fr);
-
-    gap:
-        20px;
-}
-
-
-/* =========================================================
-   FORM CARD
-========================================================= */
-
-.form-panel {
-
-    background:
-        white;
-
-    padding:
-        25px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        11px;
-
-    box-shadow:
-        0 12px 35px
-        rgba(7,26,56,.07);
-}
-
-.form-title {
-
-    color:
-        var(--navy);
-
-    font-size:
-        23px;
-
-    font-weight:
-        700;
-}
-
-.form-description {
-
-    margin:
-        7px 0 22px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        10px;
-
-    line-height:
-        1.65;
-}
-
-
-/* =========================================================
-   FORM FIELDS
-========================================================= */
-
-.field {
-
-    margin-bottom:
-        14px;
-}
-
-label {
-
-    display:
-        block;
-
-    margin-bottom:
-        7px;
-
-    color:
-        var(--navy);
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        .7px;
-}
-
-input {
-
-    width:
-        100%;
-
-    height:
-        43px;
-
-    padding:
-        0 12px;
-
-    border:
-        1px solid
-        #d4dae2;
-
-    border-radius:
-        6px;
-
-    outline:
-        none;
-
-    background:
-        white;
-
-    color:
-        #26344a;
-
-    font-family:
-        inherit;
-
-    font-size:
-        12px;
-}
-
-input:focus {
-
-    border-color:
-        var(--gold);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(184,135,32,.10);
-}
-
-.two {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:
-        10px;
-}
-
-
-/* =========================================================
-   CERTIFICATE TYPES
-========================================================= */
-
-.type-option {
-
-    display:
-        flex;
-
-    align-items:
-        flex-start;
-
-    gap:
-        10px;
-
-    padding:
-        12px;
-
-    margin-bottom:
-        8px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        7px;
-
-    cursor:
-        pointer;
-}
-
-.type-option.active {
-
-    border-color:
-        var(--gold);
-
-    background:
-        #fffaf0;
-}
-
-.type-radio {
-
-    width:
-        17px;
-
-    height:
-        17px;
-
-    flex:
-        0 0 17px;
-
-    margin-top:
-        1px;
-
-    border:
-        2px solid
-        #aeb7c4;
-
-    border-radius:
-        50%;
-}
-
-.type-option.active
-.type-radio {
-
-    border:
-        5px solid
-        var(--navy);
-}
-
-.type-title {
-
-    color:
-        var(--navy);
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-}
-
-.type-description {
-
-    margin-top:
-        3px;
-
-    color:
-        #7b8491;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.45;
-}
-
-
-/* =========================================================
-   INFO BOX
-========================================================= */
-
-.info {
-
-    padding:
-        11px 12px;
-
-    margin:
-        2px 0 16px;
-
-    border-left:
-        3px solid
-        var(--gold);
-
-    background:
-        #faf8f1;
-}
-
-.info-title {
-
-    color:
-        var(--navy);
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-}
-
-.info-text {
-
-    margin-top:
-        3px;
-
-    color:
-        #7a8492;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.5;
-}
-
-
-/* =========================================================
-   GENERATE BUTTON
-========================================================= */
-
-.generate {
-
-    width:
-        100%;
-
-    height:
-        50px;
-
-    border:
-        0;
-
-    border-radius:
-        6px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #071a38,
-            #17365e
-        );
-
-    color:
-        white;
-
-    cursor:
-        pointer;
-
-    font-family:
-        inherit;
-
-    font-size:
-        11px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        .3px;
-}
-
-.generate:disabled {
-
-    opacity:
-        .6;
-
-    cursor:
-        wait;
-}
-
-.message {
-
-    min-height:
-        18px;
-
-    margin-top:
-        9px;
-
-    text-align:
-        center;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-}
-
-.message.error {
-
-    color:
-        #c62828;
-}
-
-.message.success {
-
-    color:
-        #16763b;
-}
-
-
-/* =========================================================
-   PREVIEW BACKGROUND
-========================================================= */
-
-.form-preview {
-
-    min-height:
-        650px;
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    padding:
-        30px;
-
-    border-radius:
-        11px;
-
-    background:
-
         radial-gradient(
             circle at center,
-            rgba(199,150,39,.10),
+            rgba(199,150,39,.1),
             transparent 35%
         ),
-
         linear-gradient(
             135deg,
             #071a38,
@@ -667,967 +302,423 @@ input:focus {
         );
 }
 
-.preview-content {
-
-    max-width:
-        700px;
-
-    text-align:
-        center;
-
-    color:
-        white;
+.preview-content{
+    max-width:700px;
+    text-align:center;
+    color:white;
 }
 
-.preview-logo {
-
-    font-size:
-        72px;
-
-    font-weight:
-        700;
-
-    line-height:
-        .9;
-
-    letter-spacing:
-        -6px;
+.preview-logo{
+    font-size:72px;
+    font-weight:700;
+    line-height:.9;
+    letter-spacing:-6px;
 }
 
-.preview-logo span {
-
-    color:
-        var(--gold-light);
+.preview-logo span{
+    color:var(--gold-light);
 }
 
-.preview-tagline {
-
-    margin-top:
-        12px;
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        3px;
+.preview-tagline{
+    margin-top:12px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:3px;
 }
 
-.preview-rule {
+.preview-rule{
+    width:140px;
+    height:1px;
+    margin:23px auto;
+    background:var(--gold-light);
+}
 
-    width:
-        140px;
+.preview-title{
+    font-family:"Cinzel",serif;
+    font-size:29px;
+    letter-spacing:5px;
+}
 
-    height:
-        1px;
+.preview-description{
+    max-width:560px;
+    margin:16px auto;
+    color:#d5dce7;
+    font-size:10px;
+    line-height:1.8;
+}
 
-    margin:
-        23px auto;
+/* ================= RESULT ================= */
 
+.result{
+    display:none;
+}
+
+.result-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:15px 18px;
+    margin-bottom:15px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+.result-title{
+    color:var(--navy);
+    font-size:17px;
+    font-weight:700;
+}
+
+.result-description{
+    margin-top:4px;
+    color:#7a8492;
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.actions button{
+    height:35px;
+    padding:0 14px;
+    border:0;
+    border-radius:5px;
+    background:var(--navy);
+    color:white;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:700;
+}
+
+.actions .light{
+    background:#edf0f4;
+    color:var(--navy);
+}
+
+.actions .gold{
+    background:#a8791f;
+}
+
+/* ================= CERTIFICATE ================= */
+
+.certificate-scroll{
+    width:100%;
+    overflow-x:auto;
+    padding-bottom:25px;
+}
+
+.certificate{
+    width:1400px;
+    height:990px;
+    margin:0 auto;
+    padding:10px;
     background:
-        var(--gold-light);
-}
-
-.preview-title {
-
-    font-family:
-        "Cinzel",
-        serif;
-
-    font-size:
-        29px;
-
-    letter-spacing:
-        5px;
-}
-
-.preview-description {
-
-    max-width:
-        560px;
-
-    margin:
-        16px auto;
-
-    color:
-        #d5dce7;
-
-    font-size:
-        10px;
-
-    line-height:
-        1.8;
-}
-
-
-/* =========================================================
-   RESULT
-========================================================= */
-
-.result {
-
-    display:
-        none;
-}
-
-.result-header {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        20px;
-
-    padding:
-        15px 18px;
-
-    margin-bottom:
-        15px;
-
-    background:
-        white;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        10px;
-}
-
-.result-title {
-
-    color:
-        var(--navy);
-
-    font-size:
-        17px;
-
-    font-weight:
-        700;
-}
-
-.result-description {
-
-    margin-top:
-        4px;
-
-    color:
-        #7a8492;
-
-    font-size:
-        9px;
-}
-
-.actions {
-
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        7px;
-}
-
-.actions button {
-
-    height:
-        35px;
-
-    padding:
-        0 14px;
-
-    border:
-        0;
-
-    border-radius:
-        5px;
-
-    background:
-        var(--navy);
-
-    color:
-        white;
-
-    cursor:
-        pointer;
-
-    font-family:
-        inherit;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-}
-
-.actions .light {
-
-    background:
-        #edf0f4;
-
-    color:
-        var(--navy);
-}
-
-.actions .gold {
-
-    background:
-        #a8791f;
-}
-
-
-/* =========================================================
-   CERTIFICATE SCROLL
-========================================================= */
-
-.certificate-scroll {
-
-    width:
-        100%;
-
-    overflow-x:
-        auto;
-
-    padding-bottom:
-        25px;
-}
-
-
-/* =========================================================
-   CERTIFICATE
-   EXACT 1400 × 990
-========================================================= */
-
-.certificate {
-
-    width:
-        1400px;
-
-    height:
-        990px;
-
-    aspect-ratio:
-        1400 / 990;
-
-    margin:
-        auto;
-
-    padding:
-        10px;
-
-    background:
-
         linear-gradient(
             135deg,
             #06162f 0%,
             #193961 50%,
             #071a38 100%
         );
-
-    box-shadow:
-        0 25px 70px
-        rgba(5,20,45,.30);
+    box-shadow:0 25px 70px rgba(5,20,45,.30);
 }
 
-
-/* =========================================================
-   PAPER
-========================================================= */
-
-.paper {
-
-    position:
-        relative;
-
-    width:
-        100%;
-
-    height:
-        100%;
-
-    overflow:
-        hidden;
-
+.paper{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
     background:
-
         radial-gradient(
             ellipse at center,
             rgba(199,150,39,.045),
             transparent 58%
         ),
-
         #fdfbf7;
-
-    border:
-        2px solid
-        var(--gold);
+    border:2px solid var(--gold);
 }
 
-.paper::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        14px;
-
-    border:
-        1px solid
-        rgba(184,135,32,.72);
-
-    pointer-events:
-        none;
-
-    z-index:
-        2;
+.paper::before{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border:1px solid rgba(184,135,32,.72);
+    pointer-events:none;
+    z-index:2;
 }
 
-.paper::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        22px;
-
-    border:
-        1px solid
-        rgba(7,26,56,.10);
-
-    pointer-events:
-        none;
-
-    z-index:
-        2;
+.paper::after{
+    content:"";
+    position:absolute;
+    inset:22px;
+    border:1px solid rgba(7,26,56,.1);
+    pointer-events:none;
+    z-index:2;
 }
 
+/* ================= CORNERS ================= */
 
-/* =========================================================
-   CORNERS
-========================================================= */
-
-.corner {
-
-    position:
-        absolute;
-
-    pointer-events:
-        none;
+.corner{
+    position:absolute;
+    pointer-events:none;
 }
 
-.corner-tl {
-
-    top:
-        0;
-
-    left:
-        0;
-
-    width:
-        305px;
-
-    height:
-        195px;
-
+.corner-tl{
+    top:0;
+    left:0;
+    width:305px;
+    height:195px;
     background:
-
         linear-gradient(
             135deg,
             #071a38 0 66%,
             transparent 66%
         );
-
-    z-index:
-        4;
+    z-index:4;
 }
 
-.corner-tl::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        22px;
-
-    top:
-        20px;
-
-    width:
-        270px;
-
-    height:
-        150px;
-
-    border-top:
-        3px solid
-        var(--gold-light);
-
-    border-left:
-        3px solid
-        var(--gold-light);
+.corner-tl::after{
+    content:"";
+    position:absolute;
+    left:22px;
+    top:20px;
+    width:270px;
+    height:150px;
+    border-top:3px solid var(--gold-light);
+    border-left:3px solid var(--gold-light);
 }
 
-.corner-tr {
-
-    top:
-        0;
-
-    right:
-        0;
-
-    width:
-        90px;
-
-    height:
-        70px;
-
-    border-top:
-        4px solid
-        var(--gold);
-
-    border-right:
-        4px solid
-        var(--gold);
-
-    z-index:
-        4;
+.corner-tr{
+    top:0;
+    right:0;
+    width:90px;
+    height:70px;
+    border-top:4px solid var(--gold);
+    border-right:4px solid var(--gold);
+    z-index:4;
 }
 
-.corner-bl {
-
-    left:
-        0;
-
-    bottom:
-        0;
-
-    width:
-        75px;
-
-    height:
-        75px;
-
-    border-left:
-        4px solid
-        var(--gold);
-
-    border-bottom:
-        4px solid
-        var(--gold);
-
-    z-index:
-        4;
+.corner-bl{
+    left:0;
+    bottom:0;
+    width:75px;
+    height:75px;
+    border-left:4px solid var(--gold);
+    border-bottom:4px solid var(--gold);
+    z-index:4;
 }
 
-.corner-br {
-
-    right:
-        0;
-
-    bottom:
-        0;
-
-    width:
-        235px;
-
-    height:
-        145px;
-
+.corner-br{
+    right:0;
+    bottom:0;
+    width:235px;
+    height:145px;
     background:
-
         linear-gradient(
             315deg,
             #071a38 0 64%,
             transparent 64%
         );
-
-    z-index:
-        3;
+    z-index:3;
 }
 
-.corner-br::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    right:
-        18px;
-
-    bottom:
-        18px;
-
-    width:
-        200px;
-
-    height:
-        112px;
-
-    border-right:
-        3px solid
-        var(--gold-light);
-
-    border-bottom:
-        3px solid
-        var(--gold-light);
+.corner-br::after{
+    content:"";
+    position:absolute;
+    right:18px;
+    bottom:18px;
+    width:200px;
+    height:112px;
+    border-right:3px solid var(--gold-light);
+    border-bottom:3px solid var(--gold-light);
 }
 
+/* ================= WATERMARK ================= */
 
-/* =========================================================
-   WATERMARK
-========================================================= */
-
-.watermark {
-
-    position:
-        absolute;
-
-    left:
-        50%;
-
-    top:
-        53%;
-
-    transform:
-        translate(-50%,-50%);
-
-    z-index:
-        1;
-
-    color:
-        rgba(7,26,56,.025);
-
-    font-family:
-        "Cinzel",
-        serif;
-
-    font-size:
-        410px;
-
-    font-weight:
-        700;
-
-    line-height:
-        1;
-
-    letter-spacing:
-        -50px;
-
-    pointer-events:
-        none;
+.watermark{
+    position:absolute;
+    left:50%;
+    top:53%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+    color:rgba(7,26,56,.025);
+    font-family:"Cinzel",serif;
+    font-size:410px;
+    font-weight:700;
+    line-height:1;
+    letter-spacing:-50px;
+    pointer-events:none;
 }
 
-.watermark span {
-
-    color:
-        rgba(199,150,39,.04);
+.watermark span{
+    color:rgba(199,150,39,.04);
 }
 
+/* ================= CERTIFICATE ID ================= */
 
-/* =========================================================
-   CERTIFICATE ID
-========================================================= */
-
-.certificate-id {
-
-    position:
-        absolute;
-
-    top:
-        45px;
-
-    right:
-        55px;
-
-    z-index:
-        20;
-
-    width:
-        210px;
-
-    text-align:
-        center;
+.certificate-id{
+    position:absolute;
+    top:45px;
+    right:55px;
+    z-index:20;
+    width:210px;
+    text-align:center;
 }
 
-.id-label {
-
-    color:
-        #747e8d;
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        2px;
+.id-label{
+    color:#747e8d;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
 }
 
-.id-value {
-
-    margin-top:
-        7px;
-
-    color:
-        var(--navy);
-
-    font-size:
-        16px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        1px;
+.id-value{
+    margin-top:7px;
+    color:var(--navy);
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1px;
 }
 
-.id-decoration {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        8px;
-
-    margin-top:
-        8px;
+.id-decoration{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:8px;
 }
 
-.id-line {
-
-    width:
-        38px;
-
-    height:
-        1px;
-
-    background:
-        var(--gold);
+.id-line{
+    width:38px;
+    height:1px;
+    background:var(--gold);
 }
 
-.id-star {
-
-    color:
-        var(--gold-dark);
-
-    font-size:
-        11px;
+.id-star{
+    color:#8e681c;
+    font-size:11px;
 }
 
+/* ================= BRAND ================= */
 
-/* =========================================================
-   BRAND
-========================================================= */
-
-.brand {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    padding-top:
-        56px;
-
-    text-align:
-        center;
+.brand{
+    position:relative;
+    z-index:10;
+    padding-top:56px;
+    text-align:center;
 }
 
-.brand-name {
-
-    color:
-        var(--navy);
-
-    font-size:
-        82px;
-
-    font-weight:
-        700;
-
-    line-height:
-        .90;
-
-    letter-spacing:
-        -7px;
+.brand-name{
+    color:var(--navy);
+    font-size:82px;
+    font-weight:700;
+    line-height:.9;
+    letter-spacing:-7px;
 }
 
-.brand-name span {
-
-    color:
-        #d09a25;
+.brand-name span{
+    color:#d09a25;
 }
 
-.brand-tagline {
-
-    margin-top:
-        12px;
-
-    color:
-        #263650;
-
-    font-size:
-        14px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        4px;
+.brand-tagline{
+    margin-top:12px;
+    color:#263650;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:4px;
 }
 
-.brand-decoration {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    width:
-        420px;
-
-    margin:
-        14px auto 0;
+.brand-decoration{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:420px;
+    margin:14px auto 0;
 }
 
 .brand-decoration::before,
-.brand-decoration::after {
-
-    content:
-        "";
-
-    width:
-        130px;
-
-    height:
-        1px;
-
-    background:
-        var(--gold);
+.brand-decoration::after{
+    content:"";
+    width:130px;
+    height:1px;
+    background:var(--gold);
 }
 
-.diamond {
-
-    width:
-        9px;
-
-    height:
-        9px;
-
-    margin:
-        0 10px;
-
-    transform:
-        rotate(45deg);
-
-    background:
-        var(--gold);
+.diamond{
+    width:9px;
+    height:9px;
+    margin:0 10px;
+    transform:rotate(45deg);
+    background:var(--gold);
 }
 
+/* ================= TITLE ================= */
 
-/* =========================================================
-   MAIN TITLE
-========================================================= */
-
-.certificate-title {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    margin-top:
-        24px;
-
-    text-align:
-        center;
-
-    color:
-        var(--navy);
-
-    font-family:
-        "Cinzel",
-        serif;
-
-    font-size:
-        65px;
-
-    font-weight:
-        600;
-
-    line-height:
-        1;
-
-    letter-spacing:
-        10px;
+.certificate-title{
+    position:relative;
+    z-index:10;
+    margin-top:24px;
+    text-align:center;
+    color:var(--navy);
+    font-family:"Cinzel",serif;
+    font-size:65px;
+    font-weight:600;
+    line-height:1;
+    letter-spacing:10px;
 }
 
-.certificate-subtitle {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    margin-top:
-        5px;
-
-    text-align:
-        center;
-
-    color:
-        #9b721e;
-
-    font-family:
-        "Cinzel",
-        serif;
-
-    font-size:
-        24px;
-
-    font-weight:
-        600;
-
-    line-height:
-        1;
-
-    letter-spacing:
-        8px;
+.certificate-subtitle{
+    position:relative;
+    z-index:10;
+    margin-top:5px;
+    text-align:center;
+    color:#9b721e;
+    font-family:"Cinzel",serif;
+    font-size:24px;
+    font-weight:600;
+    line-height:1;
+    letter-spacing:8px;
 }
 
+/* ================= STUDENT ================= */
 
-/* =========================================================
-   CERTIFY TEXT
-========================================================= */
-
-.certify {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    margin-top:
-        26px;
-
-    text-align:
-        center;
-
-    color:
-        #536073;
-
-    font-size:
-        13px;
-
-    font-weight:
-        600;
-
-    line-height:
-        1.2;
-
-    letter-spacing:
-        3px;
+.certify{
+    position:relative;
+    z-index:10;
+    margin-top:26px;
+    text-align:center;
+    color:#536073;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.2;
+    letter-spacing:3px;
 }
 
-
-/* =========================================================
-   STUDENT NAME
-========================================================= */
-
-.student-name {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    width:
-        100%;
-
-    margin-top:
-        2px;
-
-    padding:
-        0 35px;
-
-    text-align:
-        center;
-
-    color:
-        var(--navy);
-
-    font-family:
-        "Allura",
-        cursive;
-
-    font-size:
-        94px;
-
-    line-height:
-        1.08;
-
-    letter-spacing:
-        0;
-
-    white-space:
-        nowrap;
-
-    overflow:
-        hidden;
-
-    text-overflow:
-        ellipsis;
+.student-name{
+    position:relative;
+    z-index:10;
+    width:100%;
+    margin-top:2px;
+    padding:0 35px;
+    text-align:center;
+    color:var(--navy);
+    font-family:"Allura",cursive;
+    font-size:94px;
+    line-height:1.08;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.name-line {
-
-    width:
-        580px;
-
-    height:
-        1px;
-
-    margin:
-        4px auto 0;
-
+.name-line{
+    width:580px;
+    height:1px;
+    margin:4px auto 0;
     background:
         linear-gradient(
             90deg,
@@ -1637,405 +728,173 @@ input:focus {
         );
 }
 
-.name-diamond {
+.name-diamond{
+    width:10px;
+    height:10px;
+    margin:-5px auto 0;
+    transform:rotate(45deg);
+    background:var(--gold);
+}
 
-    width:
-        10px;
+/* ================= BODY ================= */
 
-    height:
-        10px;
+.body-text{
+    position:relative;
+    z-index:10;
+    width:77%;
+    margin:15px auto 0;
+    text-align:center;
+    color:#354257;
+    font-size:14px;
+    line-height:1.55;
+}
 
-    margin:
-        -5px auto 0;
+.body-text strong{
+    color:var(--navy);
+    font-weight:700;
+}
 
-    transform:
-        rotate(45deg);
+/* ================= PROJECT ================= */
 
+.project{
+    position:relative;
+    z-index:10;
+    display:none;
+    width:45%;
+    margin:9px auto 0;
+    padding:7px 15px;
+    text-align:center;
+    border-top:1px solid var(--gold);
+    border-bottom:1px solid var(--gold);
+}
+
+.project-label{
+    color:#9b721e;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:3px;
+}
+
+.project-value{
+    margin-top:4px;
+    color:var(--navy);
+    font-size:15px;
+    font-weight:700;
+}
+
+/* ================= DETAILS ================= */
+
+.details{
+    position:relative;
+    z-index:10;
+    width:76%;
+    margin:15px auto 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:11px 0;
+    border-top:1px solid rgba(184,135,32,.48);
+    border-bottom:1px solid rgba(184,135,32,.48);
+}
+
+.detail{
+    text-align:center;
+    border-right:1px solid #d9d2c4;
+}
+
+.detail:last-child{
+    border-right:none;
+}
+
+.detail-label{
+    color:#747e8d;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:1.6px;
+}
+
+.detail-value{
+    margin-top:5px;
+    color:var(--navy);
+    font-size:13px;
+    font-weight:700;
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom{
+    position:absolute;
+    left:7%;
+    right:14%;
+    bottom:48px;
+    z-index:30;
+    display:grid;
+    grid-template-columns:minmax(300px,1fr) 155px 330px;
+    align-items:end;
+    column-gap:22px;
+    min-width:0;
+}
+
+/* ================= SIGNATURE ================= */
+
+.signature{
+    position:relative;
+    z-index:40;
+    text-align:center;
+    min-width:0;
+}
+
+.signature-image{
+    display:block;
+    width:250px;
+    height:72px;
+    margin:0 auto 3px;
+    object-fit:contain;
+    mix-blend-mode:multiply;
+}
+
+.signature-fallback{
+    margin-bottom:4px;
+    color:#102746;
+    font-family:"Allura",cursive;
+    font-size:52px;
+    line-height:1;
+    transform:rotate(-3deg);
+}
+
+.signature-line{
+    width:235px;
+    height:1px;
+    margin:0 auto;
+    background:#26354b;
+}
+
+.signature-name{
+    margin-top:7px;
+    color:var(--navy);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.signature-title{
+    margin-top:3px;
+    color:#747e8d;
+    font-size:9px;
+}
+
+/* ================= SEAL ================= */
+
+.seal{
+    position:relative;
+    z-index:45;
+    width:150px;
+    height:150px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
     background:
-        var(--gold);
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.body-text {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    width:
-        77%;
-
-    margin:
-        15px auto 0;
-
-    text-align:
-        center;
-
-    color:
-        #354257;
-
-    font-size:
-        14px;
-
-    line-height:
-        1.55;
-
-    letter-spacing:
-        0;
-}
-
-.body-text strong {
-
-    color:
-        var(--navy);
-
-    font-weight:
-        700;
-}
-
-
-/* =========================================================
-   PROJECT
-========================================================= */
-
-.project {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    display:
-        none;
-
-    width:
-        45%;
-
-    margin:
-        9px auto 0;
-
-    padding:
-        7px 15px;
-
-    text-align:
-        center;
-
-    border-top:
-        1px solid
-        var(--gold);
-
-    border-bottom:
-        1px solid
-        var(--gold);
-}
-
-.project-label {
-
-    color:
-        #9b721e;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        3px;
-}
-
-.project-value {
-
-    margin-top:
-        4px;
-
-    color:
-        var(--navy);
-
-    font-size:
-        15px;
-
-    font-weight:
-        700;
-}
-
-
-/* =========================================================
-   DATE DETAILS
-========================================================= */
-
-.details {
-
-    position:
-        relative;
-
-    z-index:
-        10;
-
-    width:
-        76%;
-
-    margin:
-        15px auto 0;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    padding:
-        11px 0;
-
-    border-top:
-        1px solid
-        rgba(184,135,32,.48);
-
-    border-bottom:
-        1px solid
-        rgba(184,135,32,.48);
-}
-
-.detail {
-
-    text-align:
-        center;
-
-    border-right:
-        1px solid
-        #d9d2c4;
-}
-
-.detail:last-child {
-
-    border-right:
-        none;
-}
-
-.detail-label {
-
-    color:
-        #747e8d;
-
-    font-size:
-        8px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        1.6px;
-}
-
-.detail-value {
-
-    margin-top:
-        5px;
-
-    color:
-        var(--navy);
-
-    font-size:
-        13px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        0;
-}
-
-
-/* =========================================================
-   BOTTOM ROW
-========================================================= */
-
-.bottom {
-
-    position:
-        absolute;
-
-    left:
-        7%;
-
-    right:
-        14%;
-
-    bottom:
-        48px;
-
-    z-index:
-        25;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        minmax(300px,1fr)
-        155px
-        330px;
-
-    align-items:
-        end;
-
-    column-gap:
-        22px;
-
-    min-width:
-        0;
-}
-
-
-/* =========================================================
-   SIGNATURE
-========================================================= */
-
-.signature {
-
-    position:
-        relative;
-
-    z-index:
-        30;
-
-    text-align:
-        center;
-
-    min-width:
-        0;
-}
-
-.signature-image {
-
-    display:
-        block;
-
-    width:
-        250px;
-
-    height:
-        72px;
-
-    margin:
-        0 auto 3px;
-
-    object-fit:
-        contain;
-
-    mix-blend-mode:
-        multiply;
-}
-
-.signature-fallback {
-
-    margin-bottom:
-        4px;
-
-    color:
-        #102746;
-
-    font-family:
-        "Allura",
-        cursive;
-
-    font-size:
-        52px;
-
-    line-height:
-        1;
-
-    transform:
-        rotate(-3deg);
-}
-
-.signature-line {
-
-    width:
-        235px;
-
-    height:
-        1px;
-
-    margin:
-        0 auto;
-
-    background:
-        #26354b;
-}
-
-.signature-name {
-
-    margin-top:
-        7px;
-
-    color:
-        var(--navy);
-
-    font-size:
-        12px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        2px;
-}
-
-.signature-title {
-
-    margin-top:
-        3px;
-
-    color:
-        #747e8d;
-
-    font-size:
-        9px;
-}
-
-
-/* =========================================================
-   SEAL
-========================================================= */
-
-.seal {
-
-    position:
-        relative;
-
-    z-index:
-        35;
-
-    width:
-        150px;
-
-    height:
-        150px;
-
-    margin:
-        auto;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        50%;
-
-    background:
-
         linear-gradient(
             135deg,
             #f0d174,
@@ -2043,2237 +902,1807 @@ input:focus {
             #f1d477 70%,
             #916717
         );
-
-    box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.20);
+    box-shadow:0 5px 12px rgba(0,0,0,.20);
 }
 
-.seal::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        7px;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--navy);
-
-    border:
-        1px solid
-        #f1d477;
+.seal::before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border-radius:50%;
+    background:var(--navy);
+    border:1px solid #f1d477;
 }
 
-.seal::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        15px;
-
-    border-radius:
-        50%;
-
-    border:
-        1px solid
-        #dcb856;
+.seal::after{
+    content:"";
+    position:absolute;
+    inset:15px;
+    border-radius:50%;
+    border:1px solid #dcb856;
 }
 
-.seal-content {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    text-align:
-        center;
-
-    color:
-        white;
+.seal-content{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    color:white;
 }
 
-.seal-brand {
-
-    color:
-        #f1d477;
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        3px;
+.seal-brand{
+    color:#f1d477;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:3px;
 }
 
-.seal-stars {
-
-    margin-top:
-        5px;
-
-    color:
-        #e8c55d;
-
-    font-size:
-        9px;
-
-    letter-spacing:
-        3px;
+.seal-stars{
+    margin-top:5px;
+    color:#e8c55d;
+    font-size:9px;
+    letter-spacing:3px;
 }
 
-.seal-io {
-
-    margin-top:
-        2px;
-
-    color:
-        #e7c15a;
-
-    font-family:
-        "Cinzel",
-        serif;
-
-    font-size:
-        36px;
-
-    font-weight:
-        700;
+.seal-io{
+    margin-top:2px;
+    color:#e7c15a;
+    font-family:"Cinzel",serif;
+    font-size:36px;
+    font-weight:700;
 }
 
-.seal-verified {
-
-    margin-top:
-        1px;
-
-    color:
-        white;
-
-    font-size:
-        8px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        2px;
+.seal-verified{
+    margin-top:1px;
+    color:white;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:2px;
 }
 
-.seal-small {
-
-    margin-top:
-        4px;
-
-    color:
-        #e5c25d;
-
-    font-size:
-        6px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        1.5px;
+.seal-small{
+    margin-top:4px;
+    color:#e5c25d;
+    font-size:6px;
+    font-weight:700;
+    letter-spacing:1.5px;
 }
 
+/* ================= QR ================= */
 
-/* =========================================================
-   QR AREA
-========================================================= */
-
-.qr-area {
-
-    width:
-        330px;
-
-    max-width:
-        330px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        flex-start;
-
-    gap:
-        12px;
-
-    min-width:
-        0;
-
-    position:
-        relative;
-
-    z-index:
-        45;
+.qr-area{
+    width:330px;
+    max-width:330px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:12px;
+    min-width:0;
+    position:relative;
+    z-index:60;
 }
 
-.qr-box {
-
-    width:
-        118px;
-
-    height:
-        118px;
-
-    flex:
-        0 0 118px;
-
-    padding:
-        6px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    background:
-        white;
-
-    border:
-        2px solid
-        #c9a64a;
-
-    position:
-        relative;
-
-    z-index:
-        50;
+.qr-box{
+    width:118px;
+    height:118px;
+    flex:0 0 118px;
+    padding:5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border:2px solid #c9a64a;
+    position:relative;
+    z-index:70;
+    overflow:hidden;
 }
 
-.qr-box img,
-.qr-box canvas {
-
-    width:
-        100% !important;
-
-    height:
-        100% !important;
-
-    display:
-        block !important;
+.qr-box img{
+    width:106px !important;
+    height:106px !important;
+    max-width:106px !important;
+    max-height:106px !important;
+    display:block !important;
+    object-fit:contain;
 }
 
-.qr-copy {
-
-    width:
-        175px;
-
-    min-width:
-        0;
-
-    position:
-        relative;
-
-    z-index:
-        50;
+.qr-copy{
+    width:175px;
+    min-width:0;
+    position:relative;
+    z-index:70;
 }
 
-.qr-title {
-
-    color:
-        var(--navy);
-
-    font-size:
-        11px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        1px;
-
-    white-space:
-        nowrap;
+.qr-title{
+    color:var(--navy);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    white-space:nowrap;
 }
 
-.qr-description {
-
-    margin-top:
-        6px;
-
-    color:
-        #747e8d;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.55;
-
-    max-width:
-        170px;
+.qr-description{
+    margin-top:6px;
+    color:#747e8d;
+    font-size:8px;
+    line-height:1.55;
+    max-width:170px;
 }
 
+/* ================= FOOTER ================= */
 
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.certificate-footer {
-
-    position:
-        absolute;
-
-    left:
-        0;
-
-    right:
-        0;
-
-    bottom:
-        10px;
-
-    z-index:
-        60;
-
-    text-align:
-        center;
-
-    color:
-        #7b8491;
-
-    font-size:
-        7px;
-
-    font-weight:
-        600;
-
-    letter-spacing:
-        1.5px;
+.certificate-footer{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:10px;
+    z-index:80;
+    text-align:center;
+    color:#7b8491;
+    font-size:7px;
+    font-weight:600;
+    letter-spacing:1.5px;
 }
 
+/* ================= PRINT ================= */
 
-/* =========================================================
-   PRINT / PDF
-========================================================= */
+@media print{
 
-@media print {
-
-    @page {
-
-        size:
-            A4 landscape;
-
-        margin:
-            0;
-    }
-
-    html,
-    body {
-
-        width:
-            297mm;
-
-        height:
-            210mm;
-
-        margin:
-            0;
-
-        background:
-            white;
-    }
-
-    body * {
-
-        visibility:
-            hidden;
-    }
-
-    .result,
-    .result * {
-
-        visibility:
-            visible;
-    }
-
-    .result {
-
-        display:
-            block !important;
-
-        position:
-            absolute;
-
-        left:
-            0;
-
-        top:
-            0;
-
-        width:
-            297mm;
-
-        height:
-            210mm;
-    }
-
-    .result-header {
-
-        display:
-            none !important;
-    }
-
-    .certificate-scroll {
-
-        overflow:
-            visible;
-
-        padding:
-            0;
-    }
-
-    .certificate {
-
-        width:
-            297mm !important;
-
-        height:
-            210mm !important;
-
-        aspect-ratio:
-            auto;
-
-        padding:
-            3mm !important;
-
-        margin:
-            0;
-
-        box-shadow:
-            none;
-    }
+@page{
+    size:A4 landscape;
+    margin:0;
 }
 
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width:1050px) {
-
-    .form-layout {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .form-preview {
-
-        min-height:
-            480px;
-    }
+html,body{
+    width:297mm;
+    height:210mm;
+    margin:0;
+    background:white;
 }
 
-@media (max-width:650px) {
+body *{
+    visibility:hidden;
+}
 
-    .topbar {
+.result,
+.result *{
+    visibility:visible;
+}
 
-        padding:
-            0 15px;
-    }
+.result{
+    display:block !important;
+    position:absolute;
+    left:0;
+    top:0;
+    width:297mm;
+    height:210mm;
+}
 
-    .top-label {
+.result-header{
+    display:none !important;
+}
 
-        display:
-            none;
-    }
+.certificate-scroll{
+    overflow:visible;
+    padding:0;
+}
 
-    .page {
+.certificate{
+    width:297mm !important;
+    height:210mm !important;
+    padding:3mm !important;
+    margin:0;
+    box-shadow:none;
+}
 
-        width:
-            calc(100% - 14px);
-    }
+}
 
-    .two {
+/* ================= RESPONSIVE ================= */
 
-        grid-template-columns:
-            1fr;
-    }
+@media(max-width:1050px){
 
-    .result-header {
+.form-layout{
+    grid-template-columns:1fr;
+}
 
-        flex-direction:
-            column;
+.form-preview{
+    min-height:480px;
+}
 
-        align-items:
-            flex-start;
-    }
+}
+
+@media(max-width:650px){
+
+.topbar{
+    padding:0 15px;
+}
+
+.top-label{
+    display:none;
+}
+
+.page{
+    width:calc(100% - 14px);
+}
+
+.two{
+    grid-template-columns:1fr;
+}
+
+.result-header{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =======================================================
-     HEADER
-======================================================== -->
-
 <header class="topbar">
 
-    <div class="logo">
-        Intern<span>IO</span>
-    </div>
+<div class="logo">
+Intern<span>IO</span>
+</div>
 
-    <div class="top-right">
+<div class="top-right">
 
-        <div class="top-label">
-            CERTIFICATE MAKER
-        </div>
+<div class="top-label">
+CERTIFICATE MAKER
+</div>
 
-        <button
-            class="logout"
-            type="button"
-            onclick="logoutAdmin()"
-        >
-            LOGOUT
-        </button>
+<button
+class="logout"
+type="button"
+onclick="logoutAdmin()">
+LOGOUT
+</button>
 
-    </div>
+</div>
 
 </header>
 
-
-
-<!-- =======================================================
-     MAIN
-======================================================== -->
-
 <main class="page">
 
-
-<!-- =======================================================
-     FORM SCREEN
-======================================================== -->
-
 <section
-    id="formScreen"
-    class="form-layout"
->
-
-
-<!-- =======================================================
-     FORM
-======================================================== -->
+id="formScreen"
+class="form-layout">
 
 <div class="form-panel">
 
-    <div class="form-title">
-        Create Certificate
-    </div>
+<div class="form-title">
+Create Certificate
+</div>
 
-    <div class="form-description">
-        Enter the student's internship details.
-        The certificate will be securely created,
-        verified and stored.
-    </div>
+<div class="form-description">
+Enter the student's internship details.
+The certificate will be securely created,
+verified and stored.
+</div>
 
+<div class="field">
 
-    <!-- TYPE -->
+<label>
+CERTIFICATE TYPE
+</label>
 
-    <div class="field">
+<div
+id="typeProject"
+class="type-option active"
+onclick="selectType('PROJECT_NAMED')">
 
-        <label>
-            CERTIFICATE TYPE
-        </label>
+<div class="type-radio"></div>
 
+<div>
 
-        <div
-            id="typeProject"
-            class="type-option active"
-            onclick="selectType('PROJECT_NAMED')"
-        >
+<div class="type-title">
+Project-Based Internship
+</div>
 
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Project-Based Internship
-                </div>
-
-                <div class="type-description">
-                    Include the project name.
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="typeNoProject"
-            class="type-option"
-            onclick="selectType('PROJECT_NONE')"
-        >
-
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Internship Certificate
-                </div>
-
-                <div class="type-description">
-                    Internship certificate without project name.
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="typeCompletion"
-            class="type-option"
-            onclick="selectType('COMPLETION')"
-        >
-
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Internship Completion
-                </div>
-
-                <div class="type-description">
-                    General internship completion certificate.
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- STUDENT -->
-
-    <div class="field">
-
-        <label for="studentName">
-            STUDENT NAME *
-        </label>
-
-        <input
-            id="studentName"
-            type="text"
-            autocomplete="off"
-            placeholder="Enter student's full name"
-        >
-
-    </div>
-
-
-    <!-- INTERNSHIP -->
-
-    <div class="field">
-
-        <label for="internship">
-            INTERNSHIP / PROGRAM *
-        </label>
-
-        <input
-            id="internship"
-            type="text"
-            autocomplete="off"
-            placeholder="Example: Python Programming Training"
-        >
-
-    </div>
-
-
-    <!-- PROJECT -->
-
-    <div
-        id="projectField"
-        class="field"
-    >
-
-        <label for="projectName">
-            PROJECT NAME
-        </label>
-
-        <input
-            id="projectName"
-            type="text"
-            autocomplete="off"
-            placeholder="Example: InternIO Platform Development"
-        >
-
-    </div>
-
-
-    <!-- DATES -->
-
-    <div class="two">
-
-        <div class="field">
-
-            <label for="startDate">
-                START DATE *
-            </label>
-
-            <input
-                id="startDate"
-                type="date"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label for="endDate">
-                END DATE *
-            </label>
-
-            <input
-                id="endDate"
-                type="date"
-            >
-
-        </div>
-
-    </div>
-
-
-    <div class="two">
-
-        <div class="field">
-
-            <label for="duration">
-                DURATION *
-            </label>
-
-            <input
-                id="duration"
-                type="text"
-                autocomplete="off"
-                placeholder="Example: 45 Days"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label for="issueDate">
-                ISSUE DATE *
-            </label>
-
-            <input
-                id="issueDate"
-                type="date"
-            >
-
-        </div>
-
-    </div>
-
-
-    <!-- INFO -->
-
-    <div class="info">
-
-        <div class="info-title">
-            SECURE VERIFICATION
-        </div>
-
-        <div class="info-text">
-            The certificate is saved to the InternIO
-            database and Google Drive. The QR code
-            allows anyone to verify the certificate.
-        </div>
-
-    </div>
-
-
-    <!-- GENERATE -->
-
-    <button
-        id="generateButton"
-        class="generate"
-        type="button"
-        onclick="generateCertificate()"
-    >
-        GENERATE CERTIFICATE
-    </button>
-
-
-    <div
-        id="message"
-        class="message"
-        aria-live="polite"
-    ></div>
+<div class="type-description">
+Include the project name.
+</div>
 
 </div>
 
+</div>
 
+<div
+id="typeNoProject"
+class="type-option"
+onclick="selectType('PROJECT_NONE')">
 
-<!-- =======================================================
-     PREVIEW
-======================================================== -->
+<div class="type-radio"></div>
+
+<div>
+
+<div class="type-title">
+Project-Based — No Project Name
+</div>
+
+<div class="type-description">
+Use when no specific project should appear.
+</div>
+
+</div>
+
+</div>
+
+<div
+id="typeCompletion"
+class="type-option"
+onclick="selectType('COMPLETION')">
+
+<div class="type-radio"></div>
+
+<div>
+
+<div class="type-title">
+Internship Completion
+</div>
+
+<div class="type-description">
+General internship completion certificate.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label for="studentName">
+STUDENT NAME *
+</label>
+
+<input
+id="studentName"
+type="text"
+autocomplete="off"
+placeholder="Enter student's full name">
+
+</div>
+
+<div class="field">
+
+<label for="internship">
+INTERNSHIP / PROGRAM *
+</label>
+
+<input
+id="internship"
+type="text"
+autocomplete="off"
+placeholder="Example: Python Programming Training">
+
+</div>
+
+<div
+id="projectField"
+class="field">
+
+<label for="projectName">
+PROJECT NAME
+</label>
+
+<input
+id="projectName"
+type="text"
+autocomplete="off"
+placeholder="Example: InternIO Platform Development">
+
+</div>
+
+<div class="two">
+
+<div class="field">
+
+<label for="startDate">
+START DATE *
+</label>
+
+<input
+id="startDate"
+type="date">
+
+</div>
+
+<div class="field">
+
+<label for="endDate">
+END DATE *
+</label>
+
+<input
+id="endDate"
+type="date">
+
+</div>
+
+</div>
+
+<div class="two">
+
+<div class="field">
+
+<label for="duration">
+DURATION *
+</label>
+
+<input
+id="duration"
+type="text"
+autocomplete="off"
+placeholder="Example: 45 Days">
+
+</div>
+
+<div class="field">
+
+<label for="issueDate">
+ISSUE DATE *
+</label>
+
+<input
+id="issueDate"
+type="date">
+
+</div>
+
+</div>
+
+<div class="info">
+
+<div class="info-title">
+SECURE VERIFICATION
+</div>
+
+<div class="info-text">
+A unique certificate record and certificate ID
+are created in the InternIO verification system.
+The QR code contains the verification link.
+</div>
+
+</div>
+
+<button
+id="generateButton"
+class="generate"
+type="button"
+onclick="generateCertificate()">
+
+GENERATE CERTIFICATE
+
+</button>
+
+<div
+id="message"
+class="message"
+aria-live="polite">
+</div>
+
+</div>
 
 <div class="form-preview">
 
-    <div class="preview-content">
+<div class="preview-content">
 
-        <div class="preview-logo">
-            Intern<span>IO</span>
-        </div>
+<div class="preview-logo">
+Intern<span>IO</span>
+</div>
 
-        <div class="preview-tagline">
-            INNOVATION &amp; OPPORTUNITIES
-        </div>
+<div class="preview-tagline">
+INNOVATION &amp; OPPORTUNITIES
+</div>
 
-        <div class="preview-rule"></div>
+<div class="preview-rule"></div>
 
-        <div class="preview-title">
-            CERTIFICATE OF INTERNSHIP
-        </div>
+<div class="preview-title">
+CERTIFICATE OF INTERNSHIP
+</div>
 
-        <div class="preview-description">
-            A professional certificate recognizing
-            practical learning, project experience,
-            professional development and real-world
-            skills through InternIO.
-        </div>
-
-    </div>
+<div class="preview-description">
+A professional certificate recognizing
+practical learning, project experience,
+professional development and real-world
+skills through InternIO.
+</div>
 
 </div>
 
+</div>
 
 </section>
 
-
-
-<!-- =======================================================
-     RESULT
-======================================================== -->
-
 <section
-    id="result"
-    class="result"
->
-
-
-<!-- RESULT HEADER -->
+id="result"
+class="result">
 
 <div class="result-header">
 
-    <div>
+<div>
 
-        <div class="result-title">
-            Certificate Generated
-        </div>
+<div class="result-title">
+Certificate Generated
+</div>
 
-        <div class="result-description">
-            Your certificate has been securely created,
-            uploaded and linked to verification.
-        </div>
-
-    </div>
-
-
-    <div class="actions">
-
-        <button
-            class="light"
-            type="button"
-            onclick="editCertificate()"
-        >
-            EDIT
-        </button>
-
-        <button
-            class="gold"
-            type="button"
-            onclick="downloadCertificatePDF()"
-        >
-            DOWNLOAD PDF
-        </button>
-
-        <button
-            type="button"
-            onclick="newCertificate()"
-        >
-            CREATE ANOTHER
-        </button>
-
-    </div>
+<div class="result-description">
+Your certificate has been securely created.
+Review it before saving the PDF.
+</div>
 
 </div>
 
+<div class="actions">
 
+<button
+class="light"
+type="button"
+onclick="editCertificate()">
+EDIT
+</button>
 
-<!-- =======================================================
-     CERTIFICATE
-======================================================== -->
+<button
+class="gold"
+type="button"
+onclick="downloadCertificatePDF()">
+PRINT / SAVE PDF
+</button>
+
+<button
+type="button"
+onclick="newCertificate()">
+CREATE ANOTHER
+</button>
+
+</div>
+
+</div>
 
 <div class="certificate-scroll">
 
-
 <div
-    id="certificate"
-    class="certificate"
->
-
+id="certificate"
+class="certificate">
 
 <div class="paper">
 
-
-<!-- CORNERS -->
-
 <div class="corner corner-tl"></div>
-
 <div class="corner corner-tr"></div>
-
 <div class="corner corner-bl"></div>
-
 <div class="corner corner-br"></div>
 
-
-<!-- WATERMARK -->
-
 <div class="watermark">
-    I<span>O</span>
+I<span>O</span>
 </div>
-
-
-
-<!-- =====================================================
-     CERTIFICATE ID
-===================================================== -->
 
 <div class="certificate-id">
 
-    <div class="id-label">
-        CERTIFICATE ID
-    </div>
+<div class="id-label">
+CERTIFICATE ID
+</div>
 
-    <div
-        id="certificateId"
-        class="id-value"
-    >
-        INIO-2026-000000
-    </div>
+<div
+id="certificateId"
+class="id-value">
+—
+</div>
 
-    <div class="id-decoration">
+<div class="id-decoration">
 
-        <div class="id-line"></div>
-
-        <div class="id-star">
-            ★
-        </div>
-
-        <div class="id-star">
-            ★
-        </div>
-
-        <div class="id-star">
-            ★
-        </div>
-
-        <div class="id-line"></div>
-
-    </div>
+<div class="id-line"></div>
+<div class="id-star">★</div>
+<div class="id-star">★</div>
+<div class="id-star">★</div>
+<div class="id-line"></div>
 
 </div>
 
-
-
-<!-- =====================================================
-     BRAND
-===================================================== -->
+</div>
 
 <div class="brand">
 
-    <div class="brand-name">
-        Intern<span>IO</span>
-    </div>
+<div class="brand-name">
+Intern<span>IO</span>
+</div>
 
-    <div class="brand-tagline">
-        INNOVATION &amp; OPPORTUNITIES
-    </div>
+<div class="brand-tagline">
+INNOVATION &amp; OPPORTUNITIES
+</div>
 
-    <div class="brand-decoration">
+<div class="brand-decoration">
 
-        <div class="diamond"></div>
-
-    </div>
+<div class="diamond"></div>
 
 </div>
 
-
-
-<!-- =====================================================
-     TITLE
-===================================================== -->
+</div>
 
 <div class="certificate-title">
-    CERTIFICATE
+CERTIFICATE
 </div>
 
 <div class="certificate-subtitle">
-    OF INTERNSHIP
+OF INTERNSHIP
 </div>
-
-
-
-<!-- =====================================================
-     STUDENT
-===================================================== -->
 
 <div class="certify">
-    THIS IS TO CERTIFY THAT
+THIS IS TO CERTIFY THAT
 </div>
-
 
 <div
-    id="certificateStudent"
-    class="student-name"
->
-    Student Name
+id="certificateStudent"
+class="student-name">
+Student Name
 </div>
-
 
 <div class="name-line"></div>
 
 <div class="name-diamond"></div>
 
-
-
-<!-- =====================================================
-     BODY
-===================================================== -->
-
 <div
-    id="certificateBody"
-    class="body-text"
->
-    has successfully completed the
-    <strong>INTERNSHIP PROGRAM</strong>
-    at <strong>InternIO</strong> and demonstrated
-    dedication, professional conduct, practical
-    learning and a strong commitment to developing
-    real-world skills and experience.
-</div>
+id="certificateBody"
+class="body-text">
 
-
-
-<!-- =====================================================
-     PROJECT
-===================================================== -->
-
-<div
-    id="projectDisplay"
-    class="project"
->
-
-    <div class="project-label">
-        PROJECT
-    </div>
-
-    <div
-        id="certificateProject"
-        class="project-value"
-    >
-        Project Name
-    </div>
+has successfully completed the
+<strong>INTERNSHIP PROGRAM</strong>
+at <strong>InternIO</strong> and demonstrated
+dedication, professional conduct, practical
+learning and a strong commitment to developing
+real-world skills and experience.
 
 </div>
 
+<div
+id="projectDisplay"
+class="project">
 
+<div class="project-label">
+PROJECT
+</div>
 
-<!-- =====================================================
-     DATE DETAILS
-===================================================== -->
+<div
+id="certificateProject"
+class="project-value">
+Project Name
+</div>
+
+</div>
 
 <div class="details">
 
+<div class="detail">
 
-    <div class="detail">
+<div class="detail-label">
+START DATE
+</div>
 
-        <div class="detail-label">
-            START DATE
-        </div>
-
-        <div
-            id="certificateStart"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            END DATE
-        </div>
-
-        <div
-            id="certificateEnd"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            DURATION
-        </div>
-
-        <div
-            id="certificateDuration"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            ISSUE DATE
-        </div>
-
-        <div
-            id="certificateIssue"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
+<div
+id="certificateStart"
+class="detail-value">
+—
+</div>
 
 </div>
 
+<div class="detail">
 
+<div class="detail-label">
+END DATE
+</div>
 
-<!-- =====================================================
-     BOTTOM ROW
-===================================================== -->
+<div
+id="certificateEnd"
+class="detail-value">
+—
+</div>
+
+</div>
+
+<div class="detail">
+
+<div class="detail-label">
+DURATION
+</div>
+
+<div
+id="certificateDuration"
+class="detail-value">
+—
+</div>
+
+</div>
+
+<div class="detail">
+
+<div class="detail-label">
+ISSUE DATE
+</div>
+
+<div
+id="certificateIssue"
+class="detail-value">
+—
+</div>
+
+</div>
+
+</div>
 
 <div class="bottom">
 
-
-<!-- SIGNATURE -->
-
 <div class="signature">
 
-    <img
-        src="amar-singh-signature.png"
-        class="signature-image"
-        alt="Authorized Signature"
-        onerror="
-            this.style.display='none';
-            document.getElementById('signatureFallback').style.display='block';
-        "
-    >
+<img
+src="amar-singh-signature.png"
+class="signature-image"
+alt="Authorized Signature"
+crossorigin="anonymous"
+onerror="
+this.style.display='none';
+document.getElementById('signatureFallback').style.display='block';
+">
 
-    <div
-        id="signatureFallback"
-        class="signature-fallback"
-        style="display:none;"
-    >
-        Amar Singh
-    </div>
-
-    <div class="signature-line"></div>
-
-    <div class="signature-name">
-        AMAR SINGH
-    </div>
-
-    <div class="signature-title">
-        Founder &amp; CEO, InternIO
-    </div>
-
+<div
+id="signatureFallback"
+class="signature-fallback"
+style="display:none;">
+Amar Singh
 </div>
 
+<div class="signature-line"></div>
 
+<div class="signature-name">
+AMAR SINGH
+</div>
 
-<!-- SEAL -->
+<div class="signature-title">
+Founder &amp; CEO, InternIO
+</div>
+
+</div>
 
 <div class="seal">
 
-    <div class="seal-content">
+<div class="seal-content">
 
-        <div class="seal-brand">
-            INTERNIO
-        </div>
+<div class="seal-brand">
+INTERNIO
+</div>
 
-        <div class="seal-stars">
-            ★ ★ ★
-        </div>
+<div class="seal-stars">
+★ ★ ★
+</div>
 
-        <div class="seal-io">
-            IO
-        </div>
+<div class="seal-io">
+IO
+</div>
 
-        <div class="seal-verified">
-            VERIFIED
-        </div>
+<div class="seal-verified">
+VERIFIED
+</div>
 
-        <div class="seal-small">
-            CERTIFICATE
-        </div>
-
-    </div>
+<div class="seal-small">
+CERTIFICATE
+</div>
 
 </div>
 
-
-
-<!-- QR -->
+</div>
 
 <div class="qr-area">
 
-    <div
-        id="qrCode"
-        class="qr-box"
-    ></div>
+<div
+id="qrCode"
+class="qr-box"
+aria-label="Certificate verification QR code">
+</div>
 
+<div class="qr-copy">
 
-    <div class="qr-copy">
+<div class="qr-title">
+VERIFY THIS CERTIFICATE
+</div>
 
-        <div class="qr-title">
-            VERIFY THIS CERTIFICATE
-        </div>
-
-        <div class="qr-description">
-            Scan the QR code to verify
-            certificate authenticity.
-        </div>
-
-    </div>
+<div class="qr-description">
+Scan the QR code to verify
+certificate authenticity.
+</div>
 
 </div>
 
-
 </div>
 
-
-
-<!-- FOOTER -->
+</div>
 
 <div class="certificate-footer">
-    INTERNIO • INNOVATION &amp; OPPORTUNITIES
-</div>
-
-
+INTERNIO • INNOVATION &amp; OPPORTUNITIES
 </div>
 
 </div>
 
 </div>
 
+</div>
+
+</div>
 
 </section>
 
-
 </main>
-
-
 
 <script>
 
 /* =========================================================
-   CONFIGURATION
+   INTERNIO CONFIGURATION
 ========================================================= */
 
-
-/*
-   IMPORTANT:
-
-   Keep these two URLs as they are if your current
-   database + Google Drive system is already working.
-*/
-
-
 const VERIFICATION_BASE =
-    "https://internio-official.github.io/internio-verification/";
-
+"https://internio-official.github.io/internio-verification/";
 
 const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbyCWuhBqqMmM4o-eRdoYkSyqbnme9I7ULyCXCTUoHrWNvUtHbsmk9421neoZB9r8Rqg/exec";
-
+"https://script.google.com/macros/s/AKfycbyCWuhBqqMmM4o-eRdoYkSyqbnme9I7ULyCXCTUoHrWNvUtHbsmk9421neoZB9r8Rqg/exec";
 
 
 /* =========================================================
    STATE
 ========================================================= */
 
-let certificateType =
-    "PROJECT_NAMED";
+let certificateType="PROJECT_NAMED";
 
-let generatedCertificateId =
-    null;
+let generatedCertificateId=null;
 
-let generatedPDF =
-    null;
+let generatedPDF=null;
 
-let generatedDriveURL =
-    null;
-
+let generatedDriveURL=null;
 
 
 /* =========================================================
    LOGOUT
 ========================================================= */
 
-async function logoutAdmin() {
+async function logoutAdmin(){
 
-    try {
+try{
 
-        if (
-            typeof internioLogout === "function"
-        ) {
+if(typeof internioLogout==="function"){
 
-            await internioLogout();
+await internioLogout();
 
-            return;
-        }
+return;
 
-
-        if (
-            typeof internioSupabase !== "undefined" &&
-            internioSupabase
-        ) {
-
-            await internioSupabase.auth.signOut();
-        }
-
-
-        window.location.href =
-            "admin.html";
-
-    }
-
-    catch (error) {
-
-        console.error(
-            error
-        );
-
-        window.location.href =
-            "admin.html";
-    }
 }
 
+if(
+typeof internioSupabase!=="undefined" &&
+internioSupabase
+){
+
+await internioSupabase.auth.signOut();
+
+}
+
+window.location.href="admin.html";
+
+}catch(error){
+
+console.error(error);
+
+window.location.href="admin.html";
+
+}
+
+}
 
 
 /* =========================================================
    CERTIFICATE TYPE
 ========================================================= */
 
-function selectType(type) {
+function selectType(type){
 
-    certificateType =
-        type;
+certificateType=type;
 
+document
+.getElementById("typeProject")
+.classList
+.remove("active");
 
-    document
-        .getElementById("typeProject")
-        .classList.remove("active");
+document
+.getElementById("typeNoProject")
+.classList
+.remove("active");
 
+document
+.getElementById("typeCompletion")
+.classList
+.remove("active");
 
-    document
-        .getElementById("typeNoProject")
-        .classList.remove("active");
+const projectField=
+document.getElementById("projectField");
 
+if(type==="PROJECT_NAMED"){
 
-    document
-        .getElementById("typeCompletion")
-        .classList.remove("active");
+document
+.getElementById("typeProject")
+.classList
+.add("active");
 
+projectField.style.display="block";
 
-    const projectField =
-        document.getElementById(
-            "projectField"
-        );
+}else if(type==="PROJECT_NONE"){
 
+document
+.getElementById("typeNoProject")
+.classList
+.add("active");
 
-    if (
-        type ===
-        "PROJECT_NAMED"
-    ) {
+projectField.style.display="none";
 
-        document
-            .getElementById(
-                "typeProject"
-            )
-            .classList.add("active");
+}else{
 
+document
+.getElementById("typeCompletion")
+.classList
+.add("active");
 
-        projectField.style.display =
-            "block";
+projectField.style.display="none";
 
-    }
-
-
-    else if (
-        type ===
-        "PROJECT_NONE"
-    ) {
-
-        document
-            .getElementById(
-                "typeNoProject"
-            )
-            .classList.add("active");
-
-
-        projectField.style.display =
-            "none";
-
-    }
-
-
-    else {
-
-        document
-            .getElementById(
-                "typeCompletion"
-            )
-            .classList.add("active");
-
-
-        projectField.style.display =
-            "none";
-    }
 }
 
+}
 
 
 /* =========================================================
-   DATE FORMAT
+   DATE
 ========================================================= */
 
-function formatDate(value) {
+function formatDate(value){
 
-    if (!value) {
-
-        return "";
-    }
-
-
-    const date =
-        new Date(
-            value + "T00:00:00"
-        );
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return value;
-    }
-
-
-    return date.toLocaleDateString(
-        "en-GB",
-        {
-            day:
-                "2-digit",
-
-            month:
-                "short",
-
-            year:
-                "numeric"
-        }
-    );
+if(!value){
+return "—";
 }
 
+const date=
+new Date(
+value+"T00:00:00"
+);
+
+if(Number.isNaN(date.getTime())){
+return value;
+}
+
+return date.toLocaleDateString(
+"en-GB",
+{
+day:"2-digit",
+month:"short",
+year:"numeric"
+}
+);
+
+}
 
 
 /* =========================================================
    ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
-    return String(value)
+return String(value)
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+.replace(/&/g,"&amp;")
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+.replace(/</g,"&lt;")
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+.replace(/>/g,"&gt;")
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+.replace(/"/g,"&quot;")
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+.replace(/'/g,"&#039;");
+
 }
-
 
 
 /* =========================================================
    MESSAGE
 ========================================================= */
 
-function showMessage(
-    text,
-    type
-) {
+function showMessage(text,type){
 
-    const message =
-        document.getElementById(
-            "message"
-        );
+const message=
+document.getElementById("message");
 
+message.textContent=text;
 
-    message.textContent =
-        text;
+message.className=
+"message "+(type||"");
 
-
-    message.className =
-        "message " +
-        (
-            type ||
-            ""
-        );
 }
-
 
 
 /* =========================================================
    FORM DATA
 ========================================================= */
 
-function getFormData() {
+function getFormData(){
 
-    return {
+return{
 
-        studentName:
+studentName:
+document
+.getElementById("studentName")
+.value
+.trim(),
 
-            document
-                .getElementById(
-                    "studentName"
-                )
-                .value
-                .trim(),
+internship:
+document
+.getElementById("internship")
+.value
+.trim(),
 
+project:
+document
+.getElementById("projectName")
+.value
+.trim(),
 
-        internship:
+startDate:
+document
+.getElementById("startDate")
+.value,
 
-            document
-                .getElementById(
-                    "internship"
-                )
-                .value
-                .trim(),
+endDate:
+document
+.getElementById("endDate")
+.value,
 
+duration:
+document
+.getElementById("duration")
+.value
+.trim(),
 
-        project:
+issueDate:
+document
+.getElementById("issueDate")
+.value
 
-            document
-                .getElementById(
-                    "projectName"
-                )
-                .value
-                .trim(),
+};
 
-
-        startDate:
-
-            document
-                .getElementById(
-                    "startDate"
-                )
-                .value,
-
-
-        endDate:
-
-            document
-                .getElementById(
-                    "endDate"
-                )
-                .value,
-
-
-        duration:
-
-            document
-                .getElementById(
-                    "duration"
-                )
-                .value
-                .trim(),
-
-
-        issueDate:
-
-            document
-                .getElementById(
-                    "issueDate"
-                )
-                .value
-    };
 }
-
 
 
 /* =========================================================
    VALIDATION
 ========================================================= */
 
-function validateForm(
-    data
-) {
+function validateForm(data){
 
-    if (
-        !data.studentName
-    ) {
+if(!data.studentName){
 
-        showMessage(
-            "Please enter the student's name.",
-            "error"
-        );
+showMessage(
+"Please enter the student's name.",
+"error"
+);
 
-        return false;
-    }
+return false;
 
-
-    if (
-        !data.internship
-    ) {
-
-        showMessage(
-            "Please enter the internship/program name.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        !data.startDate
-    ) {
-
-        showMessage(
-            "Please select the start date.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        !data.endDate
-    ) {
-
-        showMessage(
-            "Please select the end date.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        new Date(data.endDate) <
-        new Date(data.startDate)
-    ) {
-
-        showMessage(
-            "End date cannot be before start date.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        !data.duration
-    ) {
-
-        showMessage(
-            "Please enter the duration.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        !data.issueDate
-    ) {
-
-        showMessage(
-            "Please select the issue date.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (
-        certificateType ===
-        "PROJECT_NAMED" &&
-        !data.project
-    ) {
-
-        showMessage(
-            "Please enter the project name.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    return true;
 }
 
+if(!data.internship){
+
+showMessage(
+"Please enter the internship/program name.",
+"error"
+);
+
+return false;
+
+}
+
+if(!data.startDate){
+
+showMessage(
+"Please select the start date.",
+"error"
+);
+
+return false;
+
+}
+
+if(!data.endDate){
+
+showMessage(
+"Please select the end date.",
+"error"
+);
+
+return false;
+
+}
+
+if(
+new Date(data.endDate) <
+new Date(data.startDate)
+){
+
+showMessage(
+"End date cannot be before start date.",
+"error"
+);
+
+return false;
+
+}
+
+if(!data.duration){
+
+showMessage(
+"Please enter the duration.",
+"error"
+);
+
+return false;
+
+}
+
+if(!data.issueDate){
+
+showMessage(
+"Please select the issue date.",
+"error"
+);
+
+return false;
+
+}
+
+if(
+certificateType==="PROJECT_NAMED" &&
+!data.project
+){
+
+showMessage(
+"Please enter the project name.",
+"error"
+);
+
+return false;
+
+}
+
+return true;
+
+}
 
 
 /* =========================================================
-   SUPABASE — CREATE CERTIFICATE
+   DATABASE
 ========================================================= */
 
-async function saveCertificate(
-    data
-) {
+async function saveCertificate(data){
 
-    if (
-        typeof internioSupabase ===
-        "undefined"
-    ) {
+if(
+typeof internioSupabase==="undefined"
+){
 
-        throw new Error(
-            "Supabase client is not available."
-        );
-    }
+throw new Error(
+"InternIO Supabase client is not available."
+);
 
-
-    const projectValue =
-
-        certificateType ===
-        "PROJECT_NAMED"
-
-            ? data.project
-
-            : null;
-
-
-    const result =
-
-        await internioSupabase.rpc(
-            "create_certificate",
-            {
-
-                p_student_name:
-                    data.studentName,
-
-                p_internship:
-                    data.internship,
-
-                p_project:
-                    projectValue,
-
-                p_start_date:
-                    data.startDate,
-
-                p_end_date:
-                    data.endDate,
-
-                p_duration:
-                    data.duration,
-
-                p_issue_date:
-                    data.issueDate,
-
-                p_certificate_url:
-                    null
-            }
-        );
-
-
-    if (
-        result.error
-    ) {
-
-        console.error(
-            result.error
-        );
-
-        throw new Error(
-            result.error.message ||
-            "Unable to save certificate."
-        );
-    }
-
-
-    return result.data;
 }
 
+const projectValue=
+certificateType==="PROJECT_NAMED"
+?data.project
+:null;
+
+const result=
+await internioSupabase.rpc(
+"create_certificate",
+{
+
+p_student_name:
+data.studentName,
+
+p_internship:
+data.internship,
+
+p_project:
+projectValue,
+
+p_start_date:
+data.startDate,
+
+p_end_date:
+data.endDate,
+
+p_duration:
+data.duration,
+
+p_issue_date:
+data.issueDate,
+
+p_certificate_url:
+null
+
+}
+);
+
+if(result.error){
+
+console.error(result.error);
+
+throw new Error(
+result.error.message ||
+"Unable to create certificate."
+);
+
+}
+
+return result.data;
+
+}
 
 
 /* =========================================================
-   EXTRACT CERTIFICATE ID
+   GET CERTIFICATE ID
 ========================================================= */
 
-function extractCertificateId(
-    data
-) {
+function extractCertificateId(data){
 
-    if (!data) {
-
-        return null;
-    }
-
-
-    if (
-        typeof data ===
-            "string" ||
-
-        typeof data ===
-            "number"
-    ) {
-
-        return String(
-            data
-        );
-    }
-
-
-    if (
-        Array.isArray(data) &&
-        data.length
-    ) {
-
-        const first =
-            data[0];
-
-
-        if (
-            typeof first ===
-                "string" ||
-
-            typeof first ===
-                "number"
-        ) {
-
-            return String(
-                first
-            );
-        }
-
-
-        return (
-
-            first.certificate_id ||
-
-            first.id ||
-
-            first.certificateId ||
-
-            null
-        );
-    }
-
-
-    return (
-
-        data.certificate_id ||
-
-        data.id ||
-
-        data.certificateId ||
-
-        data.data?.certificate_id ||
-
-        data.data?.id ||
-
-        null
-    );
+if(!data){
+return null;
 }
 
+if(
+typeof data==="string" ||
+typeof data==="number"
+){
+
+return String(data);
+
+}
+
+if(
+Array.isArray(data) &&
+data.length
+){
+
+const first=data[0];
+
+if(
+typeof first==="string" ||
+typeof first==="number"
+){
+
+return String(first);
+
+}
+
+return(
+
+first.certificate_id ||
+
+first.id ||
+
+first.certificateId ||
+
+null
+
+);
+
+}
+
+return(
+
+data.certificate_id ||
+
+data.id ||
+
+data.certificateId ||
+
+data.data?.certificate_id ||
+
+data.data?.id ||
+
+null
+
+);
+
+}
+
+
+/* =========================================================
+   VERIFICATION URL
+========================================================= */
+
+function getVerificationURL(certificateId){
+
+return(
+VERIFICATION_BASE+
+"?id="+
+encodeURIComponent(certificateId)
+);
+
+}
+
+
+/* =========================================================
+   WAIT
+========================================================= */
+
+function wait(ms){
+
+return new Promise(
+resolve=>setTimeout(resolve,ms)
+);
+
+}
+
+
+/* =========================================================
+   WAIT FOR IMAGE
+========================================================= */
+
+function waitForImage(img){
+
+return new Promise(
+(resolve,reject)=>{
+
+if(
+img.complete &&
+img.naturalWidth>0
+){
+
+resolve();
+
+return;
+
+}
+
+img.onload=()=>resolve();
+
+img.onerror=()=>reject(
+new Error(
+"QR image failed to load."
+)
+);
+
+}
+);
+
+}
+
+
+/* =========================================================
+   FINAL QR GENERATION
+   ONE QR ONLY
+========================================================= */
+
+async function generateQRCode(certificateId){
+
+const qr=
+document.getElementById("qrCode");
+
+if(!qr){
+
+throw new Error(
+"QR container was not found."
+);
+
+}
+
+
+/*
+   CRITICAL:
+
+   Completely clear the QR container
+   before creating anything.
+*/
+
+qr.replaceChildren();
+
+
+/*
+   Check library.
+*/
+
+if(
+typeof QRCode==="undefined" ||
+typeof QRCode.toDataURL!=="function"
+){
+
+throw new Error(
+"QR code library failed to load. Refresh the page."
+);
+
+}
+
+
+/*
+   Correct InternIO verification URL.
+*/
+
+const verificationURL=
+getVerificationURL(
+certificateId
+);
+
+console.log(
+"InternIO QR URL:",
+verificationURL
+);
+
+
+/*
+   Generate exactly ONE QR image.
+*/
+
+const qrDataURL=
+await QRCode.toDataURL(
+verificationURL,
+{
+
+width:106,
+
+margin:1,
+
+errorCorrectionLevel:"H",
+
+color:{
+dark:"#071a38",
+light:"#ffffff"
+}
+
+}
+);
+
+
+/*
+   Create ONE image.
+*/
+
+const qrImage=
+document.createElement("img");
+
+qrImage.src=
+qrDataURL;
+
+qrImage.alt=
+"InternIO certificate verification QR code";
+
+qrImage.width=106;
+
+qrImage.height=106;
+
+qrImage.style.width="106px";
+
+qrImage.style.height="106px";
+
+qrImage.style.maxWidth="106px";
+
+qrImage.style.maxHeight="106px";
+
+qrImage.style.display="block";
+
+qrImage.style.objectFit="contain";
+
+
+/*
+   Clear again immediately before append.
+
+   This guarantees that the container
+   can contain only one QR image.
+*/
+
+qr.replaceChildren(
+qrImage
+);
+
+
+/*
+   Wait until the image is actually ready.
+*/
+
+await waitForImage(
+qrImage
+);
+
+
+/*
+   Give browser layout time to finish.
+*/
+
+await wait(150);
+
+
+/*
+   Final safety check:
+   there must be exactly ONE image.
+*/
+
+const qrImages=
+qr.querySelectorAll("img");
+
+if(qrImages.length!==1){
+
+throw new Error(
+"QR rendering error: multiple QR images detected."
+);
+
+}
+
+if(!qrImage.naturalWidth){
+
+throw new Error(
+"QR image was generated but could not be rendered."
+);
+
+}
+
+console.log(
+"InternIO QR generated successfully."
+);
+
+return verificationURL;
+
+}
 
 
 /* =========================================================
    RENDER CERTIFICATE
 ========================================================= */
 
-function renderCertificate(
-    data,
-    certificateId
-) {
+async function renderCertificate(
+data,
+certificateId
+){
+
+document
+.getElementById("certificateId")
+.textContent=
+certificateId;
+
+document
+.getElementById("certificateStudent")
+.textContent=
+data.studentName;
+
+document
+.getElementById("certificateStart")
+.textContent=
+formatDate(data.startDate);
+
+document
+.getElementById("certificateEnd")
+.textContent=
+formatDate(data.endDate);
+
+document
+.getElementById("certificateDuration")
+.textContent=
+data.duration;
+
+document
+.getElementById("certificateIssue")
+.textContent=
+formatDate(data.issueDate);
 
 
-    document
-        .getElementById(
-            "certificateId"
-        )
-        .textContent =
-        certificateId;
+/* BODY */
+
+document
+.getElementById("certificateBody")
+.innerHTML=
+`
+has successfully completed the
+<strong>${escapeHTML(data.internship)}</strong>
+at <strong>InternIO</strong> and demonstrated
+dedication, professional conduct, practical
+learning and a strong commitment to developing
+real-world skills and experience.
+`;
 
 
-    document
-        .getElementById(
-            "certificateStudent"
-        )
-        .textContent =
-        data.studentName;
+/* PROJECT */
 
+const projectDisplay=
+document.getElementById(
+"projectDisplay"
+);
 
-    document
-        .getElementById(
-            "certificateStart"
-        )
-        .textContent =
-        formatDate(
-            data.startDate
-        );
+if(
+certificateType==="PROJECT_NAMED"
+){
 
+projectDisplay.style.display=
+"block";
 
-    document
-        .getElementById(
-            "certificateEnd"
-        )
-        .textContent =
-        formatDate(
-            data.endDate
-        );
+document
+.getElementById(
+"certificateProject"
+)
+.textContent=
+data.project;
 
+}else{
 
-    document
-        .getElementById(
-            "certificateDuration"
-        )
-        .textContent =
-        data.duration;
+projectDisplay.style.display=
+"none";
 
-
-    document
-        .getElementById(
-            "certificateIssue"
-        )
-        .textContent =
-        formatDate(
-            data.issueDate
-        );
-
-
-    const body =
-        document.getElementById(
-            "certificateBody"
-        );
-
-
-    body.innerHTML =
-
-        `
-        has successfully completed the
-        <strong>
-            ${escapeHTML(data.internship)}
-        </strong>
-        at <strong>InternIO</strong> and demonstrated
-        dedication, professional conduct, practical
-        learning and a strong commitment to developing
-        real-world skills and experience.
-        `;
-
-
-
-    /* PROJECT */
-
-    const projectDisplay =
-        document.getElementById(
-            "projectDisplay"
-        );
-
-
-    if (
-        certificateType ===
-        "PROJECT_NAMED"
-    ) {
-
-        projectDisplay.style.display =
-            "block";
-
-
-        document
-            .getElementById(
-                "certificateProject"
-            )
-            .textContent =
-            data.project;
-
-    }
-
-    else {
-
-        projectDisplay.style.display =
-            "none";
-    }
-
-
-
-    /* =====================================================
-       QR CODE
-    ===================================================== */
-
-    const qr =
-        document.getElementById(
-            "qrCode"
-        );
-
-
-    qr.innerHTML =
-        "";
-
-
-    if (
-        typeof QRCode ===
-        "undefined"
-    ) {
-
-        throw new Error(
-            "QR code library failed to load."
-        );
-    }
-
-
-    const verificationURL =
-
-        VERIFICATION_BASE +
-
-        "?id=" +
-
-        encodeURIComponent(
-            certificateId
-        );
-
-
-    new QRCode(
-        qr,
-        {
-
-            text:
-                verificationURL,
-
-            width:
-                106,
-
-            height:
-                106,
-
-            colorDark:
-                "#071a38",
-
-            colorLight:
-                "#ffffff",
-
-            correctLevel:
-                QRCode.CorrectLevel.H
-        }
-    );
 }
 
+
+/*
+   QR MUST finish before this function returns.
+*/
+
+await generateQRCode(
+certificateId
+);
+
+}
 
 
 /* =========================================================
    CREATE PDF
 ========================================================= */
 
-async function createCertificatePDF() {
+async function createCertificatePDF(){
 
+const certificate=
+document.getElementById(
+"certificate"
+);
 
-    const certificate =
-        document.querySelector(
-            ".certificate"
-        );
+if(!certificate){
 
+throw new Error(
+"Certificate element was not found."
+);
 
-    if (!certificate) {
-
-        throw new Error(
-            "Certificate element not found."
-        );
-    }
-
-
-    await document.fonts.ready;
-
-
-    /*
-       Wait for:
-       - fonts
-       - QR
-       - signature
-       - layout
-    */
-
-    await new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                900
-            )
-    );
-
-
-    const canvas =
-
-        await html2canvas(
-            certificate,
-            {
-
-                scale:
-                    2,
-
-                useCORS:
-                    true,
-
-                allowTaint:
-                    false,
-
-                backgroundColor:
-                    "#fdfbf7",
-
-                logging:
-                    false,
-
-                width:
-                    certificate.scrollWidth,
-
-                height:
-                    certificate.scrollHeight,
-
-                windowWidth:
-                    certificate.scrollWidth,
-
-                windowHeight:
-                    certificate.scrollHeight
-            }
-        );
-
-
-    const imageData =
-
-        canvas.toDataURL(
-            "image/jpeg",
-            0.96
-        );
-
-
-    const {
-        jsPDF
-    } =
-        window.jspdf;
-
-
-    const pdf =
-
-        new jsPDF(
-            {
-
-                orientation:
-                    "landscape",
-
-                unit:
-                    "mm",
-
-                format:
-                    "a4",
-
-                compress:
-                    true
-            }
-        );
-
-
-    pdf.addImage(
-
-        imageData,
-
-        "JPEG",
-
-        0,
-
-        0,
-
-        297,
-
-        210,
-
-        undefined,
-
-        "FAST"
-    );
-
-
-    return pdf;
 }
 
+
+/*
+   Wait for fonts.
+*/
+
+if(
+document.fonts &&
+document.fonts.ready
+){
+
+await document.fonts.ready;
+
+}
+
+
+/*
+   Wait for final layout.
+*/
+
+await wait(500);
+
+
+/*
+   Confirm ONE QR exists.
+*/
+
+const qrImages=
+document.querySelectorAll(
+"#qrCode img"
+);
+
+if(qrImages.length!==1){
+
+throw new Error(
+"PDF stopped: certificate must contain exactly one QR code."
+);
+
+}
+
+const qrImage=
+qrImages[0];
+
+await waitForImage(
+qrImage
+);
+
+
+/*
+   Render certificate.
+*/
+
+const canvas=
+await html2canvas(
+certificate,
+{
+
+scale:2,
+
+useCORS:true,
+
+allowTaint:false,
+
+backgroundColor:"#fdfbf7",
+
+logging:false,
+
+width:1400,
+
+height:990,
+
+windowWidth:1400,
+
+windowHeight:990
+
+}
+);
+
+
+/*
+   High quality image.
+*/
+
+const imageData=
+canvas.toDataURL(
+"image/jpeg",
+0.97
+);
+
+
+/*
+   A4 landscape PDF.
+*/
+
+const {
+jsPDF
+}=
+window.jspdf;
+
+const pdf=
+new jsPDF(
+{
+
+orientation:"landscape",
+
+unit:"mm",
+
+format:"a4",
+
+compress:true
+
+}
+);
+
+
+/*
+   A4 landscape:
+   297 × 210 mm
+*/
+
+pdf.addImage(
+imageData,
+"JPEG",
+0,
+0,
+297,
+210,
+undefined,
+"FAST"
+);
+
+return pdf;
+
+}
 
 
 /* =========================================================
@@ -4281,689 +2710,504 @@ async function createCertificatePDF() {
 ========================================================= */
 
 async function uploadCertificateToDrive(
+pdf,
+studentName,
+certificateId
+){
 
-    pdf,
+const pdfDataURI=
+pdf.output(
+"datauristring"
+);
 
-    studentName,
+const commaIndex=
+pdfDataURI.indexOf(",");
 
-    certificateId
+if(commaIndex===-1){
 
-) {
+throw new Error(
+"Unable to prepare PDF for Drive upload."
+);
 
+}
 
-    const pdfDataURI =
+const pdfBase64=
+pdfDataURI.substring(
+commaIndex+1
+);
 
-        pdf.output(
-            "datauristring"
-        );
+const response=
+await fetch(
+GOOGLE_SCRIPT_URL,
+{
 
+method:"POST",
 
-    const commaIndex =
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
 
-        pdfDataURI.indexOf(
-            ","
-        );
+body:JSON.stringify(
+{
 
+studentName:
+studentName,
 
-    if (
-        commaIndex ===
-        -1
-    ) {
+certificateId:
+certificateId,
 
-        throw new Error(
-            "Unable to convert PDF for upload."
-        );
-    }
+pdfBase64:
+pdfBase64
 
+}
+)
 
-    const pdfBase64 =
+}
+);
 
-        pdfDataURI.substring(
-            commaIndex + 1
-        );
+if(!response.ok){
 
+throw new Error(
+"Google Drive upload failed. HTTP "+
+response.status
+);
 
-    const response =
+}
 
-        await fetch(
-            GOOGLE_SCRIPT_URL,
-            {
+const result=
+await response.json();
 
-                method:
-                    "POST",
+if(
+!result ||
+!result.success
+){
 
-                headers:
-                    {
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-                    },
+throw new Error(
+result?.error ||
+"Google Drive upload failed."
+);
 
-                body:
-                    JSON.stringify(
-                        {
+}
 
-                            studentName:
-                                studentName,
+if(!result.driveUrl){
 
-                            certificateId:
-                                certificateId,
+throw new Error(
+"Drive upload completed but no Drive URL was returned."
+);
 
-                            pdfBase64:
-                                pdfBase64
-                        }
-                    )
-            }
-        );
+}
 
+return result;
 
-    if (
-        !response.ok
-    ) {
-
-        throw new Error(
-            "Google Drive upload failed. HTTP " +
-            response.status
-        );
-    }
-
-
-    const result =
-        await response.json();
-
-
-    if (
-        !result ||
-        !result.success
-    ) {
-
-        throw new Error(
-            result?.error ||
-            "Google Drive upload failed."
-        );
-    }
-
-
-    if (
-        !result.driveUrl
-    ) {
-
-        throw new Error(
-            "Drive upload succeeded but no Drive URL was returned."
-        );
-    }
-
-
-    return result;
 }
 
 
-
 /* =========================================================
-   SAVE DRIVE URL TO SUPABASE
+   SAVE DRIVE URL
 ========================================================= */
 
 async function saveCertificateURL(
+certificateId,
+certificateURL
+){
 
-    certificateId,
+if(
+typeof internioSupabase==="undefined"
+){
 
-    certificateURL
+throw new Error(
+"InternIO Supabase client is not available."
+);
 
-) {
-
-
-    if (
-        typeof internioSupabase ===
-        "undefined"
-    ) {
-
-        throw new Error(
-            "Supabase client is not available."
-        );
-    }
-
-
-    const result =
-
-        await internioSupabase.rpc(
-            "set_certificate_url",
-            {
-
-                p_certificate_id:
-                    certificateId,
-
-                p_certificate_url:
-                    certificateURL
-            }
-        );
-
-
-    if (
-        result.error
-    ) {
-
-        console.error(
-            result.error
-        );
-
-        throw new Error(
-            result.error.message ||
-            "Unable to save Drive URL."
-        );
-    }
-
-
-    return true;
 }
 
+const result=
+await internioSupabase.rpc(
+"set_certificate_url",
+{
+
+p_certificate_id:
+certificateId,
+
+p_certificate_url:
+certificateURL
+
+}
+);
+
+if(result.error){
+
+console.error(result.error);
+
+throw new Error(
+result.error.message ||
+"Unable to save certificate URL."
+);
+
+}
+
+return true;
+
+}
 
 
 /* =========================================================
-   DOWNLOAD PDF
+   DOWNLOAD
 ========================================================= */
 
-async function downloadCertificatePDF() {
+async function downloadCertificatePDF(){
 
-    try {
+try{
 
+if(!generatedPDF){
 
-        if (
-            !generatedPDF
-        ) {
+generatedPDF=
+await createCertificatePDF();
 
-            generatedPDF =
-                await createCertificatePDF();
-        }
-
-
-        const student =
-
-            document
-                .getElementById(
-                    "certificateStudent"
-                )
-                .textContent ||
-            "Student";
-
-
-        const safeName =
-
-            String(
-                student
-            )
-
-            .replace(
-                /[^a-zA-Z0-9_-]+/g,
-                "_"
-            )
-
-            .replace(
-                /^_+|_+$/g,
-                ""
-            );
-
-
-        const safeId =
-
-            String(
-                generatedCertificateId ||
-                "Certificate"
-            )
-
-            .replace(
-                /[^a-zA-Z0-9_-]+/g,
-                "_"
-            );
-
-
-        generatedPDF.save(
-
-            "InternIO_Certificate_" +
-
-            safeName +
-
-            "_" +
-
-            safeId +
-
-            ".pdf"
-        );
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "PDF download error:",
-            error
-        );
-
-
-        alert(
-            "Unable to create the PDF.\n\n" +
-            error.message
-        );
-    }
 }
 
+const student=
+document
+.getElementById(
+"certificateStudent"
+)
+.textContent ||
+"Student";
+
+const safeName=
+String(student)
+.replace(
+/[^a-zA-Z0-9_-]+/g,
+"_"
+)
+.replace(
+/^_+|_+$/g,
+""
+);
+
+const safeId=
+String(
+generatedCertificateId ||
+"Certificate"
+)
+.replace(
+/[^a-zA-Z0-9_-]+/g,
+"_"
+);
+
+generatedPDF.save(
+
+"InternIO_Certificate_"+
+safeName+
+"_"+
+safeId+
+".pdf"
+
+);
+
+}catch(error){
+
+console.error(
+"PDF error:",
+error
+);
+
+alert(
+"Unable to create the PDF.\n\n"+
+error.message
+);
+
+}
+
+}
 
 
 /* =========================================================
-   GENERATE CERTIFICATE
+   GENERATE
 ========================================================= */
 
-async function generateCertificate() {
+async function generateCertificate(){
 
+const button=
+document.getElementById(
+"generateButton"
+);
 
-    const button =
+const data=
+getFormData();
 
-        document.getElementById(
-            "generateButton"
-        );
+showMessage("","");
 
+if(!validateForm(data)){
 
-    const data =
-        getFormData();
+return;
 
-
-    showMessage(
-        "",
-        ""
-    );
-
-
-    if (
-        !validateForm(data)
-    ) {
-
-        return;
-    }
-
-
-    button.disabled =
-        true;
-
-
-    try {
-
-
-        /* ===============================================
-           1. DATABASE
-        =============================================== */
-
-        button.textContent =
-            "CREATING CERTIFICATE...";
-
-
-        const rpcData =
-            await saveCertificate(
-                data
-            );
-
-
-        const certificateId =
-            extractCertificateId(
-                rpcData
-            );
-
-
-        if (
-            !certificateId
-        ) {
-
-            console.error(
-                "Unexpected RPC response:",
-                rpcData
-            );
-
-
-            throw new Error(
-                "Certificate was created but no certificate ID was returned."
-            );
-        }
-
-
-        generatedCertificateId =
-            String(
-                certificateId
-            );
-
-
-
-        /* ===============================================
-           2. RENDER
-        =============================================== */
-
-        button.textContent =
-            "PREPARING CERTIFICATE...";
-
-
-        renderCertificate(
-            data,
-            generatedCertificateId
-        );
-
-
-
-        /* ===============================================
-           3. SHOW RESULT
-        =============================================== */
-
-        document
-            .getElementById(
-                "formScreen"
-            )
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById(
-                "result"
-            )
-            .style.display =
-            "block";
-
-
-        window.scrollTo(
-            {
-                top:
-                    0,
-
-                behavior:
-                    "smooth"
-            }
-        );
-
-
-
-        /* ===============================================
-           4. CREATE PDF
-        =============================================== */
-
-        button.textContent =
-            "CREATING PDF...";
-
-
-        generatedPDF =
-            await createCertificatePDF();
-
-
-
-        /* ===============================================
-           5. GOOGLE DRIVE
-        =============================================== */
-
-        button.textContent =
-            "UPLOADING TO DRIVE...";
-
-
-        const driveResult =
-
-            await uploadCertificateToDrive(
-
-                generatedPDF,
-
-                data.studentName,
-
-                generatedCertificateId
-            );
-
-
-        generatedDriveURL =
-            driveResult.driveUrl;
-
-
-
-        /* ===============================================
-           6. SAVE DRIVE URL
-        =============================================== */
-
-        button.textContent =
-            "LINKING CERTIFICATE...";
-
-
-        await saveCertificateURL(
-
-            generatedCertificateId,
-
-            generatedDriveURL
-        );
-
-
-
-        /* ===============================================
-           7. SUCCESS
-        =============================================== */
-
-        showMessage(
-
-            "Certificate successfully created, uploaded and linked.",
-
-            "success"
-        );
-
-
-        console.log(
-            "InternIO Certificate ID:",
-            generatedCertificateId
-        );
-
-
-        console.log(
-            "Drive URL:",
-            generatedDriveURL
-        );
-
-
-    }
-
-    catch (error) {
-
-
-        console.error(
-            "Certificate generation error:",
-            error
-        );
-
-
-        alert(
-
-            "Certificate creation was not completed.\n\n" +
-
-            error.message
-        );
-
-
-        document
-            .getElementById(
-                "result"
-            )
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById(
-                "formScreen"
-            )
-            .style.display =
-            "grid";
-
-
-        showMessage(
-
-            error.message ||
-
-            "Unable to complete certificate generation.",
-
-            "error"
-        );
-
-    }
-
-
-    finally {
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "GENERATE CERTIFICATE";
-    }
 }
 
+button.disabled=true;
+
+try{
+
+
+/* DATABASE */
+
+button.textContent=
+"CREATING CERTIFICATE...";
+
+const rpcData=
+await saveCertificate(
+data
+);
+
+const certificateId=
+extractCertificateId(
+rpcData
+);
+
+if(!certificateId){
+
+console.error(
+"Unexpected database response:",
+rpcData
+);
+
+throw new Error(
+"Certificate was created but no certificate ID was returned."
+);
+
+}
+
+generatedCertificateId=
+String(certificateId);
+
+console.log(
+"InternIO certificate ID:",
+generatedCertificateId
+);
+
+
+/* CERTIFICATE + ONE QR */
+
+button.textContent=
+"GENERATING QR CODE...";
+
+await renderCertificate(
+data,
+generatedCertificateId
+);
+
+
+/* SHOW RESULT */
+
+document
+.getElementById("formScreen")
+.style.display="none";
+
+document
+.getElementById("result")
+.style.display="block";
+
+window.scrollTo(
+{
+top:0,
+behavior:"smooth"
+}
+);
+
+
+/* PDF */
+
+button.textContent=
+"CREATING PDF...";
+
+generatedPDF=
+await createCertificatePDF();
+
+
+/* DRIVE */
+
+button.textContent=
+"UPLOADING TO DRIVE...";
+
+const driveResult=
+await uploadCertificateToDrive(
+generatedPDF,
+data.studentName,
+generatedCertificateId
+);
+
+generatedDriveURL=
+driveResult.driveUrl;
+
+console.log(
+"InternIO Drive URL:",
+generatedDriveURL
+);
+
+
+/* DATABASE URL */
+
+button.textContent=
+"SAVING VERIFICATION LINK...";
+
+await saveCertificateURL(
+generatedCertificateId,
+generatedDriveURL
+);
+
+
+/* SUCCESS */
+
+showMessage(
+"Certificate created successfully.",
+"success"
+);
+
+console.log(
+"InternIO verification URL:",
+getVerificationURL(
+generatedCertificateId
+)
+);
+
+}catch(error){
+
+console.error(
+"InternIO certificate error:",
+error
+);
+
+alert(
+"Certificate creation failed.\n\n"+
+error.message
+);
+
+document
+.getElementById("result")
+.style.display="none";
+
+document
+.getElementById("formScreen")
+.style.display="grid";
+
+showMessage(
+error.message ||
+"Unable to create certificate.",
+"error"
+);
+
+}finally{
+
+button.disabled=false;
+
+button.textContent=
+"GENERATE CERTIFICATE";
+
+}
+
+}
 
 
 /* =========================================================
    EDIT
 ========================================================= */
 
-function editCertificate() {
+function editCertificate(){
 
+document
+.getElementById("result")
+.style.display="none";
 
-    document
-        .getElementById(
-            "result"
-        )
-        .style.display =
-        "none";
+document
+.getElementById("formScreen")
+.style.display="grid";
 
-
-    document
-        .getElementById(
-            "formScreen"
-        )
-        .style.display =
-        "grid";
-
-
-    window.scrollTo(
-        {
-            top:
-                0,
-
-            behavior:
-                "smooth"
-        }
-    );
+window.scrollTo(
+{
+top:0,
+behavior:"smooth"
 }
+);
 
+}
 
 
 /* =========================================================
    NEW CERTIFICATE
 ========================================================= */
 
-function newCertificate() {
+function newCertificate(){
+
+document
+.getElementById("studentName")
+.value="";
+
+document
+.getElementById("internship")
+.value="";
+
+document
+.getElementById("projectName")
+.value="";
+
+document
+.getElementById("startDate")
+.value="";
+
+document
+.getElementById("endDate")
+.value="";
+
+document
+.getElementById("duration")
+.value="";
+
+document
+.getElementById("issueDate")
+.value="";
 
 
-    document
-        .getElementById(
-            "studentName"
-        )
-        .value =
-        "";
+generatedCertificateId=null;
+
+generatedPDF=null;
+
+generatedDriveURL=null;
 
 
-    document
-        .getElementById(
-            "internship"
-        )
-        .value =
-        "";
+/*
+   Remove absolutely everything
+   from QR container.
+*/
+
+document
+.getElementById("qrCode")
+.replaceChildren();
 
 
-    document
-        .getElementById(
-            "projectName"
-        )
-        .value =
-        "";
+selectType(
+"PROJECT_NAMED"
+);
 
 
-    document
-        .getElementById(
-            "startDate"
-        )
-        .value =
-        "";
+document
+.getElementById("result")
+.style.display="none";
 
+document
+.getElementById("formScreen")
+.style.display="grid";
 
-    document
-        .getElementById(
-            "endDate"
-        )
-        .value =
-        "";
+showMessage("","");
 
-
-    document
-        .getElementById(
-            "duration"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "issueDate"
-        )
-        .value =
-        "";
-
-
-    generatedCertificateId =
-        null;
-
-
-    generatedPDF =
-        null;
-
-
-    generatedDriveURL =
-        null;
-
-
-    selectType(
-        "PROJECT_NAMED"
-    );
-
-
-    document
-        .getElementById(
-            "result"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "formScreen"
-        )
-        .style.display =
-        "grid";
-
-
-    showMessage(
-        "",
-        ""
-    );
-
-
-    window.scrollTo(
-        {
-            top:
-                0,
-
-            behavior:
-                "smooth"
-        }
-    );
+window.scrollTo(
+{
+top:0,
+behavior:"smooth"
 }
+);
 
+}
 
 
 /* =========================================================
@@ -4971,11 +3215,10 @@ function newCertificate() {
 ========================================================= */
 
 selectType(
-    "PROJECT_NAMED"
+"PROJECT_NAMED"
 );
 
 </script>
-
 
 </body>
 </html>
