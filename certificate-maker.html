@@ -6,10 +6,6 @@
 
 <title>InternIO — Certificate Maker</title>
 
-<!-- =====================================================
-     FONTS
-====================================================== -->
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -18,30 +14,15 @@
     rel="stylesheet"
 >
 
-<!-- =====================================================
-     SUPABASE
-====================================================== -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- =====================================================
-     SHARED ADMIN AUTH
-====================================================== -->
-
 <script src="auth.js"></script>
-
-<!-- =====================================================
-     QR CODE
-====================================================== -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 
 <style>
 
-/* =====================================================
+/* =========================================================
    GLOBAL
-====================================================== */
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -54,6 +35,7 @@ body {
 }
 
 body {
+    min-height: 100vh;
     background: #eef1f5;
     color: #13213a;
     font-family: "Montserrat", sans-serif;
@@ -61,29 +43,25 @@ body {
 
 :root {
     --navy: #071a38;
-    --navy2: #102b50;
-
-    --gold: #c79627;
-    --gold2: #e4c66e;
-    --gold3: #9a701b;
-
+    --navy-light: #18375e;
+    --gold: #b88720;
+    --gold-light: #e2c66d;
+    --gold-dark: #8d6518;
     --paper: #fdfbf6;
-
-    --text: #17243c;
+    --text: #26344a;
     --muted: #737d8c;
-
-    --green: #16803c;
+    --border: #dce1e8;
+    --green: #16763b;
     --red: #c62828;
 }
 
 
-/* =====================================================
-   TOP BAR
-====================================================== */
+/* =========================================================
+   ADMIN HEADER
+========================================================= */
 
 .topbar {
     height: 70px;
-
     padding: 0 30px;
 
     display: flex;
@@ -95,14 +73,17 @@ body {
 }
 
 .logo {
+    color: white;
+
     font-size: 30px;
     font-weight: 700;
 
+    line-height: 1;
     letter-spacing: -2px;
 }
 
 .logo span {
-    color: var(--gold2);
+    color: var(--gold-light);
 }
 
 .top-right {
@@ -121,8 +102,7 @@ body {
 }
 
 .logout {
-    height: 34px;
-
+    height: 35px;
     padding: 0 15px;
 
     border: 1px solid rgba(255,255,255,.25);
@@ -140,21 +120,21 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    PAGE
-====================================================== */
+========================================================= */
 
 .page {
     width: calc(100% - 32px);
-    max-width: 1550px;
+    max-width: 1500px;
 
-    margin: 20px auto;
+    margin: 20px auto 40px;
 }
 
 
-/* =====================================================
+/* =========================================================
    FORM LAYOUT
-====================================================== */
+========================================================= */
 
 .form-layout {
     display: grid;
@@ -165,26 +145,25 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    FORM PANEL
-====================================================== */
+========================================================= */
 
 .form-panel {
     background: white;
 
-    border: 1px solid #dce1e8;
-    border-radius: 12px;
-
     padding: 25px;
 
-    box-shadow:
-        0 10px 30px rgba(7,26,56,.07);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow: 0 12px 35px rgba(7,26,56,.07);
 }
 
 .form-title {
     color: var(--navy);
 
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 700;
 }
 
@@ -198,9 +177,13 @@ body {
 }
 
 
-/* =====================================================
-   LABEL
-====================================================== */
+/* =========================================================
+   FORM
+========================================================= */
+
+.field {
+    margin-bottom: 15px;
+}
 
 label {
     display: block;
@@ -212,16 +195,7 @@ label {
     font-size: 9px;
     font-weight: 700;
 
-    letter-spacing: .6px;
-}
-
-
-/* =====================================================
-   INPUT
-====================================================== */
-
-.field {
-    margin-bottom: 15px;
+    letter-spacing: .7px;
 }
 
 input {
@@ -246,14 +220,19 @@ input {
 input:focus {
     border-color: var(--gold);
 
-    box-shadow:
-        0 0 0 3px rgba(199,150,39,.10);
+    box-shadow: 0 0 0 3px rgba(184,135,32,.10);
+}
+
+.two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 
-/* =====================================================
+/* =========================================================
    CERTIFICATE TYPE
-====================================================== */
+========================================================= */
 
 .type-option {
     display: flex;
@@ -265,10 +244,16 @@ input:focus {
 
     margin-bottom: 8px;
 
-    border: 1px solid #dce1e8;
+    border: 1px solid var(--border);
     border-radius: 7px;
 
     cursor: pointer;
+
+    transition: .15s ease;
+}
+
+.type-option:hover {
+    border-color: #c7a75b;
 }
 
 .type-option.active {
@@ -281,7 +266,7 @@ input:focus {
     width: 17px;
     height: 17px;
 
-    flex-shrink: 0;
+    flex: 0 0 17px;
 
     margin-top: 1px;
 
@@ -306,32 +291,18 @@ input:focus {
     color: #7b8491;
 
     font-size: 8px;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 
-/* =====================================================
-   TWO COLUMNS
-====================================================== */
-
-.two {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 10px;
-}
-
-
-/* =====================================================
+/* =========================================================
    INFO
-====================================================== */
+========================================================= */
 
 .info {
     padding: 11px 12px;
 
-    margin-top: 2px;
-    margin-bottom: 16px;
+    margin: 2px 0 16px;
 
     border-left: 3px solid var(--gold);
 
@@ -355,23 +326,22 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    BUTTON
-====================================================== */
+========================================================= */
 
 .generate {
     width: 100%;
     height: 50px;
 
-    border: none;
+    border: 0;
     border-radius: 6px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #071a38,
-            #17365e
-        );
+    background: linear-gradient(
+        135deg,
+        #071a38,
+        #17365e
+    );
 
     color: white;
 
@@ -380,9 +350,13 @@ input:focus {
     font-family: inherit;
     font-size: 11px;
     font-weight: 700;
+
+    transition: .15s ease;
 }
 
 .generate:hover {
+    transform: translateY(-1px);
+
     box-shadow:
         0 10px 25px rgba(7,26,56,.18);
 }
@@ -390,6 +364,7 @@ input:focus {
 .generate:disabled {
     opacity: .6;
     cursor: wait;
+    transform: none;
 }
 
 .message {
@@ -412,12 +387,12 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    FORM PREVIEW
-====================================================== */
+========================================================= */
 
 .form-preview {
-    min-height: 620px;
+    min-height: 650px;
 
     position: relative;
 
@@ -432,6 +407,11 @@ input:focus {
     border-radius: 12px;
 
     background:
+        radial-gradient(
+            circle at center,
+            rgba(199,150,39,.10),
+            transparent 35%
+        ),
         linear-gradient(
             135deg,
             #071a38,
@@ -450,26 +430,26 @@ input:focus {
 
     transform: translate(-50%, -50%);
 
-    border: 1px solid rgba(228,198,110,.16);
+    border: 1px solid rgba(228,198,110,.15);
 
     border-radius: 50%;
 }
 
 .form-preview::before {
-    width: 500px;
-    height: 500px;
+    width: 570px;
+    height: 570px;
 }
 
 .form-preview::after {
-    width: 330px;
-    height: 330px;
+    width: 390px;
+    height: 390px;
 }
 
 .preview-content {
     position: relative;
     z-index: 2;
 
-    max-width: 650px;
+    max-width: 700px;
 
     text-align: center;
 
@@ -477,18 +457,20 @@ input:focus {
 }
 
 .preview-logo {
-    font-size: 64px;
+    font-size: 72px;
     font-weight: 700;
 
-    letter-spacing: -5px;
+    line-height: .9;
+
+    letter-spacing: -6px;
 }
 
 .preview-logo span {
-    color: var(--gold2);
+    color: var(--gold-light);
 }
 
 .preview-tagline {
-    margin-top: 9px;
+    margin-top: 12px;
 
     font-size: 10px;
     font-weight: 700;
@@ -497,26 +479,26 @@ input:focus {
 }
 
 .preview-rule {
-    width: 130px;
+    width: 140px;
     height: 1px;
 
-    margin: 22px auto;
+    margin: 23px auto;
 
-    background: var(--gold2);
+    background: var(--gold-light);
 }
 
 .preview-title {
     font-family: "Cinzel", serif;
 
-    font-size: 28px;
+    font-size: 29px;
 
     letter-spacing: 5px;
 }
 
 .preview-description {
-    max-width: 550px;
+    max-width: 560px;
 
-    margin: 15px auto;
+    margin: 16px auto;
 
     color: #d5dce7;
 
@@ -531,11 +513,11 @@ input:focus {
 
     gap: 10px;
 
-    margin-top: 25px;
+    margin-top: 26px;
 }
 
 .preview-box {
-    padding: 13px;
+    padding: 14px;
 
     border: 1px solid rgba(228,198,110,.25);
 
@@ -545,7 +527,7 @@ input:focus {
 .preview-box strong {
     display: block;
 
-    color: var(--gold2);
+    color: var(--gold-light);
 
     font-size: 9px;
 }
@@ -561,9 +543,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    RESULT
-====================================================== */
+========================================================= */
 
 .result {
     display: none;
@@ -574,13 +556,15 @@ input:focus {
     align-items: center;
     justify-content: space-between;
 
+    gap: 20px;
+
     padding: 15px 18px;
 
     margin-bottom: 15px;
 
     background: white;
 
-    border: 1px solid #dce1e8;
+    border: 1px solid var(--border);
     border-radius: 10px;
 }
 
@@ -601,6 +585,7 @@ input:focus {
 
 .actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 7px;
 }
 
@@ -609,7 +594,7 @@ input:focus {
 
     padding: 0 14px;
 
-    border: none;
+    border: 0;
     border-radius: 5px;
 
     background: var(--navy);
@@ -623,6 +608,10 @@ input:focus {
     font-weight: 700;
 }
 
+.actions button:hover {
+    opacity: .9;
+}
+
 .actions .light {
     background: #edf0f4;
     color: var(--navy);
@@ -633,13 +622,12 @@ input:focus {
 }
 
 
-/* =====================================================
-   CERTIFICATE OUTER
-====================================================== */
+/* =========================================================
+   CERTIFICATE
+========================================================= */
 
 .certificate-scroll {
     width: 100%;
-
     overflow-x: auto;
 
     padding-bottom: 25px;
@@ -650,7 +638,6 @@ input:focus {
     height: 990px;
 
     margin: auto;
-
     padding: 13px;
 
     background:
@@ -666,9 +653,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    PAPER
-====================================================== */
+========================================================= */
 
 .paper {
     position: relative;
@@ -696,7 +683,7 @@ input:focus {
 
     inset: 13px;
 
-    border: 1px solid rgba(199,150,39,.8);
+    border: 1px solid rgba(199,150,39,.82);
 
     pointer-events: none;
 }
@@ -714,9 +701,9 @@ input:focus {
 }
 
 
-/* =====================================================
-   CORNERS
-====================================================== */
+/* =========================================================
+   DECORATIVE CORNERS
+========================================================= */
 
 .corner {
     position: absolute;
@@ -752,8 +739,8 @@ input:focus {
     width: 265px;
     height: 150px;
 
-    border-top: 3px solid var(--gold2);
-    border-left: 3px solid var(--gold2);
+    border-top: 3px solid var(--gold-light);
+    border-left: 3px solid var(--gold-light);
 }
 
 .corner-br {
@@ -782,8 +769,8 @@ input:focus {
     width: 265px;
     height: 150px;
 
-    border-right: 3px solid var(--gold2);
-    border-bottom: 3px solid var(--gold2);
+    border-right: 3px solid var(--gold-light);
+    border-bottom: 3px solid var(--gold-light);
 }
 
 .corner-tr {
@@ -809,9 +796,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    WATERMARK
-====================================================== */
+========================================================= */
 
 .watermark {
     position: absolute;
@@ -830,6 +817,8 @@ input:focus {
     font-size: 410px;
     font-weight: 700;
 
+    line-height: 1;
+
     letter-spacing: -50px;
 
     pointer-events: none;
@@ -840,9 +829,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    CERTIFICATE ID
-====================================================== */
+========================================================= */
 
 .certificate-id {
     position: absolute;
@@ -880,35 +869,35 @@ input:focus {
     align-items: center;
     justify-content: center;
 
-    gap: 10px;
+    gap: 8px;
 
-    margin-top: 9px;
+    margin-top: 8px;
 }
 
 .id-line {
-    width: 42px;
+    width: 38px;
     height: 1px;
 
     background: var(--gold);
 }
 
 .id-star {
-    color: var(--gold3);
+    color: var(--gold-dark);
 
-    font-size: 13px;
+    font-size: 11px;
 }
 
 
-/* =====================================================
+/* =========================================================
    BRAND
-====================================================== */
+========================================================= */
 
 .brand {
     position: relative;
 
     z-index: 5;
 
-    padding-top: 58px;
+    padding-top: 56px;
 
     text-align: center;
 }
@@ -916,7 +905,7 @@ input:focus {
 .brand-name {
     color: var(--navy);
 
-    font-size: 83px;
+    font-size: 82px;
     font-weight: 700;
 
     line-height: .9;
@@ -929,7 +918,7 @@ input:focus {
 }
 
 .brand-tagline {
-    margin-top: 13px;
+    margin-top: 12px;
 
     color: #263650;
 
@@ -943,8 +932,6 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    gap: 10px;
 
     width: 420px;
 
@@ -965,19 +952,20 @@ input:focus {
     width: 9px;
     height: 9px;
 
+    margin: 0 10px;
+
     transform: rotate(45deg);
 
     background: var(--gold);
 }
 
 
-/* =====================================================
+/* =========================================================
    MAIN TITLE
-====================================================== */
+========================================================= */
 
 .certificate-title {
     position: relative;
-
     z-index: 5;
 
     margin-top: 24px;
@@ -988,18 +976,19 @@ input:focus {
 
     font-family: "Cinzel", serif;
 
-    font-size: 66px;
+    font-size: 65px;
     font-weight: 600;
 
-    letter-spacing: 11px;
+    line-height: 1;
+
+    letter-spacing: 10px;
 }
 
 .certificate-subtitle {
     position: relative;
-
     z-index: 5;
 
-    margin-top: 3px;
+    margin-top: 5px;
 
     text-align: center;
 
@@ -1007,23 +996,22 @@ input:focus {
 
     font-family: "Cinzel", serif;
 
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 600;
 
     letter-spacing: 8px;
 }
 
 
-/* =====================================================
+/* =========================================================
    CERTIFY
-====================================================== */
+========================================================= */
 
 .certify {
     position: relative;
-
     z-index: 5;
 
-    margin-top: 27px;
+    margin-top: 26px;
 
     text-align: center;
 
@@ -1036,18 +1024,18 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    STUDENT NAME
-====================================================== */
+========================================================= */
 
 .student-name {
     position: relative;
-
     z-index: 5;
 
-    margin-top: 2px;
+    width: 100%;
 
-    padding: 0 30px;
+    margin-top: 2px;
+    padding: 0 35px;
 
     text-align: center;
 
@@ -1055,11 +1043,13 @@ input:focus {
 
     font-family: "Allura", cursive;
 
-    font-size: 96px;
-
+    font-size: 94px;
     line-height: 1.08;
 
     white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .name-line {
@@ -1089,26 +1079,25 @@ input:focus {
 }
 
 
-/* =====================================================
-   DESCRIPTION
-====================================================== */
+/* =========================================================
+   BODY TEXT
+========================================================= */
 
 .body-text {
     position: relative;
-
     z-index: 5;
 
-    width: 82%;
+    width: 78%;
 
-    margin: 15px auto 0;
+    margin: 13px auto 0;
 
     text-align: center;
 
     color: #354257;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    line-height: 1.65;
+    line-height: 1.55;
 }
 
 .body-text strong {
@@ -1117,22 +1106,21 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    PROJECT
-====================================================== */
+========================================================= */
 
 .project {
     position: relative;
-
     z-index: 5;
 
     display: none;
 
-    width: 48%;
+    width: 45%;
 
-    margin: 11px auto 0;
+    margin: 9px auto 0;
 
-    padding: 8px 18px;
+    padding: 7px 15px;
 
     text-align: center;
 
@@ -1143,7 +1131,7 @@ input:focus {
 .project-label {
     color: #9b721e;
 
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
 
     letter-spacing: 3px;
@@ -1154,29 +1142,28 @@ input:focus {
 
     color: var(--navy);
 
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
 }
 
 
-/* =====================================================
+/* =========================================================
    DETAILS
-====================================================== */
+========================================================= */
 
 .details {
     position: relative;
-
     z-index: 5;
 
-    width: 78%;
+    width: 76%;
 
-    margin: 18px auto 0;
+    margin: 15px auto 0;
 
     display: grid;
 
     grid-template-columns: repeat(4, 1fr);
 
-    padding: 11px 0;
+    padding: 10px 0;
 
     border-top: 1px solid rgba(199,150,39,.5);
     border-bottom: 1px solid rgba(199,150,39,.5);
@@ -1195,25 +1182,25 @@ input:focus {
 .detail-label {
     color: #737d8c;
 
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
 
-    letter-spacing: 1.7px;
+    letter-spacing: 1.6px;
 }
 
 .detail-value {
-    margin-top: 6px;
+    margin-top: 5px;
 
     color: var(--navy);
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 }
 
 
-/* =====================================================
-   BOTTOM
-====================================================== */
+/* =========================================================
+   BOTTOM AREA
+========================================================= */
 
 .bottom {
     position: absolute;
@@ -1234,9 +1221,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    SIGNATURE
-====================================================== */
+========================================================= */
 
 .signature {
     text-align: center;
@@ -1246,7 +1233,7 @@ input:focus {
     display: block;
 
     width: 250px;
-    height: 75px;
+    height: 72px;
 
     margin: 0 auto 3px;
 
@@ -1258,11 +1245,11 @@ input:focus {
 .signature-fallback {
     margin-bottom: 4px;
 
+    color: #102746;
+
     font-family: "Allura", cursive;
 
     font-size: 52px;
-
-    color: #102746;
 
     transform: rotate(-3deg);
 }
@@ -1277,7 +1264,7 @@ input:focus {
 }
 
 .signature-name {
-    margin-top: 8px;
+    margin-top: 7px;
 
     color: var(--navy);
 
@@ -1288,7 +1275,7 @@ input:focus {
 }
 
 .signature-title {
-    margin-top: 4px;
+    margin-top: 3px;
 
     color: #737d8c;
 
@@ -1296,9 +1283,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    SEAL
-====================================================== */
+========================================================= */
 
 .seal {
     width: 150px;
@@ -1355,7 +1342,6 @@ input:focus {
 
 .seal-content {
     position: relative;
-
     z-index: 2;
 
     text-align: center;
@@ -1373,32 +1359,32 @@ input:focus {
 }
 
 .seal-stars {
-    margin-top: 6px;
+    margin-top: 5px;
 
     color: #e8c55d;
 
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: 3px;
 }
 
 .seal-io {
-    margin-top: 3px;
+    margin-top: 2px;
 
     color: #e7c15a;
 
     font-family: "Cinzel", serif;
 
-    font-size: 37px;
+    font-size: 36px;
     font-weight: 700;
 }
 
 .seal-verified {
-    margin-top: 2px;
+    margin-top: 1px;
 
     color: white;
 
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
 
     letter-spacing: 2px;
@@ -1409,23 +1395,23 @@ input:focus {
 
     color: #e5c25d;
 
-    font-size: 7px;
+    font-size: 6px;
     font-weight: 700;
 
     letter-spacing: 1.5px;
 }
 
 
-/* =====================================================
+/* =========================================================
    QR
-====================================================== */
+========================================================= */
 
 .qr-area {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
-    gap: 15px;
+    gap: 14px;
 }
 
 .qr-box {
@@ -1436,13 +1422,13 @@ input:focus {
 
     flex-shrink: 0;
 
-    background: white;
-
-    border: 2px solid #c9a64a;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background: white;
+
+    border: 2px solid #c9a64a;
 }
 
 .qr-box img,
@@ -1452,13 +1438,13 @@ input:focus {
 }
 
 .qr-copy {
-    width: 190px;
+    width: 180px;
 }
 
 .qr-title {
     color: var(--navy);
 
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
 
     letter-spacing: 1px;
@@ -1469,21 +1455,20 @@ input:focus {
 
     color: #737d8c;
 
-    font-size: 9px;
+    font-size: 8px;
     line-height: 1.5;
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-====================================================== */
+========================================================= */
 
 .certificate-footer {
     position: absolute;
 
     left: 0;
     right: 0;
-
     bottom: 13px;
 
     z-index: 8;
@@ -1499,9 +1484,9 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    PRINT
-====================================================== */
+========================================================= */
 
 @media print {
 
@@ -1547,6 +1532,7 @@ input:focus {
 
     .certificate-scroll {
         overflow: visible;
+        padding: 0;
     }
 
     .certificate {
@@ -1567,22 +1553,22 @@ input:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    RESPONSIVE
-====================================================== */
+========================================================= */
 
-@media(max-width:1050px) {
+@media (max-width: 1050px) {
 
     .form-layout {
         grid-template-columns: 1fr;
     }
 
     .form-preview {
-        min-height: 450px;
+        min-height: 480px;
     }
 }
 
-@media(max-width:650px) {
+@media (max-width: 650px) {
 
     .topbar {
         padding: 0 15px;
@@ -1602,23 +1588,23 @@ input:focus {
 
     .result-header {
         flex-direction: column;
-
         align-items: flex-start;
+    }
 
-        gap: 12px;
+    .student-name {
+        font-size: 72px;
     }
 }
 
 </style>
 </head>
 
-
 <body>
 
 
-<!-- =====================================================
-     TOP BAR
-====================================================== -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header class="topbar">
 
@@ -1634,7 +1620,8 @@ input:focus {
 
         <button
             class="logout"
-            onclick="internioLogout()"
+            type="button"
+            onclick="logoutAdmin()"
         >
             LOGOUT
         </button>
@@ -1647,9 +1634,9 @@ input:focus {
 <main class="page">
 
 
-<!-- =====================================================
+<!-- =========================================================
      FORM SCREEN
-====================================================== -->
+========================================================= -->
 
 <section
     id="formScreen"
@@ -1657,9 +1644,9 @@ input:focus {
 >
 
 
-    <!-- =================================================
+    <!-- =====================================================
          FORM
-    ================================================== -->
+    ====================================================== -->
 
     <div class="form-panel">
 
@@ -1669,9 +1656,8 @@ input:focus {
 
         <div class="form-description">
             Enter the student's internship details.
-            After generation, the premium certificate
-            will be displayed with a unique certificate ID
-            and QR code.
+            The certificate will be saved to InternIO
+            verification automatically when generated.
         </div>
 
 
@@ -1682,7 +1668,6 @@ input:focus {
             <label>
                 CERTIFICATE TYPE
             </label>
-
 
             <div
                 id="typeProject"
@@ -1722,8 +1707,7 @@ input:focus {
                     </div>
 
                     <div class="type-description">
-                        Use this when no project name
-                        should appear.
+                        Generate without displaying a project.
                     </div>
 
                 </div>
@@ -1767,6 +1751,7 @@ input:focus {
             <input
                 id="studentName"
                 type="text"
+                autocomplete="off"
                 placeholder="Enter student's full name"
             >
 
@@ -1784,6 +1769,7 @@ input:focus {
             <input
                 id="internship"
                 type="text"
+                autocomplete="off"
                 placeholder="Example: Python Programming Internship"
             >
 
@@ -1804,6 +1790,7 @@ input:focus {
             <input
                 id="projectName"
                 type="text"
+                autocomplete="off"
                 placeholder="Example: E-Commerce Website"
             >
 
@@ -1844,7 +1831,7 @@ input:focus {
         </div>
 
 
-        <!-- DURATION / ISSUE -->
+        <!-- DURATION / ISSUE DATE -->
 
         <div class="two">
 
@@ -1857,6 +1844,7 @@ input:focus {
                 <input
                     id="duration"
                     type="text"
+                    autocomplete="off"
                     placeholder="Example: 4 Weeks"
                 >
 
@@ -1882,12 +1870,13 @@ input:focus {
         <div class="info">
 
             <div class="info-title">
-                VERIFICATION INCLUDED
+                SECURE VERIFICATION
             </div>
 
             <div class="info-text">
-                A unique Certificate ID and QR code will
-                be generated for every certificate.
+                A real certificate record is created in the
+                InternIO database. The QR code contains the
+                certificate's real verification ID.
             </div>
 
         </div>
@@ -1896,6 +1885,7 @@ input:focus {
         <button
             id="generateButton"
             class="generate"
+            type="button"
             onclick="generateCertificate()"
         >
             GENERATE CERTIFICATE
@@ -1905,14 +1895,15 @@ input:focus {
         <div
             id="message"
             class="message"
+            aria-live="polite"
         ></div>
 
     </div>
 
 
-    <!-- =================================================
-         PREVIEW INFORMATION
-    ================================================== -->
+    <!-- =====================================================
+         PREVIEW
+    ====================================================== -->
 
     <div class="form-preview">
 
@@ -1933,11 +1924,10 @@ input:focus {
             </div>
 
             <div class="preview-description">
-                A professionally designed certificate
-                recognizing practical learning, internship
-                participation, professional development,
-                project experience and real-world exposure
-                through InternIO.
+                A premium certificate recognizing practical
+                learning, professional development, project
+                experience and real-world exposure through
+                InternIO.
             </div>
 
 
@@ -1965,9 +1955,9 @@ input:focus {
                 </div>
 
                 <div class="preview-box">
-                    <strong>INTERNIO</strong>
+                    <strong>INPUT → OUTPUT</strong>
                     <span>
-                        Input → Output transformation
+                        Learning transformed into real skills
                     </span>
                 </div>
 
@@ -1981,15 +1971,14 @@ input:focus {
 
 
 
-<!-- =====================================================
-     RESULT SCREEN
-====================================================== -->
+<!-- =========================================================
+     RESULT
+========================================================= -->
 
 <section
     id="result"
     class="result"
 >
-
 
     <div class="result-header">
 
@@ -2000,8 +1989,8 @@ input:focus {
             </div>
 
             <div class="result-description">
-                Review the certificate below and print or save
-                it as a PDF.
+                The certificate has been saved and is ready
+                to review, print or save as PDF.
             </div>
 
         </div>
@@ -2011,6 +2000,7 @@ input:focus {
 
             <button
                 class="light"
+                type="button"
                 onclick="editCertificate()"
             >
                 EDIT
@@ -2018,12 +2008,14 @@ input:focus {
 
             <button
                 class="gold"
+                type="button"
                 onclick="window.print()"
             >
                 PRINT / SAVE PDF
             </button>
 
             <button
+                type="button"
                 onclick="newCertificate()"
             >
                 CREATE ANOTHER
@@ -2036,13 +2028,12 @@ input:focus {
 
     <div class="certificate-scroll">
 
-
         <div class="certificate">
 
             <div class="paper">
 
 
-                <!-- CORNERS -->
+                <!-- DECORATION -->
 
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -2069,24 +2060,16 @@ input:focus {
                         id="certificateId"
                         class="id-value"
                     >
-                        IO/INT/2026/0001
+                        —
                     </div>
 
                     <div class="id-decoration">
 
                         <div class="id-line"></div>
 
-                        <div class="id-star">
-                            ★
-                        </div>
-
-                        <div class="id-star">
-                            ★
-                        </div>
-
-                        <div class="id-star">
-                            ★
-                        </div>
+                        <div class="id-star">★</div>
+                        <div class="id-star">★</div>
+                        <div class="id-star">★</div>
 
                         <div class="id-line"></div>
 
@@ -2140,7 +2123,7 @@ input:focus {
                     id="certificateStudent"
                     class="student-name"
                 >
-                    Your Name
+                    Student Name
                 </div>
 
                 <div class="name-line"></div>
@@ -2157,9 +2140,9 @@ input:focus {
                     has successfully completed the
                     <strong>INTERNSHIP PROGRAM</strong>
                     at <strong>InternIO</strong> and demonstrated
-                    dedication, enthusiasm, professional conduct,
-                    practical learning and a strong commitment
-                    to learning and growth.
+                    dedication, professional conduct, practical
+                    learning and a strong commitment to developing
+                    real-world skills.
                 </div>
 
 
@@ -2188,7 +2171,6 @@ input:focus {
 
                 <div class="details">
 
-
                     <div class="detail">
 
                         <div class="detail-label">
@@ -2199,7 +2181,7 @@ input:focus {
                             id="certificateStart"
                             class="detail-value"
                         >
-                            01 May 2026
+                            —
                         </div>
 
                     </div>
@@ -2215,7 +2197,7 @@ input:focus {
                             id="certificateEnd"
                             class="detail-value"
                         >
-                            31 May 2026
+                            —
                         </div>
 
                     </div>
@@ -2231,7 +2213,7 @@ input:focus {
                             id="certificateDuration"
                             class="detail-value"
                         >
-                            4 Weeks
+                            —
                         </div>
 
                     </div>
@@ -2247,7 +2229,7 @@ input:focus {
                             id="certificateIssue"
                             class="detail-value"
                         >
-                            31 May 2026
+                            —
                         </div>
 
                     </div>
@@ -2255,9 +2237,7 @@ input:focus {
                 </div>
 
 
-                <!-- =================================================
-                     BOTTOM
-                ================================================== -->
+                <!-- BOTTOM -->
 
                 <div class="bottom">
 
@@ -2345,8 +2325,7 @@ input:focus {
 
                             <div class="qr-description">
                                 Scan the QR code to verify
-                                the authenticity of this
-                                certificate.
+                                certificate authenticity.
                             </div>
 
                         </div>
@@ -2357,12 +2336,9 @@ input:focus {
                 </div>
 
 
-                <!-- FOOTER -->
-
                 <div class="certificate-footer">
                     INTERNIO • INNOVATION &amp; OPPORTUNITIES
                 </div>
-
 
             </div>
 
@@ -2375,38 +2351,27 @@ input:focus {
 </main>
 
 
-
 <script>
 
-/* =====================================================
+/* =========================================================
    CONFIGURATION
-====================================================== */
-
-/*
-   IMPORTANT:
-
-   This is the verification page used inside
-   the QR code.
-
-   The URL is NOT displayed anywhere on the certificate.
-
-   It is only encoded inside the QR code.
-*/
+========================================================= */
 
 const VERIFICATION_BASE =
     "https://ajaybilonia.github.io/internio-verification/";
 
 
-/* =====================================================
+/* =========================================================
    STATE
-====================================================== */
+========================================================= */
 
 let certificateType = "PROJECT_NAMED";
+let generatedCertificateId = null;
 
 
-/* =====================================================
-   ADMIN CHECK
-====================================================== */
+/* =========================================================
+   AUTH
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -2441,14 +2406,62 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   SELECT CERTIFICATE TYPE
-====================================================== */
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logoutAdmin() {
+
+    try {
+
+        if (
+            typeof internioLogout === "function"
+        ) {
+
+            await internioLogout();
+
+            return;
+
+        }
+
+        if (
+            typeof internioSupabase !== "undefined"
+            &&
+            internioSupabase
+            &&
+            internioSupabase.auth
+        ) {
+
+            await internioSupabase.auth.signOut();
+
+        }
+
+        window.location.href =
+            "admin.html";
+
+    }
+    catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   CERTIFICATE TYPE
+========================================================= */
 
 function selectType(type) {
 
     certificateType = type;
-
 
     document
         .getElementById("typeProject")
@@ -2463,50 +2476,57 @@ function selectType(type) {
         .classList.remove("active");
 
 
-    if (type === "PROJECT_NAMED") {
+    const projectField =
+        document.getElementById(
+            "projectField"
+        );
+
+
+    if (
+        type === "PROJECT_NAMED"
+    ) {
 
         document
             .getElementById("typeProject")
             .classList.add("active");
 
-        document
-            .getElementById("projectField")
-            .style.display = "block";
+        projectField.style.display =
+            "block";
 
     }
 
 
-    if (type === "PROJECT_NONE") {
+    else if (
+        type === "PROJECT_NONE"
+    ) {
 
         document
             .getElementById("typeNoProject")
             .classList.add("active");
 
-        document
-            .getElementById("projectField")
-            .style.display = "none";
+        projectField.style.display =
+            "none";
 
     }
 
 
-    if (type === "COMPLETION") {
+    else {
 
         document
             .getElementById("typeCompletion")
             .classList.add("active");
 
-        document
-            .getElementById("projectField")
-            .style.display = "none";
+        projectField.style.display =
+            "none";
 
     }
 
 }
 
 
-/* =====================================================
-   FORMAT DATE
-====================================================== */
+/* =========================================================
+   DATE FORMAT
+========================================================= */
 
 function formatDate(value) {
 
@@ -2515,10 +2535,18 @@ function formatDate(value) {
     }
 
     const date =
-        new Date(value + "T00:00:00");
+        new Date(
+            value + "T00:00:00"
+        );
 
-    if (isNaN(date.getTime())) {
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
         return value;
+
     }
 
     return date.toLocaleDateString(
@@ -2529,12 +2557,13 @@ function formatDate(value) {
             year: "numeric"
         }
     );
+
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-====================================================== */
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHTML(value) {
 
@@ -2548,34 +2577,587 @@ function escapeHTML(value) {
 }
 
 
-/* =====================================================
-   CREATE CERTIFICATE ID
-====================================================== */
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-function createCertificateId() {
+function showMessage(
+    text,
+    type
+) {
 
-    const year =
-        new Date().getFullYear();
-
-    const random =
-        Math.floor(
-            1000 +
-            Math.random() * 9000
+    const message =
+        document.getElementById(
+            "message"
         );
 
-    return (
-        "IO/INT/" +
-        year +
-        "/" +
-        random
+    message.textContent =
+        text;
+
+    message.className =
+        "message " +
+        type;
+
+}
+
+
+/* =========================================================
+   GET FORM DATA
+========================================================= */
+
+function getFormData() {
+
+    return {
+
+        studentName:
+            document
+                .getElementById("studentName")
+                .value
+                .trim(),
+
+        internship:
+            document
+                .getElementById("internship")
+                .value
+                .trim(),
+
+        project:
+            document
+                .getElementById("projectName")
+                .value
+                .trim(),
+
+        startDate:
+            document
+                .getElementById("startDate")
+                .value,
+
+        endDate:
+            document
+                .getElementById("endDate")
+                .value,
+
+        duration:
+            document
+                .getElementById("duration")
+                .value
+                .trim(),
+
+        issueDate:
+            document
+                .getElementById("issueDate")
+                .value
+
+    };
+
+}
+
+
+/* =========================================================
+   VALIDATE
+========================================================= */
+
+function validateForm(data) {
+
+    if (!data.studentName) {
+
+        showMessage(
+            "Please enter the student's name.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.internship) {
+
+        showMessage(
+            "Please enter the internship/program name.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.startDate) {
+
+        showMessage(
+            "Please select the start date.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.endDate) {
+
+        showMessage(
+            "Please select the end date.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        new Date(data.endDate)
+        <
+        new Date(data.startDate)
+    ) {
+
+        showMessage(
+            "End date cannot be before start date.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.duration) {
+
+        showMessage(
+            "Please enter the duration.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.issueDate) {
+
+        showMessage(
+            "Please select the issue date.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        certificateType === "PROJECT_NAMED"
+        &&
+        !data.project
+    ) {
+
+        showMessage(
+            "Please enter the project name.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   SAVE CERTIFICATE IN SUPABASE
+========================================================= */
+
+async function saveCertificate(
+    data
+) {
+
+    if (
+        typeof internioSupabase === "undefined"
+        ||
+        !internioSupabase
+        ||
+        !internioSupabase.rpc
+    ) {
+
+        throw new Error(
+            "Supabase authentication client is not available. Make sure auth.js is loaded."
+        );
+
+    }
+
+
+    const projectValue =
+        certificateType === "PROJECT_NAMED"
+            ? data.project
+            : null;
+
+
+    const result =
+        await internioSupabase.rpc(
+            "create_certificate",
+            {
+                p_student_name:
+                    data.studentName,
+
+                p_internship:
+                    data.internship,
+
+                p_project:
+                    projectValue,
+
+                p_start_date:
+                    data.startDate,
+
+                p_end_date:
+                    data.endDate,
+
+                p_duration:
+                    data.duration,
+
+                p_issue_date:
+                    data.issueDate,
+
+                p_certificate_url:
+                    null
+            }
+        );
+
+
+    if (result.error) {
+
+        console.error(
+            "Supabase create_certificate error:",
+            result.error
+        );
+
+        throw new Error(
+            result.error.message ||
+            "Unable to save certificate."
+        );
+
+    }
+
+
+    return result.data;
+
+}
+
+
+/* =========================================================
+   EXTRACT REAL CERTIFICATE ID
+========================================================= */
+
+function extractCertificateId(
+    rpcData
+) {
+
+    if (!rpcData) {
+        return null;
+    }
+
+
+    /*
+       Supabase RPC may return:
+
+       "IO/INT/2026/1234"
+
+       or
+
+       { certificate_id: "..." }
+
+       or
+
+       [{ certificate_id: "..." }]
+    */
+
+
+    if (
+        typeof rpcData === "string"
+        ||
+        typeof rpcData === "number"
+    ) {
+
+        return String(rpcData);
+
+    }
+
+
+    if (
+        Array.isArray(rpcData)
+        &&
+        rpcData.length > 0
+    ) {
+
+        const first =
+            rpcData[0];
+
+        if (
+            typeof first === "string"
+            ||
+            typeof first === "number"
+        ) {
+
+            return String(first);
+
+        }
+
+        if (first) {
+
+            return (
+                first.certificate_id ||
+                first.id ||
+                first.certificateId ||
+                null
+            );
+
+        }
+
+    }
+
+
+    if (
+        typeof rpcData === "object"
+    ) {
+
+        return (
+            rpcData.certificate_id ||
+            rpcData.id ||
+            rpcData.certificateId ||
+            rpcData.data?.certificate_id ||
+            rpcData.data?.id ||
+            null
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   UPDATE CERTIFICATE
+========================================================= */
+
+function renderCertificate(
+    data,
+    certificateId
+) {
+
+    document
+        .getElementById("certificateId")
+        .textContent =
+        certificateId;
+
+
+    document
+        .getElementById("certificateStudent")
+        .textContent =
+        data.studentName;
+
+
+    document
+        .getElementById("certificateStart")
+        .textContent =
+        formatDate(data.startDate);
+
+
+    document
+        .getElementById("certificateEnd")
+        .textContent =
+        formatDate(data.endDate);
+
+
+    document
+        .getElementById("certificateDuration")
+        .textContent =
+        data.duration;
+
+
+    document
+        .getElementById("certificateIssue")
+        .textContent =
+        formatDate(data.issueDate);
+
+
+    /* =====================================================
+       BODY
+    ====================================================== */
+
+    const body =
+        document.getElementById(
+            "certificateBody"
+        );
+
+
+    if (
+        certificateType ===
+        "PROJECT_NAMED"
+    ) {
+
+        body.innerHTML =
+            `
+            has successfully completed the
+            <strong>${escapeHTML(data.internship)}</strong>
+            at <strong>InternIO</strong>.
+
+            <br>
+
+            During the internship, the intern demonstrated
+            dedication, professional conduct, practical
+            learning and a strong commitment to developing
+            real-world engineering skills and experience.
+            `;
+
+    }
+
+    else if (
+        certificateType ===
+        "PROJECT_NONE"
+    ) {
+
+        body.innerHTML =
+            `
+            has successfully completed the
+            <strong>${escapeHTML(data.internship)}</strong>
+            at <strong>InternIO</strong>.
+
+            <br>
+
+            During the internship, the intern demonstrated
+            dedication, professional conduct, practical
+            learning and a strong commitment to developing
+            real-world skills and experience.
+            `;
+
+    }
+
+    else {
+
+        body.innerHTML =
+            `
+            has successfully completed the
+            <strong>${escapeHTML(data.internship)}</strong>
+            at <strong>InternIO</strong>.
+
+            <br>
+
+            The intern demonstrated dedication, enthusiasm,
+            professional conduct and a strong commitment
+            to practical learning and professional growth.
+            `;
+
+    }
+
+
+    /* =====================================================
+       PROJECT
+    ====================================================== */
+
+    const projectDisplay =
+        document.getElementById(
+            "projectDisplay"
+        );
+
+
+    if (
+        certificateType ===
+        "PROJECT_NAMED"
+    ) {
+
+        projectDisplay.style.display =
+            "block";
+
+        document
+            .getElementById("certificateProject")
+            .textContent =
+            data.project;
+
+    }
+
+    else {
+
+        projectDisplay.style.display =
+            "none";
+
+    }
+
+
+    /* =====================================================
+       QR
+    ====================================================== */
+
+    const qr =
+        document.getElementById(
+            "qrCode"
+        );
+
+
+    qr.innerHTML = "";
+
+
+    /*
+       IMPORTANT:
+
+       The verification URL is NOT printed as text.
+
+       It exists only inside the QR code.
+    */
+
+    const verificationURL =
+        VERIFICATION_BASE +
+        "?id=" +
+        encodeURIComponent(
+            certificateId
+        );
+
+
+    if (
+        typeof QRCode === "undefined"
+    ) {
+
+        throw new Error(
+            "QR code library failed to load."
+        );
+
+    }
+
+
+    new QRCode(
+        qr,
+        {
+            text:
+                verificationURL,
+
+            width:
+                110,
+
+            height:
+                110,
+
+            colorDark:
+                "#071a38",
+
+            colorLight:
+                "#ffffff",
+
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
     );
 
 }
 
 
-/* =====================================================
-   GENERATE CERTIFICATE
-====================================================== */
+/* =========================================================
+   GENERATE
+========================================================= */
 
 async function generateCertificate() {
 
@@ -2584,349 +3166,93 @@ async function generateCertificate() {
             "generateButton"
         );
 
-    const message =
-        document.getElementById(
-            "message"
-        );
+
+    const data =
+        getFormData();
 
 
-    const studentName =
-        document
-            .getElementById("studentName")
-            .value
-            .trim();
-
-    const internship =
-        document
-            .getElementById("internship")
-            .value
-            .trim();
-
-    const project =
-        document
-            .getElementById("projectName")
-            .value
-            .trim();
-
-    const startDate =
-        document
-            .getElementById("startDate")
-            .value;
-
-    const endDate =
-        document
-            .getElementById("endDate")
-            .value;
-
-    const duration =
-        document
-            .getElementById("duration")
-            .value
-            .trim();
-
-    const issueDate =
-        document
-            .getElementById("issueDate")
-            .value;
-
-
-    /* =================================================
-       VALIDATION
-    ================================================== */
-
-    message.textContent = "";
-    message.className = "message";
-
-
-    if (!studentName) {
-
-        showError(
-            "Please enter the student's name."
-        );
-
-        return;
-    }
-
-
-    if (!internship) {
-
-        showError(
-            "Please enter the internship/program name."
-        );
-
-        return;
-    }
-
-
-    if (!startDate) {
-
-        showError(
-            "Please select the start date."
-        );
-
-        return;
-    }
-
-
-    if (!endDate) {
-
-        showError(
-            "Please select the end date."
-        );
-
-        return;
-    }
-
-
-    if (!duration) {
-
-        showError(
-            "Please enter the duration."
-        );
-
-        return;
-    }
-
-
-    if (!issueDate) {
-
-        showError(
-            "Please select the issue date."
-        );
-
-        return;
-    }
+    showMessage(
+        "",
+        ""
+    );
 
 
     if (
-        certificateType === "PROJECT_NAMED"
-        &&
-        !project
+        !validateForm(data)
     ) {
 
-        showError(
-            "Please enter the project name."
-        );
-
         return;
+
     }
 
 
-    /* =================================================
-       BUTTON STATE
-    ================================================== */
-
-    button.disabled = true;
+    button.disabled =
+        true;
 
     button.textContent =
-        "GENERATING CERTIFICATE...";
+        "SAVING & GENERATING...";
 
 
     try {
 
         /*
-           Generate unique certificate ID.
+           STEP 1:
+           Save the certificate using the REAL
+           Supabase database function.
         */
 
-        const certificateId =
-            createCertificateId();
-
-
-        /* =================================================
-           UPDATE CERTIFICATE
-        ================================================== */
-
-        document
-            .getElementById("certificateId")
-            .textContent =
-            certificateId;
-
-
-        document
-            .getElementById("certificateStudent")
-            .textContent =
-            studentName;
-
-
-        document
-            .getElementById("certificateStart")
-            .textContent =
-            formatDate(startDate);
-
-
-        document
-            .getElementById("certificateEnd")
-            .textContent =
-            formatDate(endDate);
-
-
-        document
-            .getElementById("certificateDuration")
-            .textContent =
-            duration;
-
-
-        document
-            .getElementById("certificateIssue")
-            .textContent =
-            formatDate(issueDate);
-
-
-        /* =================================================
-           BODY TEXT
-        ================================================== */
-
-        const body =
-            document.getElementById(
-                "certificateBody"
+        const rpcData =
+            await saveCertificate(
+                data
             );
-
-
-        let bodyHTML = "";
-
-        if (
-            certificateType ===
-            "PROJECT_NAMED"
-        ) {
-
-            bodyHTML =
-                `
-                has successfully completed the
-                <strong>${escapeHTML(internship)}</strong>
-                at <strong>InternIO</strong>.
-
-                <br>
-
-                During the internship, the intern demonstrated
-                dedication, enthusiasm, professional conduct,
-                practical learning and a strong commitment
-                to developing real-world skills.
-                `;
-
-        }
-        else if (
-            certificateType ===
-            "PROJECT_NONE"
-        ) {
-
-            bodyHTML =
-                `
-                has successfully completed the
-                <strong>${escapeHTML(internship)}</strong>
-                at <strong>InternIO</strong>.
-
-                <br>
-
-                During the internship, the intern demonstrated
-                dedication, enthusiasm, professional conduct,
-                practical learning and a strong commitment
-                to developing real-world skills.
-                `;
-
-        }
-        else {
-
-            bodyHTML =
-                `
-                has successfully completed the
-                <strong>${escapeHTML(internship)}</strong>
-                at <strong>InternIO</strong>.
-
-                <br>
-
-                The intern demonstrated dedication,
-                enthusiasm, professional conduct and a
-                strong commitment to learning and growth.
-                `;
-
-        }
-
-
-        body.innerHTML =
-            bodyHTML;
-
-
-        /* =================================================
-           PROJECT
-        ================================================== */
-
-        const projectDisplay =
-            document.getElementById(
-                "projectDisplay"
-            );
-
-
-        if (
-            certificateType ===
-            "PROJECT_NAMED"
-        ) {
-
-            projectDisplay.style.display =
-                "block";
-
-            document
-                .getElementById("certificateProject")
-                .textContent =
-                project;
-
-        }
-        else {
-
-            projectDisplay.style.display =
-                "none";
-
-        }
-
-
-        /* =================================================
-           QR CODE
-        ================================================== */
-
-        const qr =
-            document.getElementById(
-                "qrCode"
-            );
-
-
-        qr.innerHTML = "";
 
 
         /*
-           The URL is ONLY encoded into the QR.
-           It is NOT printed visibly on the certificate.
+           STEP 2:
+           Extract the REAL certificate ID
+           returned by Supabase.
         */
 
-        const verificationURL =
-            VERIFICATION_BASE +
-            "?id=" +
-            encodeURIComponent(
-                certificateId
+        const certificateId =
+            extractCertificateId(
+                rpcData
             );
 
 
-        new QRCode(
-            qr,
-            {
-                text: verificationURL,
+        if (!certificateId) {
 
-                width: 110,
-                height: 110,
+            console.error(
+                "Unexpected create_certificate response:",
+                rpcData
+            );
 
-                colorDark:
-                    "#071a38",
+            throw new Error(
+                "Certificate was not created correctly because no certificate ID was returned."
+            );
 
-                colorLight:
-                    "#ffffff",
+        }
 
-                correctLevel:
-                    QRCode.CorrectLevel.H
-            }
+
+        generatedCertificateId =
+            String(certificateId);
+
+
+        /*
+           STEP 3:
+           Render the certificate using
+           the REAL saved certificate ID.
+        */
+
+        renderCertificate(
+            data,
+            generatedCertificateId
         );
 
 
-        /* =================================================
-           SHOW RESULT
-        ================================================== */
+        /*
+           STEP 4:
+           Hide form and show certificate.
+        */
 
         document
             .getElementById("formScreen")
@@ -2940,6 +3266,12 @@ async function generateCertificate() {
             "block";
 
 
+        showMessage(
+            "Certificate generated successfully.",
+            "success"
+        );
+
+
         window.scrollTo(
             {
                 top: 0,
@@ -2947,31 +3279,26 @@ async function generateCertificate() {
             }
         );
 
-
-        message.className =
-            "message success";
-
-        message.textContent =
-            "Certificate generated successfully.";
-
-
     }
     catch (error) {
 
         console.error(
-            "Certificate generation error:",
+            "Certificate generation failed:",
             error
         );
 
 
-        showError(
-            "Something went wrong while generating the certificate."
+        showMessage(
+            error.message ||
+            "Unable to generate certificate. Please try again.",
+            "error"
         );
 
     }
     finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "GENERATE CERTIFICATE";
@@ -2981,29 +3308,9 @@ async function generateCertificate() {
 }
 
 
-/* =====================================================
-   ERROR
-====================================================== */
-
-function showError(text) {
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-    message.className =
-        "message error";
-
-    message.textContent =
-        text;
-
-}
-
-
-/* =====================================================
+/* =========================================================
    EDIT
-====================================================== */
+========================================================= */
 
 function editCertificate() {
 
@@ -3011,6 +3318,7 @@ function editCertificate() {
         .getElementById("result")
         .style.display =
         "none";
+
 
     document
         .getElementById("formScreen")
@@ -3028,9 +3336,9 @@ function editCertificate() {
 }
 
 
-/* =====================================================
-   CREATE ANOTHER
-====================================================== */
+/* =========================================================
+   NEW CERTIFICATE
+========================================================= */
 
 function newCertificate() {
 
@@ -3038,29 +3346,39 @@ function newCertificate() {
         .getElementById("studentName")
         .value = "";
 
+
     document
         .getElementById("internship")
         .value = "";
+
 
     document
         .getElementById("projectName")
         .value = "";
 
+
     document
         .getElementById("startDate")
         .value = "";
+
 
     document
         .getElementById("endDate")
         .value = "";
 
+
     document
         .getElementById("duration")
         .value = "";
 
+
     document
         .getElementById("issueDate")
         .value = "";
+
+
+    generatedCertificateId =
+        null;
 
 
     selectType(
@@ -3096,9 +3414,35 @@ function newCertificate() {
 }
 
 
-/* =====================================================
-   INITIAL TYPE
-====================================================== */
+/* =========================================================
+   ENTER KEY SUPPORT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+            &&
+            document.activeElement
+            &&
+            document.activeElement.tagName === "INPUT"
+        ) {
+
+            event.preventDefault();
+
+            generateCertificate();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
 
 selectType(
     "PROJECT_NAMED"
