@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -24,26 +23,19 @@
 
 body {
   margin: 0;
+  background: #eef1f5;
+  color: #17213c;
   font-family:
-    Inter,
     Arial,
     Helvetica,
     sans-serif;
-  background: #eef1f5;
-  color: #14213d;
 }
 
 header {
-  background:
-    linear-gradient(
-      135deg,
-      #0d1930,
-      #14213d 60%,
-      #1e3155
-    );
+  background: #14213d;
   color: white;
+  padding: 25px 15px;
   text-align: center;
-  padding: 28px 15px;
 }
 
 .logo {
@@ -52,54 +44,48 @@ header {
   letter-spacing: -1px;
 }
 
-.logo span {
+.logo .gold {
   color: #d4af37;
 }
 
-.brand-meaning {
-  margin-top: 7px;
+.header-tagline {
+  margin-top: 5px;
   font-size: 12px;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   color: #e9edf5;
 }
 
-.brand-meaning strong {
+.header-tagline strong {
   color: #d4af37;
 }
 
 
 /* =====================================================
-   CONTAINER
+   MAKER
 ===================================================== */
 
 .container {
-  max-width: 1150px;
+  max-width: 1100px;
   margin: 35px auto;
   padding: 15px;
 }
 
-
-/* =====================================================
-   FORM
-===================================================== */
-
 .form-card {
   max-width: 850px;
   margin: auto;
-  background: white;
   padding: 32px;
-  border-radius: 16px;
-  box-shadow:
-    0 12px 40px rgba(0,0,0,.08);
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.08);
 }
 
 .form-card h1 {
-  margin: 0;
   text-align: center;
+  margin: 0;
   color: #14213d;
 }
 
-.form-description {
+.description {
   text-align: center;
   color: #6b7280;
   margin: 10px 0 28px;
@@ -112,31 +98,26 @@ label {
   font-weight: 700;
 }
 
-input,
-select {
+input {
   width: 100%;
-  padding: 14px;
+  padding: 13px;
   border: 1px solid #ccd2da;
-  border-radius: 8px;
+  border-radius: 7px;
   font-size: 15px;
-  background: white;
   color: #17213c;
 }
 
-input:focus,
-select:focus {
+input:focus {
   outline: none;
   border-color: #d4af37;
-  box-shadow:
-    0 0 0 3px rgba(212,175,55,.12);
 }
 
 
 /* =====================================================
-   TYPE SELECTOR
+   CERTIFICATE TYPE
 ===================================================== */
 
-.type-options {
+.type-grid {
   display: grid;
   grid-template-columns:
     repeat(3, 1fr);
@@ -151,38 +132,22 @@ select:focus {
 .type-option input {
   position: absolute;
   opacity: 0;
-  pointer-events: none;
 }
 
 .type-option label {
   margin: 0;
-  padding: 17px 13px;
-  min-height: 100px;
-  border: 2px solid #e1e5ea;
-  border-radius: 10px;
+  min-height: 105px;
+  padding: 15px;
+  border: 2px solid #e2e5e9;
+  border-radius: 9px;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   text-align: center;
   background: #fafbfc;
-  transition: .2s;
-}
-
-.type-option label:hover {
-  border-color: #d4af37;
 }
 
 .type-option input:checked + label {
   border-color: #d4af37;
-  background:
-    linear-gradient(
-      135deg,
-      #fffdf6,
-      #fff8df
-    );
-  box-shadow:
-    0 5px 18px rgba(212,175,55,.12);
+  background: #fffaf0;
 }
 
 .type-title {
@@ -190,7 +155,7 @@ select:focus {
   color: #14213d;
 }
 
-.type-description {
+.type-text {
   margin-top: 7px;
   font-size: 11px;
   line-height: 1.4;
@@ -202,31 +167,31 @@ select:focus {
    PROJECT OPTION
 ===================================================== */
 
-#projectOptions {
+.project-options {
   display: none;
 }
 
-.project-choice {
+.project-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.project-choice button {
+.project-buttons button {
   flex: 1;
   margin: 0;
-  background: #f4f5f7;
+  background: #f2f3f5;
   color: #14213d;
-  border: 2px solid #e1e5ea;
+  border: 2px solid #e1e4e8;
 }
 
-.project-choice button.active {
+.project-buttons button.active {
   background: #14213d;
-  color: white;
   border-color: #14213d;
+  color: white;
 }
 
-#projectNameBox {
+.project-name-box {
   display: none;
 }
 
@@ -240,16 +205,16 @@ button {
   padding: 14px;
   margin-top: 20px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 7px;
   background: #14213d;
   color: white;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
 }
 
 button:hover {
-  background: #1c3158;
+  background: #20365e;
 }
 
 button:disabled {
@@ -257,14 +222,9 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.generate-button {
-  margin-top: 28px;
-}
-
 .message {
   text-align: center;
   margin-top: 15px;
-  line-height: 1.5;
 }
 
 .success {
@@ -279,7 +239,7 @@ button:disabled {
 
 
 /* =====================================================
-   CERTIFICATE WRAPPER
+   CERTIFICATE
 ===================================================== */
 
 .certificate-wrapper {
@@ -287,100 +247,136 @@ button:disabled {
   margin-top: 35px;
 }
 
-
-/* =====================================================
-   CERTIFICATE
-===================================================== */
-
 .certificate {
-  width: 100%;
-  max-width: 1120px;
-  min-height: 790px;
+  width: 1120px;
+  max-width: 100%;
+  height: 790px;
   margin: auto;
-  padding: 15px;
+  padding: 12px;
   background:
     linear-gradient(
       135deg,
-      #0d1930,
-      #14213d
+      #0c1830,
+      #14213d,
+      #0c1830
     );
   box-shadow:
-    0 18px 55px rgba(0,0,0,.18);
-  position: relative;
+    0 20px 55px rgba(0,0,0,.2);
 }
 
 .certificate-inner {
-  min-height: 760px;
+  height: 100%;
   position: relative;
+  overflow: hidden;
   background:
     radial-gradient(
-      circle at 50% 40%,
-      rgba(212,175,55,.06),
-      transparent 45%
+      circle at 50% 45%,
+      rgba(212,175,55,.055),
+      transparent 40%
     ),
-    #fff;
+    #fffdf8;
   border: 2px solid #d4af37;
-  padding: 48px 65px 45px;
-  overflow: hidden;
+  padding: 42px 60px;
 }
 
 
 /* =====================================================
-   DECORATIVE ELEMENTS
+   WATERMARK
 ===================================================== */
 
-.certificate-inner::before {
-  content: "";
+.watermark {
   position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 1px solid rgba(212,175,55,.15);
-  top: -170px;
-  left: -150px;
+  left: 50%;
+  top: 51%;
+  transform:
+    translate(-50%, -50%)
+    rotate(-10deg);
+  font-size: 330px;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(20,33,61,.035);
+  letter-spacing: -30px;
+  pointer-events: none;
+  user-select: none;
 }
 
-.certificate-inner::after {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 1px solid rgba(212,175,55,.15);
-  bottom: -170px;
-  right: -150px;
-}
-
-.gold-line {
-  height: 3px;
-  width: 100px;
-  background: #d4af37;
-  margin: 12px auto;
+.watermark span {
+  color: rgba(212,175,55,.045);
 }
 
 
 /* =====================================================
-   CERTIFICATE BRAND
+   CORNERS
 ===================================================== */
+
+.corner {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  border-color: #d4af37;
+  border-style: solid;
+  z-index: 2;
+}
+
+.corner-tl {
+  left: 15px;
+  top: 15px;
+  border-width: 3px 0 0 3px;
+}
+
+.corner-tr {
+  right: 15px;
+  top: 15px;
+  border-width: 3px 3px 0 0;
+}
+
+.corner-bl {
+  left: 15px;
+  bottom: 15px;
+  border-width: 0 0 3px 3px;
+}
+
+.corner-br {
+  right: 15px;
+  bottom: 15px;
+  border-width: 0 3px 3px 0;
+}
+
+
+/* =====================================================
+   BRANDING
+===================================================== */
+
+.certificate-brand {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
 
 .certificate-logo {
-  text-align: center;
-  font-size: 42px;
+  font-size: 44px;
   font-weight: 900;
   color: #14213d;
-  letter-spacing: -1px;
+  letter-spacing: -2px;
 }
 
-.certificate-logo span {
+.certificate-logo .gold {
   color: #d4af37;
 }
 
-.certificate-brand-subtitle {
-  text-align: center;
+.certificate-tagline {
+  margin-top: 4px;
+  color: #6d7480;
   font-size: 10px;
-  letter-spacing: 2.5px;
-  color: #737b88;
-  margin-top: 3px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.gold-rule {
+  width: 110px;
+  height: 2px;
+  margin: 12px auto 0;
+  background: #d4af37;
 }
 
 
@@ -389,74 +385,86 @@ button:disabled {
 ===================================================== */
 
 .certificate-title {
+  position: relative;
+  z-index: 3;
   text-align: center;
-  margin-top: 22px;
+  margin-top: 20px;
   font-family:
     Georgia,
     "Times New Roman",
     serif;
   font-size: 40px;
+  font-weight: 700;
   letter-spacing: 3px;
   color: #14213d;
-  font-weight: 700;
 }
 
-.certificate-type-title {
+.certificate-subtitle {
+  position: relative;
+  z-index: 3;
   text-align: center;
   margin-top: 6px;
-  font-size: 13px;
+  color: #a17c16;
+  font-size: 12px;
   letter-spacing: 3px;
-  color: #a27d15;
   font-weight: 800;
 }
 
 
 /* =====================================================
-   PRESENTED TO
+   STUDENT
 ===================================================== */
 
 .presented {
+  position: relative;
+  z-index: 3;
+  margin-top: 25px;
   text-align: center;
-  margin-top: 30px;
-  color: #626b78;
-  font-size: 14px;
+  color: #69717d;
+  font-size: 13px;
 }
 
 .student-name {
+  position: relative;
+  z-index: 3;
   text-align: center;
-  margin-top: 9px;
+  margin-top: 7px;
   font-family:
     Georgia,
     "Times New Roman",
     serif;
   font-size: 43px;
-  color: #14213d;
   font-weight: 700;
+  color: #14213d;
 }
 
-.student-underline {
-  width: 280px;
+.student-rule {
+  position: relative;
+  z-index: 3;
+  width: 270px;
   height: 2px;
   background: #d4af37;
-  margin: 9px auto 0;
+  margin: 8px auto;
 }
 
 
 /* =====================================================
-   DESCRIPTION
+   BODY
 ===================================================== */
 
 .certificate-description {
-  max-width: 820px;
-  margin: 22px auto 0;
+  position: relative;
+  z-index: 3;
+  max-width: 790px;
+  margin: 18px auto 0;
   text-align: center;
   font-family:
     Georgia,
     "Times New Roman",
     serif;
-  font-size: 16px;
-  line-height: 1.75;
-  color: #4b5563;
+  color: #4f5865;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .certificate-description strong {
@@ -465,31 +473,33 @@ button:disabled {
 
 
 /* =====================================================
-   PROJECT BOX
+   PROJECT
 ===================================================== */
 
 .project-box {
-  max-width: 690px;
-  margin: 20px auto 0;
-  padding: 12px 20px;
+  position: relative;
+  z-index: 3;
+  display: none;
+  max-width: 620px;
+  margin: 15px auto 0;
+  padding: 9px 15px;
   text-align: center;
   border-top: 1px solid #d4af37;
   border-bottom: 1px solid #d4af37;
-  background: rgba(212,175,55,.035);
 }
 
 .project-label {
-  font-size: 9px;
-  letter-spacing: 2px;
   color: #8a8f97;
+  font-size: 8px;
   font-weight: 800;
+  letter-spacing: 2px;
 }
 
 .project-name {
-  margin-top: 4px;
-  font-size: 19px;
-  font-weight: 800;
+  margin-top: 3px;
   color: #14213d;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 
@@ -498,104 +508,126 @@ button:disabled {
 ===================================================== */
 
 .details {
+  position: relative;
+  z-index: 3;
+  max-width: 850px;
+  margin: 18px auto 0;
   display: grid;
   grid-template-columns:
     repeat(4, 1fr);
-  gap: 12px;
-  max-width: 850px;
-  margin: 24px auto 0;
 }
 
 .detail {
   text-align: center;
-  padding: 10px 7px;
-  border-right: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  border-right: 1px solid #e0e3e6;
 }
 
 .detail:last-child {
-  border-right: none;
+  border-right: 0;
 }
 
 .detail-label {
-  font-size: 8px;
-  letter-spacing: 1.5px;
   color: #8a8f97;
-  text-transform: uppercase;
+  font-size: 8px;
   font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
 }
 
 .detail-value {
-  margin-top: 5px;
-  font-size: 12px;
+  margin-top: 4px;
   color: #14213d;
+  font-size: 11px;
   font-weight: 800;
 }
 
 
 /* =====================================================
-   BOTTOM AREA
+   BOTTOM
 ===================================================== */
 
-.bottom-area {
+.bottom {
+  position: relative;
+  z-index: 3;
+  max-width: 880px;
+  margin: 18px auto 0;
   display: grid;
   grid-template-columns:
-    1fr 160px 1fr;
+    1fr 150px 1fr;
   align-items: end;
   gap: 20px;
-  max-width: 920px;
-  margin: 25px auto 0;
 }
+
+
+/* =====================================================
+   SIGNATORY
+===================================================== */
 
 .signatory {
   text-align: center;
 }
 
 .signature-space {
-  height: 35px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.signature-script {
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+  font-size: 31px;
+  color: #14213d;
+  transform: rotate(-3deg);
 }
 
 .signature-line {
-  width: 180px;
+  width: 175px;
   height: 1px;
-  background: #333;
-  margin: auto;
+  background: #263246;
+  margin: 3px auto 0;
 }
 
 .signatory-name {
-  margin-top: 6px;
-  font-weight: 800;
-  font-size: 12px;
+  margin-top: 5px;
   color: #14213d;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .signatory-title {
-  margin-top: 3px;
-  font-size: 9px;
+  margin-top: 2px;
   color: #777;
+  font-size: 9px;
 }
 
 
 /* =====================================================
-   SEAL
+   VERIFIED SEAL
 ===================================================== */
 
 .seal {
-  width: 125px;
-  height: 125px;
+  width: 118px;
+  height: 118px;
   margin: auto;
   border-radius: 50%;
-  border: 4px solid #d4af37;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
   color: #14213d;
+  border: 4px solid #d4af37;
   background:
     radial-gradient(
       circle,
       #fffdf5 0%,
-      #fff 68%
+      #f8f0d7 70%,
+      #fff 71%
     );
 }
 
@@ -607,19 +639,27 @@ button:disabled {
   border-radius: 50%;
 }
 
-.seal-text {
+.seal::after {
+  content: "✦";
+  position: absolute;
+  top: 9px;
+  font-size: 12px;
+  color: #d4af37;
+}
+
+.seal-content {
   position: relative;
   z-index: 2;
   font-weight: 900;
-  font-size: 13px;
-  line-height: 1.2;
-  letter-spacing: .8px;
+  font-size: 12px;
+  line-height: 1.25;
+  letter-spacing: .7px;
 }
 
 .seal-small {
   font-size: 7px;
-  letter-spacing: 1.4px;
-  color: #a27d15;
+  letter-spacing: 1.3px;
+  color: #9a781c;
 }
 
 
@@ -627,30 +667,33 @@ button:disabled {
    QR
 ===================================================== */
 
-.qr-area {
+.qr {
   text-align: center;
 }
 
-.qr-area img {
-  width: 100px;
-  height: 100px;
+.qr img {
   display: block;
+  width: 92px;
+  height: 92px;
   margin: auto;
 }
 
 .qr-label {
-  margin-top: 5px;
+  margin-top: 4px;
   font-size: 8px;
-  letter-spacing: 1.5px;
   color: #777;
+  letter-spacing: 1.4px;
   font-weight: 800;
 }
 
-.verify-short {
-  margin-top: 3px;
+.qr-url {
+  max-width: 150px;
+  margin: 3px auto 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 7px;
   color: #888;
-  word-break: break-all;
 }
 
 
@@ -660,18 +703,19 @@ button:disabled {
 
 .certificate-footer {
   position: absolute;
-  left: 50px;
-  right: 50px;
-  bottom: 15px;
+  z-index: 3;
+  left: 45px;
+  right: 45px;
+  bottom: 13px;
   text-align: center;
+  color: #8b9097;
   font-size: 8px;
-  color: #8a8f97;
-  letter-spacing: .8px;
+  letter-spacing: .7px;
 }
 
 .certificate-id {
-  font-weight: 800;
   color: #14213d;
+  font-weight: 800;
 }
 
 
@@ -722,6 +766,7 @@ button:disabled {
   }
 
   .container {
+    width: 297mm;
     max-width: none;
     margin: 0;
     padding: 0;
@@ -735,15 +780,13 @@ button:disabled {
   .certificate {
     width: 297mm;
     height: 210mm;
-    min-height: 210mm;
     max-width: none;
-    padding: 8mm;
+    padding: 4mm;
     box-shadow: none;
   }
 
   .certificate-inner {
-    min-height: calc(210mm - 16mm);
-    padding: 11mm 15mm 10mm;
+    padding: 9mm 13mm;
   }
 
   .certificate-logo {
@@ -751,60 +794,72 @@ button:disabled {
   }
 
   .certificate-title {
-    font-size: 35px;
-    margin-top: 15px;
+    font-size: 34px;
+    margin-top: 12px;
+  }
+
+  .certificate-subtitle {
+    font-size: 10px;
+  }
+
+  .presented {
+    margin-top: 18px;
   }
 
   .student-name {
-    font-size: 39px;
+    font-size: 38px;
   }
 
   .certificate-description {
-    font-size: 14px;
-    line-height: 1.55;
-    margin-top: 15px;
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
   }
 
   .project-box {
-    margin-top: 13px;
+    margin-top: 10px;
   }
 
   .details {
-    margin-top: 14px;
+    margin-top: 11px;
   }
 
-  .bottom-area {
-    margin-top: 14px;
+  .bottom {
+    margin-top: 10px;
   }
 
   .certificate-footer {
-    bottom: 10px;
+    bottom: 8px;
   }
 
   @page {
     size: A4 landscape;
     margin: 0;
   }
-
 }
 
 
 /* =====================================================
-   RESPONSIVE
+   MOBILE
 ===================================================== */
 
 @media (max-width: 800px) {
 
-  .type-options {
+  .type-grid {
     grid-template-columns: 1fr;
   }
 
+  .project-buttons {
+    flex-direction: column;
+  }
+
   .certificate {
-    padding: 8px;
+    height: auto;
+    min-height: 800px;
   }
 
   .certificate-inner {
-    padding: 35px 20px;
+    padding: 35px 20px 55px;
   }
 
   .certificate-title {
@@ -821,12 +876,11 @@ button:disabled {
   }
 
   .detail:nth-child(2) {
-    border-right: none;
+    border-right: 0;
   }
 
-  .bottom-area {
+  .bottom {
     grid-template-columns: 1fr;
-    gap: 18px;
   }
 
   .certificate-footer {
@@ -834,6 +888,9 @@ button:disabled {
     margin-top: 15px;
   }
 
+  .actions {
+    flex-direction: column;
+  }
 }
 
 </style>
@@ -847,15 +904,14 @@ button:disabled {
 <header>
 
   <div class="logo">
-    Intern<span>IO</span>
+    Intern<span class="gold">IO</span>
   </div>
 
-  <div class="brand-meaning">
+  <div class="header-tagline">
     INTERN + <strong>INNOVATION &amp; OPPORTUNITIES</strong>
   </div>
 
 </header>
-
 
 
 <div class="container">
@@ -868,46 +924,40 @@ button:disabled {
 <div class="form-card">
 
   <h1>
-    Certificate Maker
+    InternIO Certificate Maker
   </h1>
 
-  <div class="form-description">
-    Create a professional InternIO certificate for a
-    successfully completed internship.
+  <div class="description">
+    Create a verified certificate for a completed InternIO internship.
   </div>
 
-
-  <!-- ===============================================
-       CERTIFICATE TYPE
-  ================================================ -->
 
   <label>
     Certificate Type *
   </label>
 
 
-  <div class="type-options">
+  <div class="type-grid">
 
 
     <div class="type-option">
 
       <input
         type="radio"
-        id="typeProjectNamed"
+        id="projectNamed"
         name="certificateType"
         value="PROJECT_NAMED"
-        onchange="certificateTypeChanged()"
+        onchange="typeChanged()"
       >
 
-      <label for="typeProjectNamed">
+      <label for="projectNamed">
 
         <div class="type-title">
           Project-Based
         </div>
 
-        <div class="type-description">
-          Student has a specific project
-          to mention.
+        <div class="type-text">
+          Include the student's specific project.
         </div>
 
       </label>
@@ -915,26 +965,24 @@ button:disabled {
     </div>
 
 
-
     <div class="type-option">
 
       <input
         type="radio"
-        id="typeProjectNoName"
+        id="projectNoName"
         name="certificateType"
         value="PROJECT_NO_NAME"
-        onchange="certificateTypeChanged()"
+        onchange="typeChanged()"
       >
 
-      <label for="typeProjectNoName">
+      <label for="projectNoName">
 
         <div class="type-title">
           Project-Based
         </div>
 
-        <div class="type-description">
-          Project-based internship,
-          but no specific project name.
+        <div class="type-text">
+          Project-based internship without naming a project.
         </div>
 
       </label>
@@ -942,26 +990,24 @@ button:disabled {
     </div>
 
 
-
     <div class="type-option">
 
       <input
         type="radio"
-        id="typeCompletion"
+        id="completion"
         name="certificateType"
         value="COMPLETION"
-        onchange="certificateTypeChanged()"
+        onchange="typeChanged()"
       >
 
-      <label for="typeCompletion">
+      <label for="completion">
 
         <div class="type-title">
           Internship Completion
         </div>
 
-        <div class="type-description">
-          Internship completed without
-          a project being mentioned.
+        <div class="type-text">
+          Internship certificate without project details.
         </div>
 
       </label>
@@ -970,10 +1016,6 @@ button:disabled {
 
   </div>
 
-
-  <!-- ===============================================
-       STUDENT
-  ================================================ -->
 
   <label>
     Student Name *
@@ -986,10 +1028,6 @@ button:disabled {
   >
 
 
-  <!-- ===============================================
-       INTERNSHIP
-  ================================================ -->
-
   <label>
     Internship *
   </label>
@@ -1001,30 +1039,29 @@ button:disabled {
   >
 
 
-  <!-- ===============================================
-       PROJECT OPTIONS
-  ================================================ -->
-
-  <div id="projectOptions">
+  <div
+    id="projectOptions"
+    class="project-options"
+  >
 
     <label>
-      Project Details
+      Project
     </label>
 
-    <div class="project-choice">
+    <div class="project-buttons">
 
       <button
         type="button"
-        id="projectNamedButton"
-        onclick="chooseProjectMode(true)"
+        id="includeProjectButton"
+        onclick="setProjectMode(true)"
       >
         Include Project Name
       </button>
 
       <button
         type="button"
-        id="projectNoNameButton"
-        onclick="chooseProjectMode(false)"
+        id="noProjectButton"
+        onclick="setProjectMode(false)"
       >
         No Specific Project
       </button>
@@ -1032,7 +1069,10 @@ button:disabled {
     </div>
 
 
-    <div id="projectNameBox">
+    <div
+      id="projectNameBox"
+      class="project-name-box"
+    >
 
       <label>
         Project Name *
@@ -1048,10 +1088,6 @@ button:disabled {
 
   </div>
 
-
-  <!-- ===============================================
-       DATES
-  ================================================ -->
 
   <label>
     Start Date *
@@ -1096,7 +1132,6 @@ button:disabled {
 
   <button
     id="generateButton"
-    class="generate-button"
     onclick="generateCertificate()"
   >
     Generate Certificate
@@ -1111,7 +1146,6 @@ button:disabled {
 </div>
 
 
-
 <!-- =================================================
      CERTIFICATE
 ================================================== -->
@@ -1122,28 +1156,42 @@ button:disabled {
 >
 
 
-  <div
-    id="certificate"
-    class="certificate"
-  >
+  <div class="certificate">
 
 
     <div class="certificate-inner">
 
 
+      <!-- WATERMARK -->
+
+      <div class="watermark">
+        I<span>O</span>
+      </div>
+
+
+      <!-- CORNERS -->
+
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+
       <!-- BRAND -->
 
-      <div class="certificate-logo">
-        Intern<span>IO</span>
+      <div class="certificate-brand">
+
+        <div class="certificate-logo">
+          Intern<span class="gold">IO</span>
+        </div>
+
+        <div class="certificate-tagline">
+          INNOVATION &amp; OPPORTUNITIES
+        </div>
+
+        <div class="gold-rule"></div>
+
       </div>
-
-
-      <div class="certificate-brand-subtitle">
-        INTERN + INNOVATION &amp; OPPORTUNITIES
-      </div>
-
-
-      <div class="gold-line"></div>
 
 
       <!-- TITLE -->
@@ -1152,10 +1200,9 @@ button:disabled {
         CERTIFICATE
       </div>
 
-
       <div
-        id="certificateTypeTitle"
-        class="certificate-type-title"
+        id="certificateSubtitle"
+        class="certificate-subtitle"
       >
         OF INTERNSHIP
       </div>
@@ -1175,7 +1222,7 @@ button:disabled {
       </div>
 
 
-      <div class="student-underline"></div>
+      <div class="student-rule"></div>
 
 
       <!-- DESCRIPTION -->
@@ -1192,7 +1239,6 @@ button:disabled {
       <div
         id="certificateProjectBox"
         class="project-box"
-        style="display:none;"
       >
 
         <div class="project-label">
@@ -1277,14 +1323,20 @@ button:disabled {
 
       <!-- BOTTOM -->
 
-      <div class="bottom-area">
+      <div class="bottom">
 
 
-        <!-- SIGNATORY -->
+        <!-- SIGNATURE -->
 
         <div class="signatory">
 
-          <div class="signature-space"></div>
+          <div class="signature-space">
+
+            <div class="signature-script">
+              Amar Singh
+            </div>
+
+          </div>
 
           <div class="signature-line"></div>
 
@@ -1299,29 +1351,27 @@ button:disabled {
         </div>
 
 
-        <!-- SEAL -->
+        <!-- VERIFIED SEAL -->
 
         <div class="seal">
 
-          <div class="seal-text">
+          <div class="seal-content">
 
             <div class="seal-small">
               OFFICIAL
             </div>
 
-            INTERNIO
+            VERIFIED
 
             <br>
 
-            <span class="seal-small">
-              VERIFIED
-            </span>
+            CERTIFICATE
 
             <br>
 
-            <span class="seal-small">
-              INTERNSHIP
-            </span>
+            <div class="seal-small">
+              INTERNIO
+            </div>
 
           </div>
 
@@ -1330,7 +1380,7 @@ button:disabled {
 
         <!-- QR -->
 
-        <div class="qr-area">
+        <div class="qr">
 
           <img
             id="certificateQR"
@@ -1342,13 +1392,12 @@ button:disabled {
           </div>
 
           <div
-            id="verificationShort"
-            class="verify-short"
+            id="qrUrl"
+            class="qr-url"
           >
           </div>
 
         </div>
-
 
       </div>
 
@@ -1361,16 +1410,15 @@ button:disabled {
         <span
           id="certificateId"
           class="certificate-id"
-        >
-        </span>
+        ></span>
 
-        &nbsp;&nbsp;•&nbsp;&nbsp;
+        &nbsp; • &nbsp;
 
         Issued by InternIO
 
-        &nbsp;&nbsp;•&nbsp;&nbsp;
+        &nbsp; • &nbsp;
 
-        Input → Output
+        Innovation &amp; Opportunities
 
       </div>
 
@@ -1379,9 +1427,6 @@ button:disabled {
 
   </div>
 
-
-
-  <!-- ACTIONS -->
 
   <div class="actions">
 
@@ -1392,7 +1437,6 @@ button:disabled {
       🖨 Print / Save as PDF
     </button>
 
-
     <button
       class="new-button"
       onclick="newCertificate()"
@@ -1402,12 +1446,9 @@ button:disabled {
 
   </div>
 
-
 </div>
 
-
 </div>
-
 
 
 <script>
@@ -1421,15 +1462,11 @@ const SUPABASE_URL =
 
 
 /*
-IMPORTANT:
-
-Paste the SAME Supabase publishable key
-you already use in your working admin.html.
+Use your existing SUPABASE PUBLISHABLE KEY.
 
 Do NOT use:
 - service_role
 - sb_secret
-- any secret key
 */
 
 const SUPABASE_KEY =
@@ -1437,37 +1474,26 @@ const SUPABASE_KEY =
 
 
 /* =====================================================
-   VERIFICATION WEBSITE
+   VERIFICATION
 ===================================================== */
 
 const VERIFICATION_URL =
   "https://ajaybilonia.github.io/internio-verification/";
 
 
-/* =====================================================
-   CURRENT PROJECT MODE
-===================================================== */
-
-let projectMode =
-  null;
+let projectMode = null;
 
 
 /* =====================================================
-   CERTIFICATE TYPE CHANGE
+   CERTIFICATE TYPE
 ===================================================== */
 
-function certificateTypeChanged() {
+function typeChanged() {
 
   const selected =
     document.querySelector(
       'input[name="certificateType"]:checked'
     );
-
-
-  if (!selected) {
-    return;
-  }
-
 
   const projectOptions =
     document.getElementById(
@@ -1475,10 +1501,10 @@ function certificateTypeChanged() {
     );
 
 
-  /*
-  Project-based certificates show
-  project choices.
-  */
+  if (!selected) {
+    return;
+  }
+
 
   if (
     selected.value === "PROJECT_NAMED" ||
@@ -1493,26 +1519,20 @@ function certificateTypeChanged() {
       selected.value === "PROJECT_NAMED"
     ) {
 
-      chooseProjectMode(true);
+      setProjectMode(true);
 
     } else {
 
-      chooseProjectMode(false);
+      setProjectMode(false);
 
     }
 
   } else {
 
-    /*
-    Completion certificate has
-    no project at all.
-    */
-
     projectOptions.style.display =
       "none";
 
-    projectMode =
-      null;
+    projectMode = null;
 
   }
 
@@ -1523,7 +1543,7 @@ function certificateTypeChanged() {
    PROJECT MODE
 ===================================================== */
 
-function chooseProjectMode(
+function setProjectMode(
   includeProject
 ) {
 
@@ -1533,19 +1553,17 @@ function chooseProjectMode(
       : "NO_NAME";
 
 
-  const namedButton =
+  const includeButton =
     document.getElementById(
-      "projectNamedButton"
+      "includeProjectButton"
     );
 
-
-  const noNameButton =
+  const noProjectButton =
     document.getElementById(
-      "projectNoNameButton"
+      "noProjectButton"
     );
 
-
-  const projectNameBox =
+  const projectBox =
     document.getElementById(
       "projectNameBox"
     );
@@ -1553,28 +1571,28 @@ function chooseProjectMode(
 
   if (includeProject) {
 
-    namedButton.classList.add(
+    includeButton.classList.add(
       "active"
     );
 
-    noNameButton.classList.remove(
+    noProjectButton.classList.remove(
       "active"
     );
 
-    projectNameBox.style.display =
+    projectBox.style.display =
       "block";
 
   } else {
 
-    namedButton.classList.remove(
+    includeButton.classList.remove(
       "active"
     );
 
-    noNameButton.classList.add(
+    noProjectButton.classList.add(
       "active"
     );
 
-    projectNameBox.style.display =
+    projectBox.style.display =
       "none";
 
   }
@@ -1583,7 +1601,7 @@ function chooseProjectMode(
 
 
 /* =====================================================
-   GENERATE CERTIFICATE
+   GENERATE
 ===================================================== */
 
 async function generateCertificate() {
@@ -1642,10 +1660,6 @@ async function generateCertificate() {
     );
 
 
-  /* =================================================
-     VALIDATION
-  ================================================= */
-
   if (!selected) {
 
     showError(
@@ -1679,21 +1693,10 @@ async function generateCertificate() {
   }
 
 
-  if (!startDate) {
+  if (!startDate || !endDate) {
 
     showError(
-      "Please enter the start date."
-    );
-
-    return;
-
-  }
-
-
-  if (!endDate) {
-
-    showError(
-      "Please enter the end date."
+      "Please enter both internship dates."
     );
 
     return;
@@ -1723,27 +1726,12 @@ async function generateCertificate() {
   }
 
 
-  /*
-  Project name is required only when
-  Project-Based + Project Name is selected.
-  */
-
-  let project =
-    "";
+  let project = "";
 
 
   if (
     selected.value === "PROJECT_NAMED"
   ) {
-
-    if (
-      projectMode !== "NAMED"
-    ) {
-
-      chooseProjectMode(true);
-
-    }
-
 
     project =
       document.getElementById(
@@ -1764,19 +1752,6 @@ async function generateCertificate() {
   }
 
 
-  /*
-  Project-based with no name:
-  project remains empty.
-
-  Completion:
-  project remains empty.
-  */
-
-
-  /* =================================================
-     LOGIN CHECK
-  ================================================= */
-
   const token =
     localStorage.getItem(
       "internio_access_token"
@@ -1794,12 +1769,7 @@ async function generateCertificate() {
   }
 
 
-  /* =================================================
-     START
-  ================================================= */
-
-  button.disabled =
-    true;
+  button.disabled = true;
 
   button.textContent =
     "Creating Certificate...";
@@ -1813,11 +1783,6 @@ async function generateCertificate() {
 
 
   try {
-
-
-    /* ===============================================
-       CALL SUPABASE SECURE FUNCTION
-    =============================================== */
 
     const response =
       await fetch(
@@ -1893,12 +1858,6 @@ async function generateCertificate() {
     }
 
 
-    /*
-    Supabase RPC can return the row
-    as an object or array depending
-    on the response.
-    */
-
     const certificate =
       Array.isArray(data)
         ? data[0]
@@ -1917,10 +1876,6 @@ async function generateCertificate() {
     }
 
 
-    /* ===============================================
-       VERIFICATION URL
-    =============================================== */
-
     const verificationUrl =
       VERIFICATION_URL +
       "?id=" +
@@ -1928,10 +1883,6 @@ async function generateCertificate() {
         certificate.certificate_id
       );
 
-
-    /* ===============================================
-       QR
-    =============================================== */
 
     const qrUrl =
       "https://api.qrserver.com/v1/create-qr-code/" +
@@ -1942,10 +1893,6 @@ async function generateCertificate() {
       );
 
 
-    /* ===============================================
-       BUILD CERTIFICATE
-    =============================================== */
-
     buildCertificate(
       certificate,
       selected.value,
@@ -1953,10 +1900,6 @@ async function generateCertificate() {
       qrUrl
     );
 
-
-    /* ===============================================
-       SHOW
-    =============================================== */
 
     document.getElementById(
       "certificateWrapper"
@@ -1968,28 +1911,20 @@ async function generateCertificate() {
       "message success";
 
     message.textContent =
-      "✓ Certificate created successfully: " +
+      "✓ Certificate created: " +
       certificate.certificate_id;
 
 
-    setTimeout(
-      function() {
-
-        document.getElementById(
-          "certificateWrapper"
-        ).scrollIntoView({
-          behavior: "smooth"
-        });
-
-      },
-      250
-    );
+    document.getElementById(
+      "certificateWrapper"
+    ).scrollIntoView({
+      behavior: "smooth"
+    });
 
 
   } catch (error) {
 
     console.error(error);
-
 
     showError(
       error.message ||
@@ -1999,8 +1934,7 @@ async function generateCertificate() {
   }
 
 
-  button.disabled =
-    false;
+  button.disabled = false;
 
   button.textContent =
     "Generate Certificate";
@@ -2031,23 +1965,64 @@ function buildCertificate(
     certificate.project || "";
 
 
-  /* ===============================================
-     STUDENT
-  =============================================== */
-
   document.getElementById(
     "certificateStudentName"
   ).textContent =
     studentName;
 
 
-  /* ===============================================
-     TYPE TITLE + DESCRIPTION
-  =============================================== */
+  document.getElementById(
+    "certificateInternship"
+  ).textContent =
+    internship;
 
-  const typeTitle =
+
+  document.getElementById(
+    "certificateDuration"
+  ).textContent =
+    certificate.duration;
+
+
+  document.getElementById(
+    "certificateStartDate"
+  ).textContent =
+    formatDate(
+      certificate.start_date
+    );
+
+
+  document.getElementById(
+    "certificateEndDate"
+  ).textContent =
+    formatDate(
+      certificate.end_date
+    );
+
+
+  document.getElementById(
+    "certificateId"
+  ).textContent =
+    certificate.certificate_id;
+
+
+  document.getElementById(
+    "certificateQR"
+  ).src =
+    qrUrl;
+
+
+  document.getElementById(
+    "qrUrl"
+  ).textContent =
+    verificationUrl.replace(
+      "https://",
+      ""
+    );
+
+
+  const subtitle =
     document.getElementById(
-      "certificateTypeTitle"
+      "certificateSubtitle"
     );
 
 
@@ -2069,15 +2044,15 @@ function buildCertificate(
     );
 
 
-  /*
-  PROJECT-BASED WITH PROJECT
-  */
+  /* ===============================================
+     PROJECT + PROJECT NAME
+  =============================================== */
 
   if (
     type === "PROJECT_NAMED"
   ) {
 
-    typeTitle.textContent =
+    subtitle.textContent =
       "OF PROJECT-BASED INTERNSHIP";
 
 
@@ -2099,7 +2074,7 @@ function buildCertificate(
       "<strong>InternIO</strong>" +
 
       ", demonstrating practical learning, " +
-      "technical development, and hands-on experience " +
+      "technical development and hands-on experience " +
       "through the successful completion of the assigned project.";
 
 
@@ -2113,15 +2088,15 @@ function buildCertificate(
   }
 
 
-  /*
-  PROJECT-BASED WITHOUT PROJECT NAME
-  */
+  /* ===============================================
+     PROJECT-BASED WITHOUT PROJECT NAME
+  =============================================== */
 
   else if (
     type === "PROJECT_NO_NAME"
   ) {
 
-    typeTitle.textContent =
+    subtitle.textContent =
       "OF PROJECT-BASED INTERNSHIP";
 
 
@@ -2143,7 +2118,7 @@ function buildCertificate(
       "<strong>InternIO</strong>" +
 
       ", demonstrating practical learning, " +
-      "technical development, and hands-on experience " +
+      "technical development and hands-on experience " +
       "through the internship program.";
 
 
@@ -2153,13 +2128,13 @@ function buildCertificate(
   }
 
 
-  /*
-  INTERNSHIP COMPLETION
-  */
+  /* ===============================================
+     INTERNSHIP COMPLETION
+  =============================================== */
 
   else {
 
-    typeTitle.textContent =
+    subtitle.textContent =
       "OF INTERNSHIP COMPLETION";
 
 
@@ -2181,7 +2156,7 @@ function buildCertificate(
       "<strong>InternIO</strong>" +
 
       ", demonstrating commitment to learning, " +
-      "professional development, and practical exposure.";
+      "professional development and practical exposure.";
 
 
     projectBox.style.display =
@@ -2189,79 +2164,14 @@ function buildCertificate(
 
   }
 
-
-  /* ===============================================
-     DETAILS
-  =============================================== */
-
-  document.getElementById(
-    "certificateInternship"
-  ).textContent =
-    internship;
-
-
-  document.getElementById(
-    "certificateDuration"
-  ).textContent =
-    certificate.duration;
-
-
-  document.getElementById(
-    "certificateStartDate"
-  ).textContent =
-    formatDisplayDate(
-      certificate.start_date
-    );
-
-
-  document.getElementById(
-    "certificateEndDate"
-  ).textContent =
-    formatDisplayDate(
-      certificate.end_date
-    );
-
-
-  /* ===============================================
-     ID
-  =============================================== */
-
-  document.getElementById(
-    "certificateId"
-  ).textContent =
-    certificate.certificate_id;
-
-
-  /* ===============================================
-     QR
-  =============================================== */
-
-  document.getElementById(
-    "certificateQR"
-  ).src =
-    qrUrl;
-
-
-  /* ===============================================
-     SHORT VERIFICATION TEXT
-  =============================================== */
-
-  document.getElementById(
-    "verificationShort"
-  ).textContent =
-    verificationUrl.replace(
-      "https://",
-      ""
-    );
-
 }
 
 
 /* =====================================================
-   DATE FORMAT
+   DATE
 ===================================================== */
 
-function formatDisplayDate(
+function formatDate(
   value
 ) {
 
@@ -2328,14 +2238,14 @@ function printCertificate() {
 
 function newCertificate() {
 
-  const confirmed =
-    confirm(
+  if (
+    !confirm(
       "Create another certificate?"
-    );
+    )
+  ) {
 
-
-  if (!confirmed) {
     return;
+
   }
 
 
@@ -2345,52 +2255,37 @@ function newCertificate() {
     "none";
 
 
-  document.getElementById(
-    "studentName"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "internship"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "projectName"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "startDate"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "endDate"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "duration"
-  ).value =
-    "";
-
-
-  document.getElementById(
+  [
+    "studentName",
+    "internship",
+    "projectName",
+    "startDate",
+    "endDate",
+    "duration",
     "issueDate"
-  ).value =
-    "";
+  ].forEach(
+    function(id) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+        element.value = "";
+      }
+
+    }
+  );
 
 
-  document.getElementById(
-    "message"
-  ).textContent =
-    "";
+  document.querySelectorAll(
+    'input[name="certificateType"]'
+  ).forEach(
+    function(input) {
+
+      input.checked = false;
+
+    }
+  );
 
 
   document.getElementById(
@@ -2405,17 +2300,13 @@ function newCertificate() {
     "none";
 
 
-  document.querySelectorAll(
-    'input[name="certificateType"]'
-  ).forEach(
-    function(input) {
-      input.checked = false;
-    }
-  );
+  document.getElementById(
+    "message"
+  ).textContent =
+    "";
 
 
-  projectMode =
-    null;
+  projectMode = null;
 
 
   window.scrollTo({
@@ -2465,7 +2356,5 @@ function escapeHTML(
 
 </script>
 
-
 </body>
-
 </html>
