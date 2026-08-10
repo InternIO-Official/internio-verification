@@ -18,7 +18,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -38,19 +37,27 @@ body {
 
 :root {
     --navy: #071a38;
+    --navy2: #17365e;
     --gold: #b88720;
     --gold-light: #e2c66d;
     --gold-dark: #8d6518;
+    --cream: #fdfbf7;
     --border: #dce1e8;
     --muted: #737d8c;
 }
 
+/* =========================================================
+   TOP BAR
+========================================================= */
+
 .topbar {
     height: 70px;
     padding: 0 30px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     background: var(--navy);
     color: white;
 }
@@ -83,19 +90,28 @@ body {
 .logout {
     height: 35px;
     padding: 0 15px;
+
     border: 1px solid rgba(255,255,255,.25);
     border-radius: 5px;
+
     background: rgba(255,255,255,.07);
     color: white;
+
     cursor: pointer;
+
     font-family: inherit;
     font-size: 9px;
     font-weight: 700;
 }
 
+/* =========================================================
+   PAGE
+========================================================= */
+
 .page {
     width: calc(100% - 32px);
     max-width: 1500px;
+
     margin: 20px auto 40px;
 }
 
@@ -108,8 +124,10 @@ body {
 .form-panel {
     background: white;
     padding: 25px;
+
     border: 1px solid var(--border);
     border-radius: 12px;
+
     box-shadow: 0 12px 35px rgba(7,26,56,.07);
 }
 
@@ -121,10 +139,15 @@ body {
 
 .form-description {
     margin: 7px 0 22px;
+
     color: var(--muted);
     font-size: 10px;
     line-height: 1.7;
 }
+
+/* =========================================================
+   FORM
+========================================================= */
 
 .field {
     margin-bottom: 15px;
@@ -132,29 +155,40 @@ body {
 
 label {
     display: block;
+
     margin-bottom: 7px;
+
     color: var(--navy);
+
     font-size: 9px;
     font-weight: 700;
+
     letter-spacing: .7px;
 }
 
 input {
     width: 100%;
     height: 43px;
+
     padding: 0 12px;
+
     border: 1px solid #d4dae2;
     border-radius: 6px;
+
     outline: none;
+
     background: white;
     color: #26344a;
+
     font-family: inherit;
     font-size: 12px;
 }
 
 input:focus {
     border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(184,135,32,.10);
+
+    box-shadow:
+        0 0 0 3px rgba(184,135,32,.10);
 }
 
 .two {
@@ -167,10 +201,13 @@ input:focus {
     display: flex;
     align-items: flex-start;
     gap: 10px;
+
     padding: 12px;
     margin-bottom: 8px;
+
     border: 1px solid var(--border);
     border-radius: 7px;
+
     cursor: pointer;
 }
 
@@ -182,8 +219,11 @@ input:focus {
 .type-radio {
     width: 17px;
     height: 17px;
+
     flex: 0 0 17px;
+
     margin-top: 1px;
+
     border: 2px solid #aeb7c4;
     border-radius: 50%;
 }
@@ -200,7 +240,9 @@ input:focus {
 
 .type-description {
     margin-top: 3px;
+
     color: #7b8491;
+
     font-size: 8px;
     line-height: 1.45;
 }
@@ -208,7 +250,9 @@ input:focus {
 .info {
     padding: 11px 12px;
     margin: 2px 0 16px;
+
     border-left: 3px solid var(--gold);
+
     background: #faf8f1;
 }
 
@@ -220,7 +264,9 @@ input:focus {
 
 .info-text {
     margin-top: 3px;
+
     color: #7a8492;
+
     font-size: 8px;
     line-height: 1.5;
 }
@@ -228,11 +274,21 @@ input:focus {
 .generate {
     width: 100%;
     height: 50px;
+
     border: 0;
     border-radius: 6px;
-    background: linear-gradient(135deg,#071a38,#17365e);
+
+    background:
+        linear-gradient(
+            135deg,
+            #071a38,
+            #17365e
+        );
+
     color: white;
+
     cursor: pointer;
+
     font-family: inherit;
     font-size: 11px;
     font-weight: 700;
@@ -245,8 +301,11 @@ input:focus {
 
 .message {
     min-height: 18px;
+
     margin-top: 9px;
+
     text-align: center;
+
     font-size: 9px;
     font-weight: 700;
 }
@@ -259,25 +318,46 @@ input:focus {
     color: #16763b;
 }
 
+/* =========================================================
+   PREVIEW
+========================================================= */
+
 .form-preview {
     min-height: 650px;
+
     position: relative;
+
     overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 30px;
+
     border-radius: 12px;
+
     background:
-        radial-gradient(circle at center,rgba(199,150,39,.10),transparent 35%),
-        linear-gradient(135deg,#071a38,#17365e);
+        radial-gradient(
+            circle at center,
+            rgba(199,150,39,.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #071a38,
+            #17365e
+        );
 }
 
 .preview-content {
     position: relative;
     z-index: 2;
+
     max-width: 700px;
+
     text-align: center;
+
     color: white;
 }
 
@@ -294,31 +374,44 @@ input:focus {
 
 .preview-tagline {
     margin-top: 12px;
+
     font-size: 10px;
     font-weight: 700;
+
     letter-spacing: 3px;
 }
 
 .preview-rule {
     width: 140px;
     height: 1px;
+
     margin: 23px auto;
+
     background: var(--gold-light);
 }
 
 .preview-title {
     font-family: "Cinzel", serif;
+
     font-size: 29px;
+
     letter-spacing: 5px;
 }
 
 .preview-description {
     max-width: 560px;
+
     margin: 16px auto;
+
     color: #d5dce7;
+
     font-size: 10px;
     line-height: 1.8;
 }
+
+/* =========================================================
+   RESULT
+========================================================= */
 
 .result {
     display: none;
@@ -328,23 +421,30 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 20px;
+
     padding: 15px 18px;
     margin-bottom: 15px;
+
     background: white;
+
     border: 1px solid var(--border);
     border-radius: 10px;
 }
 
 .result-title {
     color: var(--navy);
+
     font-size: 17px;
     font-weight: 700;
 }
 
 .result-description {
     margin-top: 4px;
+
     color: #7a8492;
+
     font-size: 9px;
 }
 
@@ -356,12 +456,17 @@ input:focus {
 
 .actions button {
     height: 35px;
+
     padding: 0 14px;
+
     border: 0;
     border-radius: 5px;
+
     background: var(--navy);
     color: white;
+
     cursor: pointer;
+
     font-family: inherit;
     font-size: 9px;
     font-weight: 700;
@@ -376,84 +481,128 @@ input:focus {
     background: #a8791f;
 }
 
+/* =========================================================
+   CERTIFICATE SCROLL
+========================================================= */
+
 .certificate-scroll {
     width: 100%;
+
     overflow-x: auto;
+
     padding-bottom: 25px;
 }
+
+/* =========================================================
+   CERTIFICATE
+========================================================= */
 
 .certificate {
     width: 1400px;
     height: 990px;
+
     margin: auto;
-    padding: 13px;
+    padding: 10px;
+
     background:
         linear-gradient(
             135deg,
-            #06162f,
+            #06162f 0%,
             #193961 50%,
-            #071a38
+            #071a38 100%
         );
-    box-shadow: 0 25px 70px rgba(5,20,45,.30);
+
+    box-shadow:
+        0 25px 70px rgba(5,20,45,.30);
 }
 
 .paper {
     position: relative;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     background:
         radial-gradient(
             ellipse at center,
-            rgba(199,150,39,.055),
+            rgba(199,150,39,.045),
             transparent 58%
         ),
-        #fdfbf6;
+        var(--cream);
+
     border: 2px solid var(--gold);
 }
 
 .paper::before {
     content: "";
+
     position: absolute;
-    inset: 13px;
-    border: 1px solid rgba(199,150,39,.82);
+
+    inset: 14px;
+
+    border:
+        1px solid rgba(184,135,32,.72);
+
     pointer-events: none;
+
+    z-index: 2;
 }
 
 .paper::after {
     content: "";
+
     position: absolute;
-    inset: 21px;
-    border: 1px solid rgba(7,26,56,.12);
+
+    inset: 22px;
+
+    border:
+        1px solid rgba(7,26,56,.10);
+
     pointer-events: none;
+
+    z-index: 2;
 }
+
+/* =========================================================
+   DECORATIONS
+========================================================= */
 
 .corner {
     position: absolute;
-    z-index: 2;
+
     pointer-events: none;
 }
 
 .corner-tl {
     top: 0;
     left: 0;
-    width: 300px;
-    height: 190px;
+
+    width: 305px;
+    height: 195px;
+
     background:
         linear-gradient(
             135deg,
-            #071a38 0 67%,
-            transparent 67%
+            #071a38 0 66%,
+            transparent 66%
         );
+
+    z-index: 4;
 }
 
 .corner-tl::after {
     content: "";
+
     position: absolute;
-    left: 18px;
-    top: 18px;
-    width: 265px;
+
+    left: 22px;
+    top: 20px;
+
+    width: 270px;
     height: 150px;
+
     border-top: 3px solid var(--gold-light);
     border-left: 3px solid var(--gold-light);
 }
@@ -461,118 +610,177 @@ input:focus {
 .corner-tr {
     top: 0;
     right: 0;
-    width: 90px;
-    height: 70px;
+
+    width: 78px;
+    height: 58px;
+
     border-top: 4px solid var(--gold);
     border-right: 4px solid var(--gold);
+
+    z-index: 4;
 }
 
 .corner-bl {
-    bottom: 0;
     left: 0;
-    width: 75px;
-    height: 75px;
+    bottom: 0;
+
+    width: 80px;
+    height: 78px;
+
     border-left: 4px solid var(--gold);
     border-bottom: 4px solid var(--gold);
+
+    z-index: 4;
 }
 
 .corner-br {
     right: 0;
     bottom: 0;
-    width: 235px;
-    height: 145px;
+
+    width: 245px;
+    height: 150px;
+
     background:
         linear-gradient(
             315deg,
-            #071a38 0 64%,
-            transparent 64%
+            #071a38 0 62%,
+            transparent 62%
         );
+
+    z-index: 3;
 }
 
 .corner-br::after {
     content: "";
+
     position: absolute;
+
     right: 18px;
     bottom: 18px;
-    width: 200px;
+
+    width: 205px;
     height: 112px;
+
     border-right: 3px solid var(--gold-light);
     border-bottom: 3px solid var(--gold-light);
 }
 
+/* =========================================================
+   WATERMARK
+========================================================= */
+
 .watermark {
     position: absolute;
+
     left: 50%;
     top: 53%;
-    transform: translate(-50%,-50%);
+
+    transform:
+        translate(-50%, -50%);
+
     z-index: 1;
-    color: rgba(7,26,56,.025);
-    font-family: "Cinzel",serif;
-    font-size: 410px;
+
+    color: rgba(7,26,56,.018);
+
+    font-family: "Cinzel", serif;
+
+    font-size: 420px;
     font-weight: 700;
+
     line-height: 1;
-    letter-spacing: -50px;
+
+    letter-spacing: -55px;
+
     pointer-events: none;
 }
 
 .watermark span {
-    color: rgba(199,150,39,.04);
+    color: rgba(199,150,39,.025);
 }
+
+/* =========================================================
+   CERTIFICATE ID
+========================================================= */
 
 .certificate-id {
     position: absolute;
-    top: 45px;
-    right: 55px;
-    z-index: 8;
+
+    top: 43px;
+    right: 58px;
+
+    z-index: 20;
+
+    width: 210px;
+
     text-align: center;
 }
 
 .id-label {
-    color: #737d8c;
+    color: #747e8d;
+
     font-size: 10px;
     font-weight: 700;
+
     letter-spacing: 2px;
 }
 
 .id-value {
     margin-top: 7px;
+
     color: var(--navy);
+
     font-size: 16px;
     font-weight: 700;
+
     letter-spacing: 1px;
 }
 
 .id-decoration {
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     gap: 8px;
+
     margin-top: 8px;
 }
 
 .id-line {
     width: 38px;
     height: 1px;
+
     background: var(--gold);
 }
 
 .id-star {
     color: var(--gold-dark);
-    font-size: 11px;
+
+    font-size: 10px;
 }
+
+/* =========================================================
+   BRAND
+========================================================= */
 
 .brand {
     position: relative;
-    z-index: 5;
-    padding-top: 56px;
+
+    z-index: 10;
+
+    padding-top: 61px;
+
     text-align: center;
 }
 
 .brand-name {
     color: var(--navy);
+
     font-size: 82px;
     font-weight: 700;
+
     line-height: .9;
+
     letter-spacing: -7px;
 }
 
@@ -581,98 +789,152 @@ input:focus {
 }
 
 .brand-tagline {
-    margin-top: 12px;
+    margin-top: 13px;
+
     color: #263650;
+
     font-size: 14px;
     font-weight: 700;
+
     letter-spacing: 4px;
 }
 
 .brand-decoration {
     display: flex;
+
     align-items: center;
     justify-content: center;
-    width: 420px;
+
+    width: 365px;
+
     margin: 14px auto 0;
 }
 
 .brand-decoration::before,
 .brand-decoration::after {
     content: "";
-    width: 130px;
+
+    width: 125px;
     height: 1px;
+
     background: var(--gold);
 }
 
 .diamond {
     width: 9px;
     height: 9px;
-    margin: 0 10px;
+
+    margin: 0 11px;
+
     transform: rotate(45deg);
+
     background: var(--gold);
 }
 
+/* =========================================================
+   TITLE
+========================================================= */
+
 .certificate-title {
     position: relative;
-    z-index: 5;
-    margin-top: 24px;
+
+    z-index: 10;
+
+    margin-top: 30px;
+
     text-align: center;
+
     color: var(--navy);
-    font-family: "Cinzel",serif;
-    font-size: 65px;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 64px;
     font-weight: 600;
+
     line-height: 1;
-    letter-spacing: 10px;
+
+    letter-spacing: 9px;
 }
 
 .certificate-subtitle {
     position: relative;
-    z-index: 5;
-    margin-top: 5px;
+
+    z-index: 10;
+
+    margin-top: 7px;
+
     text-align: center;
+
     color: #9b721e;
-    font-family: "Cinzel",serif;
+
+    font-family: "Cinzel", serif;
+
     font-size: 24px;
     font-weight: 600;
+
     letter-spacing: 8px;
 }
 
+/* =========================================================
+   STUDENT
+========================================================= */
+
 .certify {
     position: relative;
-    z-index: 5;
-    margin-top: 26px;
+
+    z-index: 10;
+
+    margin-top: 28px;
+
     text-align: center;
-    color: #526073;
+
+    color: #536073;
+
     font-size: 13px;
     font-weight: 600;
+
     letter-spacing: 3px;
 }
 
 .student-name {
     position: relative;
-    z-index: 5;
+
+    z-index: 10;
+
     width: 100%;
-    margin-top: 2px;
-    padding: 0 35px;
+
+    margin-top: 0;
+
+    padding: 0 45px;
+
     text-align: center;
+
     color: var(--navy);
-    font-family: "Allura",cursive;
-    font-size: 94px;
-    line-height: 1.08;
+
+    font-family: "Allura", cursive;
+
+    font-size: 96px;
+
+    line-height: 1.05;
+
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
 .name-line {
-    width: 550px;
+    width: 580px;
     height: 1px;
+
     margin: 4px auto 0;
+
     background:
         linear-gradient(
             90deg,
             transparent,
-            var(--gold),
+            #c6a348,
             transparent
         );
 }
@@ -680,68 +942,115 @@ input:focus {
 .name-diamond {
     width: 10px;
     height: 10px;
+
     margin: -5px auto 0;
+
     transform: rotate(45deg);
+
     background: var(--gold);
 }
 
+/* =========================================================
+   BODY
+========================================================= */
+
 .body-text {
     position: relative;
-    z-index: 5;
-    width: 78%;
-    margin: 13px auto 0;
+
+    z-index: 10;
+
+    width: 77%;
+
+    margin: 15px auto 0;
+
     text-align: center;
+
     color: #354257;
+
     font-size: 14px;
+
     line-height: 1.55;
 }
 
 .body-text strong {
     color: var(--navy);
+
     font-weight: 700;
 }
 
+/* =========================================================
+   PROJECT
+========================================================= */
+
 .project {
     position: relative;
-    z-index: 5;
+
+    z-index: 10;
+
     display: none;
+
     width: 45%;
+
     margin: 9px auto 0;
+
     padding: 7px 15px;
+
     text-align: center;
+
     border-top: 1px solid var(--gold);
     border-bottom: 1px solid var(--gold);
 }
 
 .project-label {
     color: #9b721e;
+
     font-size: 9px;
     font-weight: 700;
+
     letter-spacing: 3px;
 }
 
 .project-value {
     margin-top: 4px;
+
     color: var(--navy);
+
     font-size: 15px;
     font-weight: 700;
 }
 
+/* =========================================================
+   DETAILS
+========================================================= */
+
 .details {
     position: relative;
-    z-index: 5;
+
+    z-index: 10;
+
     width: 76%;
+
     margin: 15px auto 0;
+
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    padding: 10px 0;
-    border-top: 1px solid rgba(199,150,39,.5);
-    border-bottom: 1px solid rgba(199,150,39,.5);
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    padding: 11px 0;
+
+    border-top:
+        1px solid rgba(184,135,32,.48);
+
+    border-bottom:
+        1px solid rgba(184,135,32,.48);
 }
 
 .detail {
     text-align: center;
-    border-right: 1px solid #d9d2c4;
+
+    border-right:
+        1px solid #d9d2c4;
 }
 
 .detail:last-child {
@@ -749,89 +1058,139 @@ input:focus {
 }
 
 .detail-label {
-    color: #737d8c;
+    color: #747e8d;
+
     font-size: 8px;
     font-weight: 700;
+
     letter-spacing: 1.6px;
 }
 
 .detail-value {
     margin-top: 5px;
+
     color: var(--navy);
+
     font-size: 13px;
     font-weight: 700;
 }
 
+/* =========================================================
+   BOTTOM
+========================================================= */
+
 .bottom {
     position: absolute;
-    left: 7%;
-    right: 10%;
-    bottom: 30px;
-    z-index: 20;
+
+    left: 9%;
+    right: 9%;
+
+    bottom: 32px;
+
+    z-index: 25;
+
     display: grid;
+
     grid-template-columns:
-        minmax(320px,1fr)
-        170px
-        330px;
+        minmax(300px, 1fr)
+        150px
+        390px;
+
     align-items: end;
-    gap: 30px;
+
+    column-gap: 42px;
+
     min-width: 0;
 }
 
+/* =========================================================
+   SIGNATURE
+========================================================= */
+
 .signature {
-    text-align: center;
-    min-width: 0;
     position: relative;
-    z-index: 25;
+
+    z-index: 30;
+
+    text-align: center;
+
+    min-width: 0;
 }
 
 .signature-image {
     display: block;
-    width: 220px;
+
+    width: 225px;
     height: 60px;
+
     margin: 0 auto 3px;
+
     object-fit: contain;
+
     mix-blend-mode: multiply;
 }
 
 .signature-fallback {
     margin-bottom: 4px;
+
     color: #102746;
-    font-family: "Allura",cursive;
+
+    font-family: "Allura", cursive;
+
     font-size: 44px;
+
     transform: rotate(-3deg);
 }
 
 .signature-line {
     width: 235px;
     height: 1px;
+
     margin: 0 auto;
+
     background: #26354b;
 }
 
 .signature-name {
     margin-top: 7px;
+
     color: var(--navy);
+
     font-size: 12px;
     font-weight: 700;
+
     letter-spacing: 2px;
 }
 
 .signature-title {
     margin-top: 3px;
-    color: #737d8c;
+
+    color: #747e8d;
+
     font-size: 9px;
 }
 
+/* =========================================================
+   SEAL
+========================================================= */
+
 .seal {
-    width: 125px;
-    height: 125px;
-    margin: auto;
     position: relative;
+
+    z-index: 35;
+
+    width: 130px;
+    height: 130px;
+
+    margin: auto;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     border-radius: 50%;
+
     background:
         linear-gradient(
             135deg,
@@ -840,95 +1199,143 @@ input:focus {
             #f1d477 70%,
             #916717
         );
-    box-shadow: 0 5px 12px rgba(0,0,0,.20);
-    z-index: 30;
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.20);
 }
 
 .seal::before {
     content: "";
+
     position: absolute;
+
     inset: 7px;
+
     border-radius: 50%;
+
     background: var(--navy);
-    border: 1px solid #f1d477;
+
+    border:
+        1px solid #f1d477;
 }
 
 .seal::after {
     content: "";
+
     position: absolute;
+
     inset: 15px;
+
     border-radius: 50%;
-    border: 1px solid #dcb856;
+
+    border:
+        1px solid #dcb856;
 }
 
 .seal-content {
     position: relative;
+
     z-index: 2;
+
     text-align: center;
+
     color: white;
 }
 
 .seal-brand {
     color: #f1d477;
+
     font-size: 8px;
     font-weight: 700;
+
     letter-spacing: 2px;
 }
 
 .seal-stars {
     margin-top: 4px;
+
     color: #e8c55d;
+
     font-size: 7px;
+
     letter-spacing: 2px;
 }
 
 .seal-io {
     margin-top: 2px;
+
     color: #e7c15a;
-    font-family: "Cinzel",serif;
+
+    font-family: "Cinzel", serif;
+
     font-size: 30px;
     font-weight: 700;
 }
 
 .seal-verified {
     margin-top: 1px;
+
     color: white;
+
     font-size: 7px;
     font-weight: 700;
+
     letter-spacing: 1.5px;
 }
 
 .seal-small {
     margin-top: 3px;
+
     color: #e5c25d;
+
     font-size: 5px;
     font-weight: 700;
+
     letter-spacing: 1px;
 }
 
+/* =========================================================
+   QR
+========================================================= */
+
 .qr-area {
-    width: 330px;
-    max-width: 330px;
+    width: 390px;
+    max-width: 390px;
+
     display: flex;
+
     align-items: center;
     justify-content: flex-start;
-    gap: 12px;
+
+    gap: 14px;
+
     min-width: 0;
+
     position: relative;
-    z-index: 40;
+
+    z-index: 45;
 }
 
 .qr-box {
-    width: 118px;
-    height: 118px;
-    flex: 0 0 118px;
+    width: 120px;
+    height: 120px;
+
+    flex: 0 0 120px;
+
     padding: 6px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     background: white;
-    border: 2px solid #c9a64a;
+
+    border:
+        2px solid #c9a64a;
+
     position: relative;
+
     z-index: 50;
 }
 
@@ -936,44 +1343,70 @@ input:focus {
 .qr-box canvas {
     width: 100% !important;
     height: 100% !important;
+
     display: block;
 }
 
 .qr-copy {
-    width: 175px;
+    width: 225px;
+
     min-width: 0;
+
     position: relative;
+
     z-index: 50;
 }
 
 .qr-title {
     color: var(--navy);
+
     font-size: 11px;
     font-weight: 700;
+
     letter-spacing: 1px;
+
     white-space: nowrap;
 }
 
 .qr-description {
     margin-top: 6px;
-    color: #737d8c;
+
+    color: #747e8d;
+
     font-size: 8px;
+
     line-height: 1.55;
-    max-width: 170px;
+
+    max-width: 205px;
 }
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .certificate-footer {
     position: absolute;
+
     left: 0;
     right: 0;
-    bottom: 13px;
+
+    bottom: 10px;
+
     z-index: 60;
+
     text-align: center;
+
     color: #7b8491;
+
     font-size: 7px;
     font-weight: 600;
+
     letter-spacing: 1.5px;
 }
+
+/* =========================================================
+   PRINT
+========================================================= */
 
 @media print {
 
@@ -986,7 +1419,9 @@ input:focus {
     body {
         width: 297mm;
         height: 210mm;
+
         margin: 0;
+
         background: white;
     }
 
@@ -1001,9 +1436,12 @@ input:focus {
 
     .result {
         display: block !important;
+
         position: absolute;
+
         left: 0;
         top: 0;
+
         width: 297mm;
         height: 210mm;
     }
@@ -1014,14 +1452,18 @@ input:focus {
 
     .certificate-scroll {
         overflow: visible;
+
         padding: 0;
     }
 
     .certificate {
         width: 297mm;
         height: 210mm;
+
         padding: 3mm;
+
         margin: 0;
+
         box-shadow: none;
     }
 
@@ -1031,7 +1473,11 @@ input:focus {
     }
 }
 
-@media (max-width:1050px) {
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
 
     .form-layout {
         grid-template-columns: 1fr;
@@ -1042,7 +1488,7 @@ input:focus {
     }
 }
 
-@media (max-width:650px) {
+@media (max-width: 650px) {
 
     .topbar {
         padding: 0 15px;
@@ -1069,7 +1515,6 @@ input:focus {
         font-size: 72px;
     }
 }
-
 </style>
 </head>
 
@@ -1098,7 +1543,6 @@ input:focus {
     </div>
 
 </header>
-
 
 <main class="page">
 
@@ -1131,6 +1575,7 @@ input:focus {
             <div class="type-radio"></div>
 
             <div>
+
                 <div class="type-title">
                     Project-Based Internship
                 </div>
@@ -1138,6 +1583,7 @@ input:focus {
                 <div class="type-description">
                     Include a specific project name.
                 </div>
+
             </div>
 
         </div>
@@ -1151,6 +1597,7 @@ input:focus {
             <div class="type-radio"></div>
 
             <div>
+
                 <div class="type-title">
                     Project-Based — No Project Name
                 </div>
@@ -1158,6 +1605,7 @@ input:focus {
                 <div class="type-description">
                     Use when no specific project should appear.
                 </div>
+
             </div>
 
         </div>
@@ -1171,6 +1619,7 @@ input:focus {
             <div class="type-radio"></div>
 
             <div>
+
                 <div class="type-title">
                     Internship Completion
                 </div>
@@ -1178,6 +1627,7 @@ input:focus {
                 <div class="type-description">
                     General internship completion certificate.
                 </div>
+
             </div>
 
         </div>
@@ -1322,7 +1772,6 @@ input:focus {
 
 </div>
 
-
 <div class="form-preview">
 
     <div class="preview-content">
@@ -1352,7 +1801,6 @@ input:focus {
 </div>
 
 </section>
-
 
 <section id="result" class="result">
 
@@ -1400,7 +1848,6 @@ input:focus {
 
 </div>
 
-
 <div class="certificate-scroll">
 
 <div class="certificate">
@@ -1443,7 +1890,6 @@ input:focus {
 
 </div>
 
-
 <div class="brand">
 
     <div class="brand-name">
@@ -1459,7 +1905,6 @@ input:focus {
     </div>
 
 </div>
-
 
 <div class="certificate-title">
     CERTIFICATE
@@ -1483,7 +1928,6 @@ input:focus {
 <div class="name-line"></div>
 <div class="name-diamond"></div>
 
-
 <div
     id="certificateBody"
     class="body-text"
@@ -1495,7 +1939,6 @@ input:focus {
     learning and a strong commitment to developing
     real-world skills and experience.
 </div>
-
 
 <div
     id="projectDisplay"
@@ -1514,7 +1957,6 @@ input:focus {
     </div>
 
 </div>
-
 
 <div class="details">
 
@@ -1580,9 +2022,7 @@ input:focus {
 
 </div>
 
-
 <div class="bottom">
-
 
 <div class="signature">
 
@@ -1616,7 +2056,6 @@ input:focus {
 
 </div>
 
-
 <div class="seal">
 
     <div class="seal-content">
@@ -1645,7 +2084,6 @@ input:focus {
 
 </div>
 
-
 <div class="qr-area">
 
     <div
@@ -1668,14 +2106,11 @@ input:focus {
 
 </div>
 
-
 </div>
-
 
 <div class="certificate-footer">
     INTERNIO • INNOVATION &amp; OPPORTUNITIES
 </div>
-
 
 </div>
 
@@ -1687,11 +2122,10 @@ input:focus {
 
 </main>
 
-
 <script>
 
 /* =========================================================
-   CONFIGURATION
+   CONFIG
 ========================================================= */
 
 const VERIFICATION_BASE =
@@ -1732,7 +2166,6 @@ async function logoutAdmin() {
 
             await internioLogout();
             return;
-
         }
 
         if (
@@ -1741,34 +2174,28 @@ async function logoutAdmin() {
         ) {
 
             await internioSupabase.auth.signOut();
-
         }
 
         window.location.href =
             "admin.html";
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
         window.location.href =
             "admin.html";
-
     }
-
 }
 
 
 /* =========================================================
-   SELECT TYPE
+   TYPE
 ========================================================= */
 
 function selectType(type) {
 
-    certificateType =
-        type;
+    certificateType = type;
 
     document
         .getElementById("typeProject")
@@ -1785,9 +2212,7 @@ function selectType(type) {
     const projectField =
         document.getElementById("projectField");
 
-    if (
-        type === "PROJECT_NAMED"
-    ) {
+    if (type === "PROJECT_NAMED") {
 
         document
             .getElementById("typeProject")
@@ -1796,11 +2221,7 @@ function selectType(type) {
         projectField.style.display =
             "block";
 
-    }
-
-    else if (
-        type === "PROJECT_NONE"
-    ) {
+    } else if (type === "PROJECT_NONE") {
 
         document
             .getElementById("typeNoProject")
@@ -1809,9 +2230,7 @@ function selectType(type) {
         projectField.style.display =
             "none";
 
-    }
-
-    else {
+    } else {
 
         document
             .getElementById("typeCompletion")
@@ -1819,9 +2238,7 @@ function selectType(type) {
 
         projectField.style.display =
             "none";
-
     }
-
 }
 
 
@@ -1845,9 +2262,7 @@ function formatDate(value) {
             date.getTime()
         )
     ) {
-
         return value;
-
     }
 
     return date.toLocaleDateString(
@@ -1858,23 +2273,21 @@ function formatDate(value) {
             year: "numeric"
         }
     );
-
 }
 
 
 /* =========================================================
-   ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(value) {
 
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
@@ -1882,10 +2295,7 @@ function escapeHTML(value) {
    MESSAGE
 ========================================================= */
 
-function showMessage(
-    text,
-    type
-) {
+function showMessage(text, type) {
 
     const message =
         document.getElementById("message");
@@ -1896,12 +2306,11 @@ function showMessage(
     message.className =
         "message " +
         (type || "");
-
 }
 
 
 /* =========================================================
-   FORM DATA
+   FORM
 ========================================================= */
 
 function getFormData() {
@@ -1946,14 +2355,12 @@ function getFormData() {
             document
                 .getElementById("issueDate")
                 .value
-
     };
-
 }
 
 
 /* =========================================================
-   VALIDATION
+   VALIDATE
 ========================================================= */
 
 function validateForm(data) {
@@ -1966,7 +2373,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (!data.internship) {
@@ -1977,7 +2383,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (!data.startDate) {
@@ -1988,7 +2393,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (!data.endDate) {
@@ -1999,7 +2403,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (
@@ -2013,7 +2416,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (!data.duration) {
@@ -2024,7 +2426,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (!data.issueDate) {
@@ -2035,7 +2436,6 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     if (
@@ -2049,16 +2449,14 @@ function validateForm(data) {
         );
 
         return false;
-
     }
 
     return true;
-
 }
 
 
 /* =========================================================
-   SAVE CERTIFICATE
+   CREATE DATABASE RECORD
 ========================================================= */
 
 async function saveCertificate(data) {
@@ -2070,7 +2468,6 @@ async function saveCertificate(data) {
         throw new Error(
             "Supabase client is not available."
         );
-
     }
 
     const projectValue =
@@ -2106,25 +2503,20 @@ async function saveCertificate(data) {
 
                 p_certificate_url:
                     null
-
             }
         );
 
     if (result.error) {
 
-        console.error(
-            result.error
-        );
+        console.error(result.error);
 
         throw new Error(
             result.error.message ||
             "Unable to save certificate."
         );
-
     }
 
     return result.data;
-
 }
 
 
@@ -2142,9 +2534,7 @@ function extractCertificateId(data) {
         typeof data === "string" ||
         typeof data === "number"
     ) {
-
         return String(data);
-
     }
 
     if (
@@ -2159,9 +2549,7 @@ function extractCertificateId(data) {
             typeof first === "string" ||
             typeof first === "number"
         ) {
-
             return String(first);
-
         }
 
         return (
@@ -2170,7 +2558,6 @@ function extractCertificateId(data) {
             first.certificateId ||
             null
         );
-
     }
 
     return (
@@ -2181,7 +2568,6 @@ function extractCertificateId(data) {
         data.data?.id ||
         null
     );
-
 }
 
 
@@ -2242,9 +2628,7 @@ function renderCertificate(
             learning and a strong commitment to professional growth.
             `;
 
-    }
-
-    else {
+    } else {
 
         body.innerHTML =
             `
@@ -2255,7 +2639,6 @@ function renderCertificate(
             learning and a strong commitment to developing
             real-world skills and experience.
             `;
-
     }
 
     const projectDisplay =
@@ -2275,13 +2658,10 @@ function renderCertificate(
             .textContent =
             data.project;
 
-    }
-
-    else {
+    } else {
 
         projectDisplay.style.display =
             "none";
-
     }
 
 
@@ -2294,8 +2674,7 @@ function renderCertificate(
             "qrCode"
         );
 
-    qr.innerHTML =
-        "";
+    qr.innerHTML = "";
 
     if (
         typeof QRCode === "undefined"
@@ -2304,7 +2683,6 @@ function renderCertificate(
         throw new Error(
             "QR code library failed to load."
         );
-
     }
 
     const verificationURL =
@@ -2335,10 +2713,8 @@ function renderCertificate(
 
             correctLevel:
                 QRCode.CorrectLevel.H
-
         }
     );
-
 }
 
 
@@ -2358,7 +2734,6 @@ async function createCertificatePDF() {
         throw new Error(
             "Certificate element not found."
         );
-
     }
 
     await document.fonts.ready;
@@ -2380,7 +2755,7 @@ async function createCertificatePDF() {
                 allowTaint: false,
 
                 backgroundColor:
-                    "#fdfbf6",
+                    "#fdfbf7",
 
                 logging: false,
 
@@ -2395,7 +2770,6 @@ async function createCertificatePDF() {
 
                 windowHeight:
                     certificate.scrollHeight
-
             }
         );
 
@@ -2423,7 +2797,6 @@ async function createCertificatePDF() {
 
                 compress:
                     true
-
             }
         );
 
@@ -2439,12 +2812,11 @@ async function createCertificatePDF() {
     );
 
     return pdf;
-
 }
 
 
 /* =========================================================
-   UPLOAD PDF TO GOOGLE DRIVE
+   GOOGLE DRIVE UPLOAD
 ========================================================= */
 
 async function uploadCertificateToDrive(
@@ -2466,9 +2838,8 @@ async function uploadCertificateToDrive(
     ) {
 
         throw new Error(
-            "Unable to convert PDF to upload data."
+            "Unable to convert PDF for upload."
         );
-
     }
 
     const pdfBase64 =
@@ -2502,20 +2873,17 @@ async function uploadCertificateToDrive(
 
                             pdfBase64:
                                 pdfBase64
-
                         }
                     )
-
             }
         );
 
     if (!response.ok) {
 
         throw new Error(
-            "Google Drive upload request failed. HTTP " +
+            "Google Drive upload failed. HTTP " +
             response.status
         );
-
     }
 
     const result =
@@ -2530,7 +2898,6 @@ async function uploadCertificateToDrive(
             result?.error ||
             "Google Drive upload failed."
         );
-
     }
 
     if (
@@ -2538,18 +2905,16 @@ async function uploadCertificateToDrive(
     ) {
 
         throw new Error(
-            "Google Drive uploaded the file but did not return a file URL."
+            "Drive upload succeeded but no Drive URL was returned."
         );
-
     }
 
     return result;
-
 }
 
 
 /* =========================================================
-   SAVE DRIVE URL TO SUPABASE
+   SAVE DRIVE URL
 ========================================================= */
 
 async function saveCertificateURL(
@@ -2564,7 +2929,6 @@ async function saveCertificateURL(
         throw new Error(
             "Supabase client is not available."
         );
-
     }
 
     const result =
@@ -2577,21 +2941,17 @@ async function saveCertificateURL(
 
                 p_certificate_url:
                     certificateURL
-
             }
         );
 
     if (result.error) {
 
-        console.error(
-            result.error
-        );
+        console.error(result.error);
 
         throw new Error(
             result.error.message ||
-            "Unable to save the Google Drive URL."
+            "Unable to save Drive URL."
         );
-
     }
 
     if (
@@ -2599,13 +2959,11 @@ async function saveCertificateURL(
     ) {
 
         throw new Error(
-            "Certificate was created, but its Google Drive URL could not be linked."
+            "Certificate was created, but the Drive URL could not be linked."
         );
-
     }
 
     return true;
-
 }
 
 
@@ -2617,32 +2975,30 @@ async function downloadCertificatePDF() {
 
     try {
 
-        if (
-            !generatedPDF
-        ) {
+        if (!generatedPDF) {
 
             generatedPDF =
                 await createCertificatePDF();
-
         }
 
+        const student =
+            document
+                .getElementById(
+                    "certificateStudent"
+                )
+                .textContent ||
+            "Student";
+
         const safeName =
-            String(
-                document
-                    .getElementById(
-                        "certificateStudent"
-                    )
-                    .textContent ||
-                "Student"
-            )
-            .replace(
-                /[^a-zA-Z0-9_-]+/g,
-                "_"
-            )
-            .replace(
-                /^_+|_+$/g,
-                ""
-            );
+            String(student)
+                .replace(
+                    /[^a-zA-Z0-9_-]+/g,
+                    "_"
+                )
+                .replace(
+                    /^_+|_+$/g,
+                    ""
+                );
 
         const safeId =
             String(
@@ -2662,9 +3018,7 @@ async function downloadCertificatePDF() {
             ".pdf"
         );
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "PDF download error:",
@@ -2675,9 +3029,7 @@ async function downloadCertificatePDF() {
             "Unable to create the PDF.\n\n" +
             error.message
         );
-
     }
-
 }
 
 
@@ -2695,27 +3047,19 @@ async function generateCertificate() {
     const data =
         getFormData();
 
-    showMessage(
-        "",
-        ""
-    );
+    showMessage("", "");
 
     if (
         !validateForm(data)
     ) {
-
         return;
-
     }
 
-    button.disabled =
-        true;
+    button.disabled = true;
 
     try {
 
-        /* ==============================================
-           1. CREATE DATABASE RECORD
-        ============================================== */
+        /* 1. DATABASE */
 
         button.textContent =
             "CREATING CERTIFICATE...";
@@ -2740,18 +3084,13 @@ async function generateCertificate() {
             throw new Error(
                 "Certificate was created but no certificate ID was returned."
             );
-
         }
 
         generatedCertificateId =
-            String(
-                certificateId
-            );
+            String(certificateId);
 
 
-        /* ==============================================
-           2. RENDER CERTIFICATE
-        ============================================== */
+        /* 2. RENDER */
 
         button.textContent =
             "PREPARING CERTIFICATE...";
@@ -2762,9 +3101,7 @@ async function generateCertificate() {
         );
 
 
-        /* ==============================================
-           3. SHOW RESULT
-        ============================================== */
+        /* 3. SHOW RESULT */
 
         document
             .getElementById(
@@ -2780,7 +3117,6 @@ async function generateCertificate() {
             .style.display =
             "block";
 
-
         window.scrollTo(
             {
                 top: 0,
@@ -2789,9 +3125,7 @@ async function generateCertificate() {
         );
 
 
-        /* ==============================================
-           4. CREATE PDF
-        ============================================== */
+        /* 4. PDF */
 
         button.textContent =
             "CREATING PDF...";
@@ -2800,9 +3134,7 @@ async function generateCertificate() {
             await createCertificatePDF();
 
 
-        /* ==============================================
-           5. UPLOAD TO GOOGLE DRIVE
-        ============================================== */
+        /* 5. DRIVE */
 
         button.textContent =
             "UPLOADING TO DRIVE...";
@@ -2818,9 +3150,7 @@ async function generateCertificate() {
             driveResult.driveUrl;
 
 
-        /* ==============================================
-           6. SAVE DRIVE URL IN SUPABASE
-        ============================================== */
+        /* 6. DATABASE URL */
 
         button.textContent =
             "LINKING CERTIFICATE...";
@@ -2831,22 +3161,14 @@ async function generateCertificate() {
         );
 
 
-        /* ==============================================
-           7. SUCCESS
-        ============================================== */
-
-        showMessage(
-            "Certificate created, uploaded to Drive and linked successfully.",
-            "success"
-        );
-
+        /* 7. SUCCESS */
 
         document
             .getElementById(
                 "message"
             )
             .textContent =
-            "Certificate successfully created and stored.";
+            "Certificate successfully created, uploaded and verified.";
 
         document
             .getElementById(
@@ -2855,39 +3177,27 @@ async function generateCertificate() {
             .className =
             "message success";
 
-
         console.log(
-            "InternIO certificate created:",
+            "InternIO certificate:",
             generatedCertificateId
         );
 
         console.log(
-            "Google Drive URL:",
+            "Drive URL:",
             generatedDriveURL
         );
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Certificate generation error:",
             error
         );
 
-
-        /*
-         IMPORTANT:
-         If Drive upload fails after Supabase creation,
-         the certificate record remains in Supabase.
-         This prevents accidental duplicate certificate IDs.
-        */
-
         alert(
             "Certificate creation was not completed.\n\n" +
             error.message
         );
-
 
         document
             .getElementById(
@@ -2903,25 +3213,19 @@ async function generateCertificate() {
             .style.display =
             "grid";
 
-
         showMessage(
             error.message ||
             "Unable to complete certificate generation.",
             "error"
         );
 
-    }
+    } finally {
 
-    finally {
-
-        button.disabled =
-            false;
+        button.disabled = false;
 
         button.textContent =
             "GENERATE CERTIFICATE";
-
     }
-
 }
 
 
@@ -2951,7 +3255,6 @@ function editCertificate() {
             behavior: "smooth"
         }
     );
-
 }
 
 
@@ -2965,66 +3268,51 @@ function newCertificate() {
         .getElementById(
             "studentName"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "internship"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "projectName"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "startDate"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "endDate"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "duration"
         )
-        .value =
-        "";
+        .value = "";
 
     document
         .getElementById(
             "issueDate"
         )
-        .value =
-        "";
+        .value = "";
 
-
-    generatedCertificateId =
-        null;
-
-    generatedPDF =
-        null;
-
-    generatedDriveURL =
-        null;
-
+    generatedCertificateId = null;
+    generatedPDF = null;
+    generatedDriveURL = null;
 
     selectType(
         "PROJECT_NAMED"
     );
-
 
     document
         .getElementById(
@@ -3044,8 +3332,7 @@ function newCertificate() {
         .getElementById(
             "message"
         )
-        .textContent =
-        "";
+        .textContent = "";
 
     window.scrollTo(
         {
@@ -3053,12 +3340,11 @@ function newCertificate() {
             behavior: "smooth"
         }
     );
-
 }
 
 
 /* =========================================================
-   INITIAL
+   INITIALIZE
 ========================================================= */
 
 selectType(
