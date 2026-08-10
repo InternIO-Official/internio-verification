@@ -10,15 +10,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
 >
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="auth.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+<!-- CORRECT QR LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -30,7 +31,8 @@ rel="stylesheet"
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     margin:0;
     padding:0;
 }
@@ -49,10 +51,11 @@ body{
     --gold-light:#e0bd58;
     --border:#dce2ea;
     --muted:#747e8d;
-    --cream:#fdfbf7;
 }
 
-/* ================= HEADER ================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .topbar{
     height:70px;
@@ -102,7 +105,9 @@ body{
     font-weight:700;
 }
 
-/* ================= PAGE ================= */
+/* =====================================================
+   PAGE
+===================================================== */
 
 .page{
     width:calc(100% - 32px);
@@ -116,7 +121,9 @@ body{
     gap:20px;
 }
 
-/* ================= FORM ================= */
+/* =====================================================
+   FORM
+===================================================== */
 
 .form-panel{
     background:white;
@@ -176,7 +183,9 @@ input:focus{
     gap:10px;
 }
 
-/* ================= TYPE ================= */
+/* =====================================================
+   CERTIFICATE TYPE
+===================================================== */
 
 .type-option{
     display:flex;
@@ -220,7 +229,9 @@ input:focus{
     line-height:1.45;
 }
 
-/* ================= INFO ================= */
+/* =====================================================
+   INFO
+===================================================== */
 
 .info{
     padding:11px 12px;
@@ -242,7 +253,9 @@ input:focus{
     line-height:1.5;
 }
 
-/* ================= BUTTON ================= */
+/* =====================================================
+   BUTTON
+===================================================== */
 
 .generate{
     width:100%;
@@ -278,7 +291,9 @@ input:focus{
     color:#16763b;
 }
 
-/* ================= PREVIEW ================= */
+/* =====================================================
+   PREVIEW
+===================================================== */
 
 .form-preview{
     min-height:650px;
@@ -347,7 +362,9 @@ input:focus{
     line-height:1.8;
 }
 
-/* ================= RESULT ================= */
+/* =====================================================
+   RESULT
+===================================================== */
 
 .result{
     display:none;
@@ -405,7 +422,9 @@ input:focus{
     background:#a8791f;
 }
 
-/* ================= CERTIFICATE ================= */
+/* =====================================================
+   CERTIFICATE
+===================================================== */
 
 .certificate-scroll{
     width:100%;
@@ -461,7 +480,9 @@ input:focus{
     z-index:2;
 }
 
-/* ================= CORNERS ================= */
+/* =====================================================
+   CORNERS
+===================================================== */
 
 .corner{
     position:absolute;
@@ -538,7 +559,9 @@ input:focus{
     border-bottom:3px solid var(--gold-light);
 }
 
-/* ================= WATERMARK ================= */
+/* =====================================================
+   WATERMARK
+===================================================== */
 
 .watermark{
     position:absolute;
@@ -559,7 +582,9 @@ input:focus{
     color:rgba(199,150,39,.04);
 }
 
-/* ================= CERTIFICATE ID ================= */
+/* =====================================================
+   CERTIFICATE ID
+===================================================== */
 
 .certificate-id{
     position:absolute;
@@ -604,7 +629,9 @@ input:focus{
     font-size:11px;
 }
 
-/* ================= BRAND ================= */
+/* =====================================================
+   BRAND
+===================================================== */
 
 .brand{
     position:relative;
@@ -657,7 +684,9 @@ input:focus{
     background:var(--gold);
 }
 
-/* ================= TITLE ================= */
+/* =====================================================
+   TITLE
+===================================================== */
 
 .certificate-title{
     position:relative;
@@ -685,7 +714,9 @@ input:focus{
     letter-spacing:8px;
 }
 
-/* ================= STUDENT ================= */
+/* =====================================================
+   STUDENT
+===================================================== */
 
 .certify{
     position:relative;
@@ -736,7 +767,9 @@ input:focus{
     background:var(--gold);
 }
 
-/* ================= BODY ================= */
+/* =====================================================
+   BODY
+===================================================== */
 
 .body-text{
     position:relative;
@@ -754,7 +787,9 @@ input:focus{
     font-weight:700;
 }
 
-/* ================= PROJECT ================= */
+/* =====================================================
+   PROJECT
+===================================================== */
 
 .project{
     position:relative;
@@ -782,7 +817,9 @@ input:focus{
     font-weight:700;
 }
 
-/* ================= DETAILS ================= */
+/* =====================================================
+   DETAILS
+===================================================== */
 
 .details{
     position:relative;
@@ -819,7 +856,9 @@ input:focus{
     font-weight:700;
 }
 
-/* ================= BOTTOM ================= */
+/* =====================================================
+   BOTTOM
+===================================================== */
 
 .bottom{
     position:absolute;
@@ -834,7 +873,9 @@ input:focus{
     min-width:0;
 }
 
-/* ================= SIGNATURE ================= */
+/* =====================================================
+   SIGNATURE
+===================================================== */
 
 .signature{
     position:relative;
@@ -882,7 +923,9 @@ input:focus{
     font-size:9px;
 }
 
-/* ================= SEAL ================= */
+/* =====================================================
+   SEAL
+===================================================== */
 
 .seal{
     position:relative;
@@ -967,7 +1010,9 @@ input:focus{
     letter-spacing:1.5px;
 }
 
-/* ================= QR ================= */
+/* =====================================================
+   QR
+===================================================== */
 
 .qr-area{
     width:330px;
@@ -1028,7 +1073,9 @@ input:focus{
     max-width:170px;
 }
 
-/* ================= FOOTER ================= */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .certificate-footer{
     position:absolute;
@@ -1043,7 +1090,9 @@ input:focus{
     letter-spacing:1.5px;
 }
 
-/* ================= PRINT ================= */
+/* =====================================================
+   PRINT
+===================================================== */
 
 @media print{
 
@@ -1052,7 +1101,8 @@ input:focus{
     margin:0;
 }
 
-html,body{
+html,
+body{
     width:297mm;
     height:210mm;
     margin:0;
@@ -1096,7 +1146,9 @@ body *{
 
 }
 
-/* ================= RESPONSIVE ================= */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:1050px){
 
@@ -1163,7 +1215,12 @@ LOGOUT
 
 </header>
 
+
 <main class="page">
+
+<!-- =====================================================
+     FORM SCREEN
+===================================================== -->
 
 <section
 id="formScreen"
@@ -1181,11 +1238,13 @@ The certificate will be securely created,
 verified and stored.
 </div>
 
+
 <div class="field">
 
 <label>
 CERTIFICATE TYPE
 </label>
+
 
 <div
 id="typeProject"
@@ -1208,6 +1267,7 @@ Include the project name.
 
 </div>
 
+
 <div
 id="typeNoProject"
 class="type-option"
@@ -1228,6 +1288,7 @@ Use when no specific project should appear.
 </div>
 
 </div>
+
 
 <div
 id="typeCompletion"
@@ -1252,6 +1313,7 @@ General internship completion certificate.
 
 </div>
 
+
 <div class="field">
 
 <label for="studentName">
@@ -1266,6 +1328,7 @@ placeholder="Enter student's full name">
 
 </div>
 
+
 <div class="field">
 
 <label for="internship">
@@ -1279,6 +1342,7 @@ autocomplete="off"
 placeholder="Example: Python Programming Training">
 
 </div>
+
 
 <div
 id="projectField"
@@ -1296,6 +1360,7 @@ placeholder="Example: InternIO Platform Development">
 
 </div>
 
+
 <div class="two">
 
 <div class="field">
@@ -1310,6 +1375,7 @@ type="date">
 
 </div>
 
+
 <div class="field">
 
 <label for="endDate">
@@ -1323,6 +1389,7 @@ type="date">
 </div>
 
 </div>
+
 
 <div class="two">
 
@@ -1340,6 +1407,7 @@ placeholder="Example: 45 Days">
 
 </div>
 
+
 <div class="field">
 
 <label for="issueDate">
@@ -1353,6 +1421,7 @@ type="date">
 </div>
 
 </div>
+
 
 <div class="info">
 
@@ -1368,6 +1437,7 @@ The QR code contains the verification link.
 
 </div>
 
+
 <button
 id="generateButton"
 class="generate"
@@ -1378,6 +1448,7 @@ GENERATE CERTIFICATE
 
 </button>
 
+
 <div
 id="message"
 class="message"
@@ -1385,6 +1456,7 @@ aria-live="polite">
 </div>
 
 </div>
+
 
 <div class="form-preview">
 
@@ -1417,9 +1489,15 @@ skills through InternIO.
 
 </section>
 
+
+<!-- =====================================================
+     RESULT
+===================================================== -->
+
 <section
 id="result"
 class="result">
+
 
 <div class="result-header">
 
@@ -1436,6 +1514,7 @@ Review it before saving the PDF.
 
 </div>
 
+
 <div class="actions">
 
 <button
@@ -1445,12 +1524,14 @@ onclick="editCertificate()">
 EDIT
 </button>
 
+
 <button
 class="gold"
 type="button"
 onclick="downloadCertificatePDF()">
 PRINT / SAVE PDF
 </button>
+
 
 <button
 type="button"
@@ -1462,6 +1543,7 @@ CREATE ANOTHER
 
 </div>
 
+
 <div class="certificate-scroll">
 
 <div
@@ -1470,14 +1552,22 @@ class="certificate">
 
 <div class="paper">
 
+
 <div class="corner corner-tl"></div>
+
 <div class="corner corner-tr"></div>
+
 <div class="corner corner-bl"></div>
+
 <div class="corner corner-br"></div>
+
 
 <div class="watermark">
 I<span>O</span>
 </div>
+
+
+<!-- CERTIFICATE ID -->
 
 <div class="certificate-id">
 
@@ -1494,14 +1584,21 @@ class="id-value">
 <div class="id-decoration">
 
 <div class="id-line"></div>
+
 <div class="id-star">★</div>
+
 <div class="id-star">★</div>
+
 <div class="id-star">★</div>
+
 <div class="id-line"></div>
 
 </div>
 
 </div>
+
+
+<!-- BRAND -->
 
 <div class="brand">
 
@@ -1521,6 +1618,9 @@ INNOVATION &amp; OPPORTUNITIES
 
 </div>
 
+
+<!-- TITLE -->
+
 <div class="certificate-title">
 CERTIFICATE
 </div>
@@ -1529,9 +1629,13 @@ CERTIFICATE
 OF INTERNSHIP
 </div>
 
+
 <div class="certify">
 THIS IS TO CERTIFY THAT
 </div>
+
+
+<!-- STUDENT -->
 
 <div
 id="certificateStudent"
@@ -1542,6 +1646,9 @@ Student Name
 <div class="name-line"></div>
 
 <div class="name-diamond"></div>
+
+
+<!-- BODY -->
 
 <div
 id="certificateBody"
@@ -1555,6 +1662,9 @@ learning and a strong commitment to developing
 real-world skills and experience.
 
 </div>
+
+
+<!-- PROJECT -->
 
 <div
 id="projectDisplay"
@@ -1572,6 +1682,9 @@ Project Name
 
 </div>
 
+
+<!-- DETAILS -->
+
 <div class="details">
 
 <div class="detail">
@@ -1588,6 +1701,7 @@ class="detail-value">
 
 </div>
 
+
 <div class="detail">
 
 <div class="detail-label">
@@ -1602,6 +1716,7 @@ class="detail-value">
 
 </div>
 
+
 <div class="detail">
 
 <div class="detail-label">
@@ -1615,6 +1730,7 @@ class="detail-value">
 </div>
 
 </div>
+
 
 <div class="detail">
 
@@ -1632,7 +1748,13 @@ class="detail-value">
 
 </div>
 
+
+<!-- BOTTOM -->
+
 <div class="bottom">
+
+
+<!-- SIGNATURE -->
 
 <div class="signature">
 
@@ -1646,12 +1768,14 @@ this.style.display='none';
 document.getElementById('signatureFallback').style.display='block';
 ">
 
+
 <div
 id="signatureFallback"
 class="signature-fallback"
 style="display:none;">
 Amar Singh
 </div>
+
 
 <div class="signature-line"></div>
 
@@ -1664,6 +1788,9 @@ Founder &amp; CEO, InternIO
 </div>
 
 </div>
+
+
+<!-- SEAL -->
 
 <div class="seal">
 
@@ -1693,6 +1820,9 @@ CERTIFICATE
 
 </div>
 
+
+<!-- QR -->
+
 <div class="qr-area">
 
 <div
@@ -1700,6 +1830,7 @@ id="qrCode"
 class="qr-box"
 aria-label="Certificate verification QR code">
 </div>
+
 
 <div class="qr-copy">
 
@@ -1718,11 +1849,11 @@ certificate authenticity.
 
 </div>
 
+
 <div class="certificate-footer">
 INTERNIO • INNOVATION &amp; OPPORTUNITIES
 </div>
 
-</div>
 
 </div>
 
@@ -1734,11 +1865,12 @@ INTERNIO • INNOVATION &amp; OPPORTUNITIES
 
 </main>
 
+
 <script>
 
-/* =========================================================
-   INTERNIO CONFIGURATION
-========================================================= */
+/* =====================================================
+   INTERNIO CONFIG
+===================================================== */
 
 const VERIFICATION_BASE =
 "https://internio-official.github.io/internio-verification/";
@@ -1747,28 +1879,35 @@ const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyCWuhBqqMmM4o-eRdoYkSyqbnme9I7ULyCXCTUoHrWNvUtHbsmk9421neoZB9r8Rqg/exec";
 
 
-/* =========================================================
+/* =====================================================
    STATE
-========================================================= */
+===================================================== */
 
-let certificateType="PROJECT_NAMED";
+let certificateType =
+"PROJECT_NAMED";
 
-let generatedCertificateId=null;
+let generatedCertificateId =
+null;
 
-let generatedPDF=null;
+let generatedPDF =
+null;
 
-let generatedDriveURL=null;
+let generatedDriveURL =
+null;
 
 
-/* =========================================================
+/* =====================================================
    LOGOUT
-========================================================= */
+===================================================== */
 
 async function logoutAdmin(){
 
 try{
 
-if(typeof internioLogout==="function"){
+if(
+typeof internioLogout ===
+"function"
+){
 
 await internioLogout();
 
@@ -1776,8 +1915,10 @@ return;
 
 }
 
+
 if(
-typeof internioSupabase!=="undefined" &&
+typeof internioSupabase !==
+"undefined" &&
 internioSupabase
 ){
 
@@ -1785,95 +1926,131 @@ await internioSupabase.auth.signOut();
 
 }
 
-window.location.href="admin.html";
+
+window.location.href =
+"admin.html";
+
 
 }catch(error){
 
 console.error(error);
 
-window.location.href="admin.html";
+window.location.href =
+"admin.html";
 
 }
 
 }
 
 
-/* =========================================================
-   CERTIFICATE TYPE
-========================================================= */
+/* =====================================================
+   TYPE
+===================================================== */
 
 function selectType(type){
 
-certificateType=type;
+certificateType =
+type;
+
 
 document
 .getElementById("typeProject")
 .classList
 .remove("active");
 
+
 document
 .getElementById("typeNoProject")
 .classList
 .remove("active");
+
 
 document
 .getElementById("typeCompletion")
 .classList
 .remove("active");
 
-const projectField=
-document.getElementById("projectField");
 
-if(type==="PROJECT_NAMED"){
+const projectField =
+document.getElementById(
+"projectField"
+);
+
+
+if(
+type ===
+"PROJECT_NAMED"
+){
 
 document
 .getElementById("typeProject")
 .classList
 .add("active");
 
-projectField.style.display="block";
+projectField.style.display =
+"block";
 
-}else if(type==="PROJECT_NONE"){
+}
+
+else if(
+type ===
+"PROJECT_NONE"
+){
 
 document
 .getElementById("typeNoProject")
 .classList
 .add("active");
 
-projectField.style.display="none";
+projectField.style.display =
+"none";
 
-}else{
+}
+
+else{
 
 document
 .getElementById("typeCompletion")
 .classList
 .add("active");
 
-projectField.style.display="none";
+projectField.style.display =
+"none";
 
 }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    DATE
-========================================================= */
+===================================================== */
 
 function formatDate(value){
 
 if(!value){
+
 return "—";
+
 }
 
-const date=
+
+const date =
 new Date(
-value+"T00:00:00"
+value + "T00:00:00"
 );
 
-if(Number.isNaN(date.getTime())){
+
+if(
+Number.isNaN(
+date.getTime()
+)
+){
+
 return value;
+
 }
+
 
 return date.toLocaleDateString(
 "en-GB",
@@ -1887,47 +2064,69 @@ year:"numeric"
 }
 
 
-/* =========================================================
+/* =====================================================
    ESCAPE HTML
-========================================================= */
+===================================================== */
 
 function escapeHTML(value){
 
 return String(value)
 
-.replace(/&/g,"&amp;")
+.replace(
+/&/g,
+"&amp;"
+)
 
-.replace(/</g,"&lt;")
+.replace(
+/</g,
+"&lt;"
+)
 
-.replace(/>/g,"&gt;")
+.replace(
+/>/g,
+"&gt;"
+)
 
-.replace(/"/g,"&quot;")
+.replace(
+/"/g,
+"&quot;"
+)
 
-.replace(/'/g,"&#039;");
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    MESSAGE
-========================================================= */
+===================================================== */
 
-function showMessage(text,type){
+function showMessage(
+text,
+type
+){
 
-const message=
-document.getElementById("message");
+const message =
+document.getElementById(
+"message"
+);
 
-message.textContent=text;
+message.textContent =
+text;
 
-message.className=
-"message "+(type||"");
+message.className =
+"message " +
+(type || "");
 
 }
 
 
-/* =========================================================
+/* =====================================================
    FORM DATA
-========================================================= */
+===================================================== */
 
 function getFormData(){
 
@@ -1977,9 +2176,9 @@ document
 }
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
+/* =====================================================
+   VALIDATE
+===================================================== */
 
 function validateForm(data){
 
@@ -1994,6 +2193,7 @@ return false;
 
 }
 
+
 if(!data.internship){
 
 showMessage(
@@ -2004,6 +2204,7 @@ showMessage(
 return false;
 
 }
+
 
 if(!data.startDate){
 
@@ -2016,6 +2217,7 @@ return false;
 
 }
 
+
 if(!data.endDate){
 
 showMessage(
@@ -2026,6 +2228,7 @@ showMessage(
 return false;
 
 }
+
 
 if(
 new Date(data.endDate) <
@@ -2041,6 +2244,7 @@ return false;
 
 }
 
+
 if(!data.duration){
 
 showMessage(
@@ -2051,6 +2255,7 @@ showMessage(
 return false;
 
 }
+
 
 if(!data.issueDate){
 
@@ -2063,8 +2268,10 @@ return false;
 
 }
 
+
 if(
-certificateType==="PROJECT_NAMED" &&
+certificateType ===
+"PROJECT_NAMED" &&
 !data.project
 ){
 
@@ -2077,19 +2284,21 @@ return false;
 
 }
 
+
 return true;
 
 }
 
 
-/* =========================================================
-   DATABASE
-========================================================= */
+/* =====================================================
+   CREATE DATABASE RECORD
+===================================================== */
 
 async function saveCertificate(data){
 
 if(
-typeof internioSupabase==="undefined"
+typeof internioSupabase ===
+"undefined"
 ){
 
 throw new Error(
@@ -2098,12 +2307,17 @@ throw new Error(
 
 }
 
-const projectValue=
-certificateType==="PROJECT_NAMED"
-?data.project
-:null;
 
-const result=
+const projectValue =
+certificateType ===
+"PROJECT_NAMED"
+?
+data.project
+:
+null;
+
+
+const result =
 await internioSupabase.rpc(
 "create_certificate",
 {
@@ -2135,9 +2349,12 @@ null
 }
 );
 
+
 if(result.error){
 
-console.error(result.error);
+console.error(
+result.error
+);
 
 throw new Error(
 result.error.message ||
@@ -2146,72 +2363,73 @@ result.error.message ||
 
 }
 
+
 return result.data;
 
 }
 
 
-/* =========================================================
-   GET CERTIFICATE ID
-========================================================= */
+/* =====================================================
+   EXTRACT ID
+===================================================== */
 
-function extractCertificateId(data){
+function extractCertificateId(
+data
+){
 
 if(!data){
+
 return null;
+
 }
 
+
 if(
-typeof data==="string" ||
-typeof data==="number"
+typeof data === "string" ||
+typeof data === "number"
 ){
 
 return String(data);
 
 }
 
+
 if(
 Array.isArray(data) &&
 data.length
 ){
 
-const first=data[0];
+const first =
+data[0];
+
 
 if(
-typeof first==="string" ||
-typeof first==="number"
+typeof first === "string" ||
+typeof first === "number"
 ){
 
 return String(first);
 
 }
 
+
 return(
-
 first.certificate_id ||
-
 first.id ||
-
 first.certificateId ||
-
 null
-
 );
 
 }
+
 
 return(
 
 data.certificate_id ||
-
 data.id ||
-
 data.certificateId ||
-
 data.data?.certificate_id ||
-
 data.data?.id ||
-
 null
 
 );
@@ -2219,37 +2437,45 @@ null
 }
 
 
-/* =========================================================
+/* =====================================================
    VERIFICATION URL
-========================================================= */
+===================================================== */
 
-function getVerificationURL(certificateId){
+function getVerificationURL(
+certificateId
+){
 
 return(
-VERIFICATION_BASE+
-"?id="+
-encodeURIComponent(certificateId)
+VERIFICATION_BASE +
+"?id=" +
+encodeURIComponent(
+certificateId
+)
 );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    WAIT
-========================================================= */
+===================================================== */
 
 function wait(ms){
 
 return new Promise(
-resolve=>setTimeout(resolve,ms)
+resolve =>
+setTimeout(
+resolve,
+ms
+)
 );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    WAIT FOR IMAGE
-========================================================= */
+===================================================== */
 
 function waitForImage(img){
 
@@ -2258,7 +2484,7 @@ return new Promise(
 
 if(
 img.complete &&
-img.naturalWidth>0
+img.naturalWidth > 0
 ){
 
 resolve();
@@ -2267,9 +2493,13 @@ return;
 
 }
 
-img.onload=()=>resolve();
 
-img.onerror=()=>reject(
+img.onload =
+() => resolve();
+
+
+img.onerror =
+() => reject(
 new Error(
 "QR image failed to load."
 )
@@ -2281,15 +2511,20 @@ new Error(
 }
 
 
-/* =========================================================
-   FINAL QR GENERATION
-   ONE QR ONLY
-========================================================= */
+/* =====================================================
+   QR CODE
+   EXACTLY ONE IMAGE
+===================================================== */
 
-async function generateQRCode(certificateId){
+async function generateQRCode(
+certificateId
+){
 
-const qr=
-document.getElementById("qrCode");
+const qr =
+document.getElementById(
+"qrCode"
+);
+
 
 if(!qr){
 
@@ -2301,22 +2536,21 @@ throw new Error(
 
 
 /*
-   CRITICAL:
-
-   Completely clear the QR container
-   before creating anything.
+   Remove everything first.
 */
 
 qr.replaceChildren();
 
 
 /*
-   Check library.
+   Confirm library.
 */
 
 if(
-typeof QRCode==="undefined" ||
-typeof QRCode.toDataURL!=="function"
+typeof QRCode ===
+"undefined" ||
+typeof QRCode.toDataURL !==
+"function"
 ){
 
 throw new Error(
@@ -2327,13 +2561,14 @@ throw new Error(
 
 
 /*
-   Correct InternIO verification URL.
+   Create verification URL.
 */
 
-const verificationURL=
+const verificationURL =
 getVerificationURL(
 certificateId
 );
+
 
 console.log(
 "InternIO QR URL:",
@@ -2342,10 +2577,10 @@ verificationURL
 
 
 /*
-   Generate exactly ONE QR image.
+   Generate ONE QR image.
 */
 
-const qrDataURL=
+const qrDataURL =
 await QRCode.toDataURL(
 verificationURL,
 {
@@ -2366,40 +2601,49 @@ light:"#ffffff"
 
 
 /*
-   Create ONE image.
+   Create ONE IMG.
 */
 
-const qrImage=
-document.createElement("img");
+const qrImage =
+document.createElement(
+"img"
+);
 
-qrImage.src=
+
+qrImage.src =
 qrDataURL;
 
-qrImage.alt=
+qrImage.alt =
 "InternIO certificate verification QR code";
 
-qrImage.width=106;
+qrImage.width =
+106;
 
-qrImage.height=106;
+qrImage.height =
+106;
 
-qrImage.style.width="106px";
+qrImage.style.width =
+"106px";
 
-qrImage.style.height="106px";
+qrImage.style.height =
+"106px";
 
-qrImage.style.maxWidth="106px";
+qrImage.style.maxWidth =
+"106px";
 
-qrImage.style.maxHeight="106px";
+qrImage.style.maxHeight =
+"106px";
 
-qrImage.style.display="block";
+qrImage.style.display =
+"block";
 
-qrImage.style.objectFit="contain";
+qrImage.style.objectFit =
+"contain";
 
 
 /*
-   Clear again immediately before append.
-
-   This guarantees that the container
-   can contain only one QR image.
+   Replace container contents
+   with exactly this one image.
 */
 
 qr.replaceChildren(
@@ -2408,7 +2652,7 @@ qrImage
 
 
 /*
-   Wait until the image is actually ready.
+   Wait until image is ready.
 */
 
 await waitForImage(
@@ -2416,30 +2660,33 @@ qrImage
 );
 
 
-/*
-   Give browser layout time to finish.
-*/
-
 await wait(150);
 
 
 /*
-   Final safety check:
-   there must be exactly ONE image.
+   FINAL SAFETY CHECK
 */
 
-const qrImages=
-qr.querySelectorAll("img");
+const qrImages =
+qr.querySelectorAll(
+"img"
+);
 
-if(qrImages.length!==1){
+
+if(
+qrImages.length !== 1
+){
 
 throw new Error(
-"QR rendering error: multiple QR images detected."
+"QR rendering error: multiple QR codes detected."
 );
 
 }
 
-if(!qrImage.naturalWidth){
+
+if(
+!qrImage.naturalWidth
+){
 
 throw new Error(
 "QR image was generated but could not be rendered."
@@ -2447,18 +2694,20 @@ throw new Error(
 
 }
 
+
 console.log(
 "InternIO QR generated successfully."
 );
+
 
 return verificationURL;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    RENDER CERTIFICATE
-========================================================= */
+===================================================== */
 
 async function renderCertificate(
 data,
@@ -2466,41 +2715,66 @@ certificateId
 ){
 
 document
-.getElementById("certificateId")
-.textContent=
+.getElementById(
+"certificateId"
+)
+.textContent =
 certificateId;
 
+
 document
-.getElementById("certificateStudent")
-.textContent=
+.getElementById(
+"certificateStudent"
+)
+.textContent =
 data.studentName;
 
-document
-.getElementById("certificateStart")
-.textContent=
-formatDate(data.startDate);
 
 document
-.getElementById("certificateEnd")
-.textContent=
-formatDate(data.endDate);
+.getElementById(
+"certificateStart"
+)
+.textContent =
+formatDate(
+data.startDate
+);
+
 
 document
-.getElementById("certificateDuration")
-.textContent=
+.getElementById(
+"certificateEnd"
+)
+.textContent =
+formatDate(
+data.endDate
+);
+
+
+document
+.getElementById(
+"certificateDuration"
+)
+.textContent =
 data.duration;
 
+
 document
-.getElementById("certificateIssue")
-.textContent=
-formatDate(data.issueDate);
+.getElementById(
+"certificateIssue"
+)
+.textContent =
+formatDate(
+data.issueDate
+);
 
 
 /* BODY */
 
 document
-.getElementById("certificateBody")
-.innerHTML=
+.getElementById(
+"certificateBody"
+)
+.innerHTML =
 `
 has successfully completed the
 <strong>${escapeHTML(data.internship)}</strong>
@@ -2513,35 +2787,40 @@ real-world skills and experience.
 
 /* PROJECT */
 
-const projectDisplay=
+const projectDisplay =
 document.getElementById(
 "projectDisplay"
 );
 
+
 if(
-certificateType==="PROJECT_NAMED"
+certificateType ===
+"PROJECT_NAMED"
 ){
 
-projectDisplay.style.display=
+projectDisplay.style.display =
 "block";
+
 
 document
 .getElementById(
 "certificateProject"
 )
-.textContent=
+.textContent =
 data.project;
 
-}else{
+}
 
-projectDisplay.style.display=
+else{
+
+projectDisplay.style.display =
 "none";
 
 }
 
 
 /*
-   QR MUST finish before this function returns.
+   WAIT FOR QR.
 */
 
 await generateQRCode(
@@ -2551,16 +2830,17 @@ certificateId
 }
 
 
-/* =========================================================
-   CREATE PDF
-========================================================= */
+/* =====================================================
+   PDF
+===================================================== */
 
 async function createCertificatePDF(){
 
-const certificate=
+const certificate =
 document.getElementById(
 "certificate"
 );
+
 
 if(!certificate){
 
@@ -2586,22 +2866,25 @@ await document.fonts.ready;
 
 
 /*
-   Wait for final layout.
+   Allow browser to finish layout.
 */
 
 await wait(500);
 
 
 /*
-   Confirm ONE QR exists.
+   There MUST be exactly one QR.
 */
 
-const qrImages=
+const qrImages =
 document.querySelectorAll(
 "#qrCode img"
 );
 
-if(qrImages.length!==1){
+
+if(
+qrImages.length !== 1
+){
 
 throw new Error(
 "PDF stopped: certificate must contain exactly one QR code."
@@ -2609,19 +2892,17 @@ throw new Error(
 
 }
 
-const qrImage=
-qrImages[0];
 
 await waitForImage(
-qrImage
+qrImages[0]
 );
 
 
 /*
-   Render certificate.
+   Capture certificate.
 */
 
-const canvas=
+const canvas =
 await html2canvas(
 certificate,
 {
@@ -2649,10 +2930,10 @@ windowHeight:990
 
 
 /*
-   High quality image.
+   Convert to JPEG.
 */
 
-const imageData=
+const imageData =
 canvas.toDataURL(
 "image/jpeg",
 0.97
@@ -2660,15 +2941,16 @@ canvas.toDataURL(
 
 
 /*
-   A4 landscape PDF.
+   A4 landscape.
 */
 
 const {
 jsPDF
-}=
+} =
 window.jspdf;
 
-const pdf=
+
+const pdf =
 new jsPDF(
 {
 
@@ -2684,11 +2966,6 @@ compress:true
 );
 
 
-/*
-   A4 landscape:
-   297 × 210 mm
-*/
-
 pdf.addImage(
 imageData,
 "JPEG",
@@ -2700,14 +2977,15 @@ undefined,
 "FAST"
 );
 
+
 return pdf;
 
 }
 
 
-/* =========================================================
-   GOOGLE DRIVE UPLOAD
-========================================================= */
+/* =====================================================
+   DRIVE
+===================================================== */
 
 async function uploadCertificateToDrive(
 pdf,
@@ -2715,15 +2993,19 @@ studentName,
 certificateId
 ){
 
-const pdfDataURI=
+const pdfDataURI =
 pdf.output(
 "datauristring"
 );
 
-const commaIndex=
+
+const commaIndex =
 pdfDataURI.indexOf(",");
 
-if(commaIndex===-1){
+
+if(
+commaIndex === -1
+){
 
 throw new Error(
 "Unable to prepare PDF for Drive upload."
@@ -2731,12 +3013,14 @@ throw new Error(
 
 }
 
-const pdfBase64=
+
+const pdfBase64 =
 pdfDataURI.substring(
-commaIndex+1
+commaIndex + 1
 );
 
-const response=
+
+const response =
 await fetch(
 GOOGLE_SCRIPT_URL,
 {
@@ -2766,17 +3050,20 @@ pdfBase64
 }
 );
 
+
 if(!response.ok){
 
 throw new Error(
-"Google Drive upload failed. HTTP "+
+"Google Drive upload failed. HTTP " +
 response.status
 );
 
 }
 
-const result=
+
+const result =
 await response.json();
+
 
 if(
 !result ||
@@ -2790,7 +3077,10 @@ result?.error ||
 
 }
 
-if(!result.driveUrl){
+
+if(
+!result.driveUrl
+){
 
 throw new Error(
 "Drive upload completed but no Drive URL was returned."
@@ -2798,14 +3088,15 @@ throw new Error(
 
 }
 
+
 return result;
 
 }
 
 
-/* =========================================================
-   SAVE DRIVE URL
-========================================================= */
+/* =====================================================
+   SAVE URL TO SUPABASE
+===================================================== */
 
 async function saveCertificateURL(
 certificateId,
@@ -2813,7 +3104,8 @@ certificateURL
 ){
 
 if(
-typeof internioSupabase==="undefined"
+typeof internioSupabase ===
+"undefined"
 ){
 
 throw new Error(
@@ -2822,7 +3114,8 @@ throw new Error(
 
 }
 
-const result=
+
+const result =
 await internioSupabase.rpc(
 "set_certificate_url",
 {
@@ -2836,9 +3129,12 @@ certificateURL
 }
 );
 
+
 if(result.error){
 
-console.error(result.error);
+console.error(
+result.error
+);
 
 throw new Error(
 result.error.message ||
@@ -2847,14 +3143,15 @@ result.error.message ||
 
 }
 
+
 return true;
 
 }
 
 
-/* =========================================================
-   DOWNLOAD
-========================================================= */
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
 
 async function downloadCertificatePDF(){
 
@@ -2862,12 +3159,13 @@ try{
 
 if(!generatedPDF){
 
-generatedPDF=
+generatedPDF =
 await createCertificatePDF();
 
 }
 
-const student=
+
+const student =
 document
 .getElementById(
 "certificateStudent"
@@ -2875,7 +3173,8 @@ document
 .textContent ||
 "Student";
 
-const safeName=
+
+const safeName =
 String(student)
 .replace(
 /[^a-zA-Z0-9_-]+/g,
@@ -2886,7 +3185,8 @@ String(student)
 ""
 );
 
-const safeId=
+
+const safeId =
 String(
 generatedCertificateId ||
 "Certificate"
@@ -2896,15 +3196,17 @@ generatedCertificateId ||
 "_"
 );
 
+
 generatedPDF.save(
 
-"InternIO_Certificate_"+
-safeName+
-"_"+
-safeId+
+"InternIO_Certificate_" +
+safeName +
+"_" +
+safeId +
 ".pdf"
 
 );
+
 
 }catch(error){
 
@@ -2913,8 +3215,9 @@ console.error(
 error
 );
 
+
 alert(
-"Unable to create the PDF.\n\n"+
+"Unable to create the PDF.\n\n" +
 error.message
 );
 
@@ -2923,47 +3226,63 @@ error.message
 }
 
 
-/* =========================================================
-   GENERATE
-========================================================= */
+/* =====================================================
+   GENERATE CERTIFICATE
+===================================================== */
 
 async function generateCertificate(){
 
-const button=
+const button =
 document.getElementById(
 "generateButton"
 );
 
-const data=
+
+const data =
 getFormData();
 
-showMessage("","");
 
-if(!validateForm(data)){
+showMessage(
+"",
+""
+);
+
+
+if(
+!validateForm(data)
+){
 
 return;
 
 }
 
-button.disabled=true;
+
+button.disabled =
+true;
+
 
 try{
 
 
-/* DATABASE */
+/* -----------------------------------------------
+   1. DATABASE
+------------------------------------------------ */
 
-button.textContent=
+button.textContent =
 "CREATING CERTIFICATE...";
 
-const rpcData=
+
+const rpcData =
 await saveCertificate(
 data
 );
 
-const certificateId=
+
+const certificateId =
 extractCertificateId(
 rpcData
 );
+
 
 if(!certificateId){
 
@@ -2978,8 +3297,12 @@ throw new Error(
 
 }
 
-generatedCertificateId=
-String(certificateId);
+
+generatedCertificateId =
+String(
+certificateId
+);
+
 
 console.log(
 "InternIO certificate ID:",
@@ -2987,10 +3310,13 @@ generatedCertificateId
 );
 
 
-/* CERTIFICATE + ONE QR */
+/* -----------------------------------------------
+   2. CERTIFICATE + ONE QR
+------------------------------------------------ */
 
-button.textContent=
+button.textContent =
 "GENERATING QR CODE...";
+
 
 await renderCertificate(
 data,
@@ -2998,15 +3324,25 @@ generatedCertificateId
 );
 
 
-/* SHOW RESULT */
+/* -----------------------------------------------
+   3. SHOW RESULT
+------------------------------------------------ */
 
 document
-.getElementById("formScreen")
-.style.display="none";
+.getElementById(
+"formScreen"
+)
+.style.display =
+"none";
+
 
 document
-.getElementById("result")
-.style.display="block";
+.getElementById(
+"result"
+)
+.style.display =
+"block";
+
 
 window.scrollTo(
 {
@@ -3016,29 +3352,37 @@ behavior:"smooth"
 );
 
 
-/* PDF */
+/* -----------------------------------------------
+   4. PDF
+------------------------------------------------ */
 
-button.textContent=
+button.textContent =
 "CREATING PDF...";
 
-generatedPDF=
+
+generatedPDF =
 await createCertificatePDF();
 
 
-/* DRIVE */
+/* -----------------------------------------------
+   5. DRIVE
+------------------------------------------------ */
 
-button.textContent=
+button.textContent =
 "UPLOADING TO DRIVE...";
 
-const driveResult=
+
+const driveResult =
 await uploadCertificateToDrive(
 generatedPDF,
 data.studentName,
 generatedCertificateId
 );
 
-generatedDriveURL=
+
+generatedDriveURL =
 driveResult.driveUrl;
+
 
 console.log(
 "InternIO Drive URL:",
@@ -3046,10 +3390,13 @@ generatedDriveURL
 );
 
 
-/* DATABASE URL */
+/* -----------------------------------------------
+   6. SAVE URL
+------------------------------------------------ */
 
-button.textContent=
+button.textContent =
 "SAVING VERIFICATION LINK...";
+
 
 await saveCertificateURL(
 generatedCertificateId,
@@ -3057,12 +3404,15 @@ generatedDriveURL
 );
 
 
-/* SUCCESS */
+/* -----------------------------------------------
+   SUCCESS
+------------------------------------------------ */
 
 showMessage(
 "Certificate created successfully.",
 "success"
 );
+
 
 console.log(
 "InternIO verification URL:",
@@ -3071,6 +3421,7 @@ generatedCertificateId
 )
 );
 
+
 }catch(error){
 
 console.error(
@@ -3078,18 +3429,28 @@ console.error(
 error
 );
 
+
 alert(
-"Certificate creation failed.\n\n"+
+"Certificate creation failed.\n\n" +
 error.message
 );
 
-document
-.getElementById("result")
-.style.display="none";
 
 document
-.getElementById("formScreen")
-.style.display="grid";
+.getElementById(
+"result"
+)
+.style.display =
+"none";
+
+
+document
+.getElementById(
+"formScreen"
+)
+.style.display =
+"grid";
+
 
 showMessage(
 error.message ||
@@ -3097,11 +3458,14 @@ error.message ||
 "error"
 );
 
+
 }finally{
 
-button.disabled=false;
+button.disabled =
+false;
 
-button.textContent=
+
+button.textContent =
 "GENERATE CERTIFICATE";
 
 }
@@ -3109,19 +3473,27 @@ button.textContent=
 }
 
 
-/* =========================================================
+/* =====================================================
    EDIT
-========================================================= */
+===================================================== */
 
 function editCertificate(){
 
 document
-.getElementById("result")
-.style.display="none";
+.getElementById(
+"result"
+)
+.style.display =
+"none";
+
 
 document
-.getElementById("formScreen")
-.style.display="grid";
+.getElementById(
+"formScreen"
+)
+.style.display =
+"grid";
+
 
 window.scrollTo(
 {
@@ -3133,55 +3505,88 @@ behavior:"smooth"
 }
 
 
-/* =========================================================
+/* =====================================================
    NEW CERTIFICATE
-========================================================= */
+===================================================== */
 
 function newCertificate(){
 
 document
-.getElementById("studentName")
-.value="";
+.getElementById(
+"studentName"
+)
+.value =
+"";
+
 
 document
-.getElementById("internship")
-.value="";
+.getElementById(
+"internship"
+)
+.value =
+"";
+
 
 document
-.getElementById("projectName")
-.value="";
+.getElementById(
+"projectName"
+)
+.value =
+"";
+
 
 document
-.getElementById("startDate")
-.value="";
+.getElementById(
+"startDate"
+)
+.value =
+"";
+
 
 document
-.getElementById("endDate")
-.value="";
+.getElementById(
+"endDate"
+)
+.value =
+"";
+
 
 document
-.getElementById("duration")
-.value="";
+.getElementById(
+"duration"
+)
+.value =
+"";
+
 
 document
-.getElementById("issueDate")
-.value="";
+.getElementById(
+"issueDate"
+)
+.value =
+"";
 
 
-generatedCertificateId=null;
+generatedCertificateId =
+null;
 
-generatedPDF=null;
 
-generatedDriveURL=null;
+generatedPDF =
+null;
+
+
+generatedDriveURL =
+null;
 
 
 /*
-   Remove absolutely everything
-   from QR container.
+   Completely remove old QR.
 */
 
 document
-.getElementById("qrCode")
+.getElementById(
+"qrCode"
+)
 .replaceChildren();
 
 
@@ -3191,14 +3596,26 @@ selectType(
 
 
 document
-.getElementById("result")
-.style.display="none";
+.getElementById(
+"result"
+)
+.style.display =
+"none";
+
 
 document
-.getElementById("formScreen")
-.style.display="grid";
+.getElementById(
+"formScreen"
+)
+.style.display =
+"grid";
 
-showMessage("","");
+
+showMessage(
+"",
+""
+);
+
 
 window.scrollTo(
 {
@@ -3210,9 +3627,9 @@ behavior:"smooth"
 }
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+/* =====================================================
+   INITIAL
+===================================================== */
 
 selectType(
 "PROJECT_NAMED"
