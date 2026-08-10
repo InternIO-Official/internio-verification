@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,17 +11,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-  href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+rel="stylesheet"
 >
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- INTERNIO AUTH -->
 <script src="auth.js"></script>
 
-<!-- CORRECT QR LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- QR LIBRARY - PRIMARY -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+onerror="loadQRFallback()">
+</script>
 
+<!-- PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -53,6 +60,7 @@ body{
     --muted:#747e8d;
 }
 
+
 /* =====================================================
    HEADER
 ===================================================== */
@@ -60,9 +68,11 @@ body{
 .topbar{
     height:70px;
     padding:0 30px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     background:var(--navy);
     color:white;
 }
@@ -95,15 +105,20 @@ body{
 .logout{
     height:36px;
     padding:0 16px;
+
     border:1px solid rgba(255,255,255,.3);
     border-radius:5px;
+
     background:rgba(255,255,255,.06);
     color:white;
+
     cursor:pointer;
+
     font-family:inherit;
     font-size:9px;
     font-weight:700;
 }
+
 
 /* =====================================================
    PAGE
@@ -112,14 +127,20 @@ body{
 .page{
     width:calc(100% - 32px);
     max-width:1500px;
+
     margin:20px auto 40px;
 }
 
 .form-layout{
     display:grid;
-    grid-template-columns:400px minmax(600px,1fr);
+
+    grid-template-columns:
+        400px
+        minmax(600px,1fr);
+
     gap:20px;
 }
+
 
 /* =====================================================
    FORM
@@ -127,21 +148,28 @@ body{
 
 .form-panel{
     background:white;
+
     padding:25px;
+
     border:1px solid var(--border);
     border-radius:11px;
-    box-shadow:0 12px 35px rgba(7,26,56,.07);
+
+    box-shadow:
+        0 12px 35px rgba(7,26,56,.07);
 }
 
 .form-title{
     color:var(--navy);
+
     font-size:23px;
     font-weight:700;
 }
 
 .form-description{
     margin:7px 0 22px;
+
     color:var(--muted);
+
     font-size:10px;
     line-height:1.65;
 }
@@ -152,63 +180,89 @@ body{
 
 label{
     display:block;
+
     margin-bottom:7px;
+
     color:var(--navy);
+
     font-size:9px;
     font-weight:700;
+
     letter-spacing:.7px;
 }
 
 input{
     width:100%;
     height:43px;
+
     padding:0 12px;
+
     border:1px solid #d4dae2;
     border-radius:6px;
+
     outline:none;
+
     background:white;
     color:#26344a;
+
     font-family:inherit;
     font-size:12px;
 }
 
 input:focus{
     border-color:var(--gold);
-    box-shadow:0 0 0 3px rgba(184,135,32,.1);
+
+    box-shadow:
+        0 0 0 3px rgba(184,135,32,.1);
 }
 
 .two{
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap:10px;
 }
 
+
 /* =====================================================
-   CERTIFICATE TYPE
+   TYPE
 ===================================================== */
 
 .type-option{
     display:flex;
+
     align-items:flex-start;
+
     gap:10px;
+
     padding:12px;
+
     margin-bottom:8px;
+
     border:1px solid var(--border);
     border-radius:7px;
+
     cursor:pointer;
 }
 
 .type-option.active{
     border-color:var(--gold);
+
     background:#fffaf0;
 }
 
 .type-radio{
     width:17px;
     height:17px;
+
     flex:0 0 17px;
+
     margin-top:1px;
+
     border:2px solid #aeb7c4;
+
     border-radius:50%;
 }
 
@@ -218,16 +272,21 @@ input:focus{
 
 .type-title{
     color:var(--navy);
+
     font-size:10px;
     font-weight:700;
 }
 
 .type-description{
     margin-top:3px;
+
     color:#7b8491;
+
     font-size:8px;
+
     line-height:1.45;
 }
+
 
 /* =====================================================
    INFO
@@ -235,23 +294,31 @@ input:focus{
 
 .info{
     padding:11px 12px;
+
     margin:2px 0 16px;
+
     border-left:3px solid var(--gold);
+
     background:#faf8f1;
 }
 
 .info-title{
     color:var(--navy);
+
     font-size:9px;
     font-weight:700;
 }
 
 .info-text{
     margin-top:3px;
+
     color:#7a8492;
+
     font-size:8px;
+
     line-height:1.5;
 }
+
 
 /* =====================================================
    BUTTON
@@ -260,12 +327,23 @@ input:focus{
 .generate{
     width:100%;
     height:50px;
+
     border:0;
     border-radius:6px;
-    background:linear-gradient(135deg,#071a38,#17365e);
+
+    background:
+        linear-gradient(
+            135deg,
+            #071a38,
+            #17365e
+        );
+
     color:white;
+
     cursor:pointer;
+
     font-family:inherit;
+
     font-size:11px;
     font-weight:700;
 }
@@ -277,8 +355,11 @@ input:focus{
 
 .message{
     min-height:18px;
+
     margin-top:9px;
+
     text-align:center;
+
     font-size:9px;
     font-weight:700;
 }
@@ -291,19 +372,27 @@ input:focus{
     color:#16763b;
 }
 
+
 /* =====================================================
    PREVIEW
 ===================================================== */
 
 .form-preview{
     min-height:650px;
+
     position:relative;
+
     overflow:hidden;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     padding:30px;
+
     border-radius:11px;
+
     background:
         radial-gradient(
             circle at center,
@@ -319,14 +408,19 @@ input:focus{
 
 .preview-content{
     max-width:700px;
+
     text-align:center;
+
     color:white;
 }
 
 .preview-logo{
     font-size:72px;
+
     font-weight:700;
+
     line-height:.9;
+
     letter-spacing:-6px;
 }
 
@@ -336,31 +430,43 @@ input:focus{
 
 .preview-tagline{
     margin-top:12px;
+
     font-size:10px;
+
     font-weight:700;
+
     letter-spacing:3px;
 }
 
 .preview-rule{
     width:140px;
     height:1px;
+
     margin:23px auto;
+
     background:var(--gold-light);
 }
 
 .preview-title{
     font-family:"Cinzel",serif;
+
     font-size:29px;
+
     letter-spacing:5px;
 }
 
 .preview-description{
     max-width:560px;
+
     margin:16px auto;
+
     color:#d5dce7;
+
     font-size:10px;
+
     line-height:1.8;
 }
+
 
 /* =====================================================
    RESULT
@@ -372,49 +478,73 @@ input:focus{
 
 .result-header{
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     gap:20px;
+
     padding:15px 18px;
+
     margin-bottom:15px;
+
     background:white;
+
     border:1px solid var(--border);
+
     border-radius:10px;
 }
 
 .result-title{
     color:var(--navy);
+
     font-size:17px;
+
     font-weight:700;
 }
 
 .result-description{
     margin-top:4px;
+
     color:#7a8492;
+
     font-size:9px;
 }
 
 .actions{
     display:flex;
+
     flex-wrap:wrap;
+
     gap:7px;
 }
 
 .actions button{
     height:35px;
+
     padding:0 14px;
+
     border:0;
+
     border-radius:5px;
+
     background:var(--navy);
+
     color:white;
+
     cursor:pointer;
+
     font-family:inherit;
+
     font-size:9px;
+
     font-weight:700;
 }
 
 .actions .light{
     background:#edf0f4;
+
     color:var(--navy);
 }
 
@@ -422,21 +552,27 @@ input:focus{
     background:#a8791f;
 }
 
+
 /* =====================================================
    CERTIFICATE
 ===================================================== */
 
 .certificate-scroll{
     width:100%;
+
     overflow-x:auto;
+
     padding-bottom:25px;
 }
 
 .certificate{
     width:1400px;
     height:990px;
+
     margin:0 auto;
+
     padding:10px;
+
     background:
         linear-gradient(
             135deg,
@@ -444,14 +580,19 @@ input:focus{
             #193961 50%,
             #071a38 100%
         );
-    box-shadow:0 25px 70px rgba(5,20,45,.30);
+
+    box-shadow:
+        0 25px 70px rgba(5,20,45,.30);
 }
 
 .paper{
     position:relative;
+
     width:100%;
     height:100%;
+
     overflow:hidden;
+
     background:
         radial-gradient(
             ellipse at center,
@@ -459,26 +600,40 @@ input:focus{
             transparent 58%
         ),
         #fdfbf7;
+
     border:2px solid var(--gold);
 }
 
 .paper::before{
     content:"";
+
     position:absolute;
+
     inset:14px;
-    border:1px solid rgba(184,135,32,.72);
+
+    border:
+        1px solid rgba(184,135,32,.72);
+
     pointer-events:none;
+
     z-index:2;
 }
 
 .paper::after{
     content:"";
+
     position:absolute;
+
     inset:22px;
-    border:1px solid rgba(7,26,56,.1);
+
+    border:
+        1px solid rgba(7,26,56,.1);
+
     pointer-events:none;
+
     z-index:2;
 }
+
 
 /* =====================================================
    CORNERS
@@ -486,78 +641,112 @@ input:focus{
 
 .corner{
     position:absolute;
+
     pointer-events:none;
 }
 
 .corner-tl{
     top:0;
     left:0;
+
     width:305px;
     height:195px;
+
     background:
         linear-gradient(
             135deg,
             #071a38 0 66%,
             transparent 66%
         );
+
     z-index:4;
 }
 
 .corner-tl::after{
     content:"";
+
     position:absolute;
+
     left:22px;
     top:20px;
+
     width:270px;
     height:150px;
-    border-top:3px solid var(--gold-light);
-    border-left:3px solid var(--gold-light);
+
+    border-top:
+        3px solid var(--gold-light);
+
+    border-left:
+        3px solid var(--gold-light);
 }
 
 .corner-tr{
     top:0;
     right:0;
+
     width:90px;
     height:70px;
-    border-top:4px solid var(--gold);
-    border-right:4px solid var(--gold);
+
+    border-top:
+        4px solid var(--gold);
+
+    border-right:
+        4px solid var(--gold);
+
     z-index:4;
 }
 
 .corner-bl{
     left:0;
     bottom:0;
+
     width:75px;
     height:75px;
-    border-left:4px solid var(--gold);
-    border-bottom:4px solid var(--gold);
+
+    border-left:
+        4px solid var(--gold);
+
+    border-bottom:
+        4px solid var(--gold);
+
     z-index:4;
 }
 
 .corner-br{
     right:0;
     bottom:0;
+
     width:235px;
     height:145px;
+
     background:
         linear-gradient(
             315deg,
             #071a38 0 64%,
             transparent 64%
         );
+
     z-index:3;
 }
 
 .corner-br::after{
     content:"";
+
     position:absolute;
+
     right:18px;
     bottom:18px;
+
     width:200px;
     height:112px;
-    border-right:3px solid var(--gold-light);
-    border-bottom:3px solid var(--gold-light);
+
+    border-right:
+        3px solid var(--gold-light);
+
+    border-bottom:
+        3px solid var(--gold-light);
 }
+
 
 /* =====================================================
    WATERMARK
@@ -565,22 +754,36 @@ input:focus{
 
 .watermark{
     position:absolute;
+
     left:50%;
     top:53%;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     z-index:1;
-    color:rgba(7,26,56,.025);
+
+    color:
+        rgba(7,26,56,.025);
+
     font-family:"Cinzel",serif;
+
     font-size:410px;
+
     font-weight:700;
+
     line-height:1;
+
     letter-spacing:-50px;
+
     pointer-events:none;
 }
 
 .watermark span{
-    color:rgba(199,150,39,.04);
+    color:
+        rgba(199,150,39,.04);
 }
+
 
 /* =====================================================
    CERTIFICATE ID
@@ -588,46 +791,64 @@ input:focus{
 
 .certificate-id{
     position:absolute;
+
     top:45px;
     right:55px;
+
     z-index:20;
+
     width:210px;
+
     text-align:center;
 }
 
 .id-label{
     color:#747e8d;
+
     font-size:10px;
+
     font-weight:700;
+
     letter-spacing:2px;
 }
 
 .id-value{
     margin-top:7px;
+
     color:var(--navy);
+
     font-size:16px;
+
     font-weight:700;
+
     letter-spacing:1px;
 }
 
 .id-decoration{
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     gap:8px;
+
     margin-top:8px;
 }
 
 .id-line{
     width:38px;
     height:1px;
+
     background:var(--gold);
 }
 
 .id-star{
     color:#8e681c;
+
     font-size:11px;
 }
+
 
 /* =====================================================
    BRAND
@@ -635,16 +856,23 @@ input:focus{
 
 .brand{
     position:relative;
+
     z-index:10;
+
     padding-top:56px;
+
     text-align:center;
 }
 
 .brand-name{
     color:var(--navy);
+
     font-size:82px;
+
     font-weight:700;
+
     line-height:.9;
+
     letter-spacing:-7px;
 }
 
@@ -654,35 +882,49 @@ input:focus{
 
 .brand-tagline{
     margin-top:12px;
+
     color:#263650;
+
     font-size:14px;
+
     font-weight:700;
+
     letter-spacing:4px;
 }
 
 .brand-decoration{
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     width:420px;
+
     margin:14px auto 0;
 }
 
 .brand-decoration::before,
 .brand-decoration::after{
     content:"";
+
     width:130px;
     height:1px;
+
     background:var(--gold);
 }
 
 .diamond{
     width:9px;
     height:9px;
+
     margin:0 10px;
+
     transform:rotate(45deg);
+
     background:var(--gold);
 }
+
 
 /* =====================================================
    TITLE
@@ -690,29 +932,48 @@ input:focus{
 
 .certificate-title{
     position:relative;
+
     z-index:10;
+
     margin-top:24px;
+
     text-align:center;
+
     color:var(--navy);
+
     font-family:"Cinzel",serif;
+
     font-size:65px;
+
     font-weight:600;
+
     line-height:1;
+
     letter-spacing:10px;
 }
 
 .certificate-subtitle{
     position:relative;
+
     z-index:10;
+
     margin-top:5px;
+
     text-align:center;
+
     color:#9b721e;
+
     font-family:"Cinzel",serif;
+
     font-size:24px;
+
     font-weight:600;
+
     line-height:1;
+
     letter-spacing:8px;
 }
+
 
 /* =====================================================
    STUDENT
@@ -720,36 +981,58 @@ input:focus{
 
 .certify{
     position:relative;
+
     z-index:10;
+
     margin-top:26px;
+
     text-align:center;
+
     color:#536073;
+
     font-size:13px;
+
     font-weight:600;
+
     line-height:1.2;
+
     letter-spacing:3px;
 }
 
 .student-name{
     position:relative;
+
     z-index:10;
+
     width:100%;
+
     margin-top:2px;
+
     padding:0 35px;
+
     text-align:center;
+
     color:var(--navy);
+
     font-family:"Allura",cursive;
+
     font-size:94px;
+
     line-height:1.08;
+
     white-space:nowrap;
+
     overflow:hidden;
+
     text-overflow:ellipsis;
 }
 
 .name-line{
     width:580px;
     height:1px;
+
     margin:4px auto 0;
+
     background:
         linear-gradient(
             90deg,
@@ -762,10 +1045,14 @@ input:focus{
 .name-diamond{
     width:10px;
     height:10px;
+
     margin:-5px auto 0;
+
     transform:rotate(45deg);
+
     background:var(--gold);
 }
+
 
 /* =====================================================
    BODY
@@ -773,19 +1060,28 @@ input:focus{
 
 .body-text{
     position:relative;
+
     z-index:10;
+
     width:77%;
+
     margin:15px auto 0;
+
     text-align:center;
+
     color:#354257;
+
     font-size:14px;
+
     line-height:1.55;
 }
 
 .body-text strong{
     color:var(--navy);
+
     font-weight:700;
 }
+
 
 /* =====================================================
    PROJECT
@@ -793,29 +1089,46 @@ input:focus{
 
 .project{
     position:relative;
+
     z-index:10;
+
     display:none;
+
     width:45%;
+
     margin:9px auto 0;
+
     padding:7px 15px;
+
     text-align:center;
-    border-top:1px solid var(--gold);
-    border-bottom:1px solid var(--gold);
+
+    border-top:
+        1px solid var(--gold);
+
+    border-bottom:
+        1px solid var(--gold);
 }
 
 .project-label{
     color:#9b721e;
+
     font-size:9px;
+
     font-weight:700;
+
     letter-spacing:3px;
 }
 
 .project-value{
     margin-top:4px;
+
     color:var(--navy);
+
     font-size:15px;
+
     font-weight:700;
 }
+
 
 /* =====================================================
    DETAILS
@@ -823,19 +1136,32 @@ input:focus{
 
 .details{
     position:relative;
+
     z-index:10;
+
     width:76%;
+
     margin:15px auto 0;
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     padding:11px 0;
-    border-top:1px solid rgba(184,135,32,.48);
-    border-bottom:1px solid rgba(184,135,32,.48);
+
+    border-top:
+        1px solid rgba(184,135,32,.48);
+
+    border-bottom:
+        1px solid rgba(184,135,32,.48);
 }
 
 .detail{
     text-align:center;
-    border-right:1px solid #d9d2c4;
+
+    border-right:
+        1px solid #d9d2c4;
 }
 
 .detail:last-child{
@@ -844,17 +1170,24 @@ input:focus{
 
 .detail-label{
     color:#747e8d;
+
     font-size:8px;
+
     font-weight:700;
+
     letter-spacing:1.6px;
 }
 
 .detail-value{
     margin-top:5px;
+
     color:var(--navy);
+
     font-size:13px;
+
     font-weight:700;
 }
+
 
 /* =====================================================
    BOTTOM
@@ -862,16 +1195,27 @@ input:focus{
 
 .bottom{
     position:absolute;
+
     left:7%;
     right:14%;
     bottom:48px;
+
     z-index:30;
+
     display:grid;
-    grid-template-columns:minmax(300px,1fr) 155px 330px;
+
+    grid-template-columns:
+        minmax(300px,1fr)
+        155px
+        330px;
+
     align-items:end;
+
     column-gap:22px;
+
     min-width:0;
 }
+
 
 /* =====================================================
    SIGNATURE
@@ -879,49 +1223,70 @@ input:focus{
 
 .signature{
     position:relative;
+
     z-index:40;
+
     text-align:center;
+
     min-width:0;
 }
 
 .signature-image{
     display:block;
+
     width:250px;
     height:72px;
+
     margin:0 auto 3px;
+
     object-fit:contain;
+
     mix-blend-mode:multiply;
 }
 
 .signature-fallback{
     margin-bottom:4px;
+
     color:#102746;
+
     font-family:"Allura",cursive;
+
     font-size:52px;
+
     line-height:1;
+
     transform:rotate(-3deg);
 }
 
 .signature-line{
     width:235px;
     height:1px;
+
     margin:0 auto;
+
     background:#26354b;
 }
 
 .signature-name{
     margin-top:7px;
+
     color:var(--navy);
+
     font-size:12px;
+
     font-weight:700;
+
     letter-spacing:2px;
 }
 
 .signature-title{
     margin-top:3px;
+
     color:#747e8d;
+
     font-size:9px;
 }
+
 
 /* =====================================================
    SEAL
@@ -929,14 +1294,21 @@ input:focus{
 
 .seal{
     position:relative;
+
     z-index:45;
+
     width:150px;
     height:150px;
+
     margin:auto;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     border-radius:50%;
+
     background:
         linear-gradient(
             135deg,
@@ -945,70 +1317,105 @@ input:focus{
             #f1d477 70%,
             #916717
         );
-    box-shadow:0 5px 12px rgba(0,0,0,.20);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.20);
 }
 
 .seal::before{
     content:"";
+
     position:absolute;
+
     inset:7px;
+
     border-radius:50%;
+
     background:var(--navy);
-    border:1px solid #f1d477;
+
+    border:
+        1px solid #f1d477;
 }
 
 .seal::after{
     content:"";
+
     position:absolute;
+
     inset:15px;
+
     border-radius:50%;
-    border:1px solid #dcb856;
+
+    border:
+        1px solid #dcb856;
 }
 
 .seal-content{
     position:relative;
+
     z-index:2;
+
     text-align:center;
+
     color:white;
 }
 
 .seal-brand{
     color:#f1d477;
+
     font-size:10px;
+
     font-weight:700;
+
     letter-spacing:3px;
 }
 
 .seal-stars{
     margin-top:5px;
+
     color:#e8c55d;
+
     font-size:9px;
+
     letter-spacing:3px;
 }
 
 .seal-io{
     margin-top:2px;
+
     color:#e7c15a;
+
     font-family:"Cinzel",serif;
+
     font-size:36px;
+
     font-weight:700;
 }
 
 .seal-verified{
     margin-top:1px;
+
     color:white;
+
     font-size:8px;
+
     font-weight:700;
+
     letter-spacing:2px;
 }
 
 .seal-small{
     margin-top:4px;
+
     color:#e5c25d;
+
     font-size:6px;
+
     font-weight:700;
+
     letter-spacing:1.5px;
 }
+
 
 /* =====================================================
    QR
@@ -1017,61 +1424,107 @@ input:focus{
 .qr-area{
     width:330px;
     max-width:330px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:flex-start;
+
     gap:12px;
+
     min-width:0;
+
     position:relative;
+
     z-index:60;
 }
 
 .qr-box{
     width:118px;
     height:118px;
+
     flex:0 0 118px;
+
     padding:5px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     background:#fff;
-    border:2px solid #c9a64a;
+
+    border:
+        2px solid #c9a64a;
+
     position:relative;
+
     z-index:70;
+
     overflow:hidden;
 }
 
-.qr-box img{
+/*
+   QRCode.js creates a canvas.
+   These rules keep exactly one QR
+   at the correct size.
+*/
+
+.qr-box canvas{
+    display:block !important;
+
     width:106px !important;
     height:106px !important;
+
     max-width:106px !important;
     max-height:106px !important;
+}
+
+.qr-box img{
     display:block !important;
-    object-fit:contain;
+
+    width:106px !important;
+    height:106px !important;
+
+    max-width:106px !important;
+    max-height:106px !important;
 }
 
 .qr-copy{
     width:175px;
+
     min-width:0;
+
     position:relative;
+
     z-index:70;
 }
 
 .qr-title{
     color:var(--navy);
+
     font-size:11px;
+
     font-weight:700;
+
     letter-spacing:1px;
+
     white-space:nowrap;
 }
 
 .qr-description{
     margin-top:6px;
+
     color:#747e8d;
+
     font-size:8px;
+
     line-height:1.55;
+
     max-width:170px;
 }
+
 
 /* =====================================================
    FOOTER
@@ -1079,16 +1532,25 @@ input:focus{
 
 .certificate-footer{
     position:absolute;
+
     left:0;
     right:0;
+
     bottom:10px;
+
     z-index:80;
+
     text-align:center;
+
     color:#7b8491;
+
     font-size:7px;
+
     font-weight:600;
+
     letter-spacing:1.5px;
 }
+
 
 /* =====================================================
    PRINT
@@ -1105,7 +1567,9 @@ html,
 body{
     width:297mm;
     height:210mm;
+
     margin:0;
+
     background:white;
 }
 
@@ -1120,9 +1584,12 @@ body *{
 
 .result{
     display:block !important;
+
     position:absolute;
+
     left:0;
     top:0;
+
     width:297mm;
     height:210mm;
 }
@@ -1133,18 +1600,23 @@ body *{
 
 .certificate-scroll{
     overflow:visible;
+
     padding:0;
 }
 
 .certificate{
     width:297mm !important;
     height:210mm !important;
+
     padding:3mm !important;
+
     margin:0;
+
     box-shadow:none;
 }
 
 }
+
 
 /* =====================================================
    RESPONSIVE
@@ -1182,15 +1654,65 @@ body *{
 
 .result-header{
     flex-direction:column;
+
     align-items:flex-start;
 }
 
 }
 
 </style>
+
+
+<script>
+
+/* =====================================================
+   QR FALLBACK LOADER
+===================================================== */
+
+function loadQRFallback(){
+
+    console.warn(
+        "InternIO: Primary QR library failed. Loading fallback..."
+    );
+
+    if(
+        typeof QRCode !== "undefined"
+    ){
+        return;
+    }
+
+    const script =
+        document.createElement("script");
+
+    script.src =
+        "https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js";
+
+    script.onload = function(){
+
+        console.log(
+            "InternIO: QR fallback loaded."
+        );
+
+    };
+
+    script.onerror = function(){
+
+        console.error(
+            "InternIO: QR fallback also failed."
+        );
+
+    };
+
+    document.head.appendChild(script);
+}
+
+</script>
+
 </head>
 
+
 <body>
+
 
 <header class="topbar">
 
@@ -1208,7 +1730,9 @@ CERTIFICATE MAKER
 class="logout"
 type="button"
 onclick="logoutAdmin()">
+
 LOGOUT
+
 </button>
 
 </div>
@@ -1218,26 +1742,34 @@ LOGOUT
 
 <main class="page">
 
+
 <!-- =====================================================
-     FORM SCREEN
+     FORM
 ===================================================== -->
 
 <section
 id="formScreen"
 class="form-layout">
 
+
 <div class="form-panel">
+
 
 <div class="form-title">
 Create Certificate
 </div>
 
+
 <div class="form-description">
+
 Enter the student's internship details.
 The certificate will be securely created,
 verified and stored.
+
 </div>
 
+
+<!-- TYPE -->
 
 <div class="field">
 
@@ -1314,6 +1846,8 @@ General internship completion certificate.
 </div>
 
 
+<!-- STUDENT -->
+
 <div class="field">
 
 <label for="studentName">
@@ -1329,6 +1863,8 @@ placeholder="Enter student's full name">
 </div>
 
 
+<!-- INTERNSHIP -->
+
 <div class="field">
 
 <label for="internship">
@@ -1343,6 +1879,8 @@ placeholder="Example: Python Programming Training">
 
 </div>
 
+
+<!-- PROJECT -->
 
 <div
 id="projectField"
@@ -1360,6 +1898,8 @@ placeholder="Example: InternIO Platform Development">
 
 </div>
 
+
+<!-- DATES -->
 
 <div class="two">
 
@@ -1403,7 +1943,7 @@ DURATION *
 id="duration"
 type="text"
 autocomplete="off"
-placeholder="Example: 45 Days">
+placeholder="Example: 30 Days">
 
 </div>
 
@@ -1430,9 +1970,11 @@ SECURE VERIFICATION
 </div>
 
 <div class="info-text">
+
 A unique certificate record and certificate ID
 are created in the InternIO verification system.
 The QR code contains the verification link.
+
 </div>
 
 </div>
@@ -1451,12 +1993,14 @@ GENERATE CERTIFICATE
 
 <div
 id="message"
-class="message"
-aria-live="polite">
+class="message">
 </div>
+
 
 </div>
 
+
+<!-- PREVIEW -->
 
 <div class="form-preview">
 
@@ -1477,10 +2021,12 @@ CERTIFICATE OF INTERNSHIP
 </div>
 
 <div class="preview-description">
+
 A professional certificate recognizing
 practical learning, project experience,
 professional development and real-world
 skills through InternIO.
+
 </div>
 
 </div>
@@ -1501,6 +2047,7 @@ class="result">
 
 <div class="result-header">
 
+
 <div>
 
 <div class="result-title">
@@ -1508,8 +2055,10 @@ Certificate Generated
 </div>
 
 <div class="result-description">
+
 Your certificate has been securely created.
 Review it before saving the PDF.
+
 </div>
 
 </div>
@@ -1517,11 +2066,14 @@ Review it before saving the PDF.
 
 <div class="actions">
 
+
 <button
 class="light"
 type="button"
 onclick="editCertificate()">
+
 EDIT
+
 </button>
 
 
@@ -1529,15 +2081,20 @@ EDIT
 class="gold"
 type="button"
 onclick="downloadCertificatePDF()">
+
 PRINT / SAVE PDF
+
 </button>
 
 
 <button
 type="button"
 onclick="newCertificate()">
+
 CREATE ANOTHER
+
 </button>
+
 
 </div>
 
@@ -1546,9 +2103,11 @@ CREATE ANOTHER
 
 <div class="certificate-scroll">
 
+
 <div
 id="certificate"
 class="certificate">
+
 
 <div class="paper">
 
@@ -1578,8 +2137,11 @@ CERTIFICATE ID
 <div
 id="certificateId"
 class="id-value">
+
 —
+
 </div>
+
 
 <div class="id-decoration">
 
@@ -1640,8 +2202,11 @@ THIS IS TO CERTIFY THAT
 <div
 id="certificateStudent"
 class="student-name">
+
 Student Name
+
 </div>
+
 
 <div class="name-line"></div>
 
@@ -1677,7 +2242,9 @@ PROJECT
 <div
 id="certificateProject"
 class="project-value">
+
 Project Name
+
 </div>
 
 </div>
@@ -1686,6 +2253,7 @@ Project Name
 <!-- DETAILS -->
 
 <div class="details">
+
 
 <div class="detail">
 
@@ -1696,7 +2264,9 @@ START DATE
 <div
 id="certificateStart"
 class="detail-value">
+
 —
+
 </div>
 
 </div>
@@ -1711,7 +2281,9 @@ END DATE
 <div
 id="certificateEnd"
 class="detail-value">
+
 —
+
 </div>
 
 </div>
@@ -1726,7 +2298,9 @@ DURATION
 <div
 id="certificateDuration"
 class="detail-value">
+
 —
+
 </div>
 
 </div>
@@ -1741,10 +2315,13 @@ ISSUE DATE
 <div
 id="certificateIssue"
 class="detail-value">
+
 —
+
 </div>
 
 </div>
+
 
 </div>
 
@@ -1757,6 +2334,7 @@ class="detail-value">
 <!-- SIGNATURE -->
 
 <div class="signature">
+
 
 <img
 src="amar-singh-signature.png"
@@ -1773,19 +2351,24 @@ document.getElementById('signatureFallback').style.display='block';
 id="signatureFallback"
 class="signature-fallback"
 style="display:none;">
+
 Amar Singh
+
 </div>
 
 
 <div class="signature-line"></div>
 
+
 <div class="signature-name">
 AMAR SINGH
 </div>
 
+
 <div class="signature-title">
 Founder &amp; CEO, InternIO
 </div>
+
 
 </div>
 
@@ -1796,25 +2379,31 @@ Founder &amp; CEO, InternIO
 
 <div class="seal-content">
 
+
 <div class="seal-brand">
 INTERNIO
 </div>
+
 
 <div class="seal-stars">
 ★ ★ ★
 </div>
 
+
 <div class="seal-io">
 IO
 </div>
+
 
 <div class="seal-verified">
 VERIFIED
 </div>
 
+
 <div class="seal-small">
 CERTIFICATE
 </div>
+
 
 </div>
 
@@ -1825,33 +2414,42 @@ CERTIFICATE
 
 <div class="qr-area">
 
+
 <div
 id="qrCode"
-class="qr-box"
-aria-label="Certificate verification QR code">
+class="qr-box">
+
 </div>
 
 
 <div class="qr-copy">
 
+
 <div class="qr-title">
 VERIFY THIS CERTIFICATE
 </div>
 
+
 <div class="qr-description">
+
 Scan the QR code to verify
 certificate authenticity.
+
 </div>
+
 
 </div>
 
 </div>
+
 
 </div>
 
 
 <div class="certificate-footer">
+
 INTERNIO • INNOVATION &amp; OPPORTUNITIES
+
 </div>
 
 
@@ -1869,7 +2467,7 @@ INTERNIO • INNOVATION &amp; OPPORTUNITIES
 <script>
 
 /* =====================================================
-   INTERNIO CONFIG
+   CONFIG
 ===================================================== */
 
 const VERIFICATION_BASE =
@@ -2065,37 +2663,22 @@ year:"numeric"
 
 
 /* =====================================================
-   ESCAPE HTML
+   ESCAPE
 ===================================================== */
 
 function escapeHTML(value){
 
 return String(value)
 
-.replace(
-/&/g,
-"&amp;"
-)
+.replace(/&/g,"&amp;")
 
-.replace(
-/</g,
-"&lt;"
-)
+.replace(/</g,"&lt;")
 
-.replace(
-/>/g,
-"&gt;"
-)
+.replace(/>/g,"&gt;")
 
-.replace(
-/"/g,
-"&quot;"
-)
+.replace(/"/g,"&quot;")
 
-.replace(
-/'/g,
-"&#039;"
-);
+.replace(/'/g,"&#039;");
 
 }
 
@@ -2177,7 +2760,7 @@ document
 
 
 /* =====================================================
-   VALIDATE
+   VALIDATION
 ===================================================== */
 
 function validateForm(data){
@@ -2291,7 +2874,7 @@ return true;
 
 
 /* =====================================================
-   CREATE DATABASE RECORD
+   DATABASE
 ===================================================== */
 
 async function saveCertificate(data){
@@ -2370,7 +2953,7 @@ return result.data;
 
 
 /* =====================================================
-   EXTRACT ID
+   EXTRACT CERTIFICATE ID
 ===================================================== */
 
 function extractCertificateId(
@@ -2463,70 +3046,86 @@ certificateId
 function wait(ms){
 
 return new Promise(
-resolve =>
+function(resolve){
+
 setTimeout(
 resolve,
 ms
-)
+);
+
+}
 );
 
 }
 
 
 /* =====================================================
-   WAIT FOR IMAGE
+   QR LIBRARY CHECK
 ===================================================== */
 
-function waitForImage(img){
+async function waitForQRLibrary(){
 
-return new Promise(
-(resolve,reject)=>{
+/*
+   Give the primary/fallback script time
+   to finish loading.
+*/
 
-if(
-img.complete &&
-img.naturalWidth > 0
+for(
+let i=0;
+i<30;
+i++
 ){
 
-resolve();
+if(
+typeof QRCode !==
+"undefined"
+){
 
-return;
+return true;
+
+}
+
+await wait(200);
 
 }
 
 
-img.onload =
-() => resolve();
+/*
+   Final check.
+*/
 
+if(
+typeof QRCode ===
+"undefined"
+){
 
-img.onerror =
-() => reject(
-new Error(
-"QR image failed to load."
-)
+throw new Error(
+"QR code library failed to load. Please refresh the page."
 );
 
 }
-);
+
+
+return true;
 
 }
 
 
 /* =====================================================
-   QR CODE
-   EXACTLY ONE IMAGE
+   QR GENERATION
 ===================================================== */
 
 async function generateQRCode(
 certificateId
 ){
 
-const qr =
+const qrBox =
 document.getElementById(
 "qrCode"
 );
 
 
-if(!qr){
+if(!qrBox){
 
 throw new Error(
 "QR container was not found."
@@ -2536,32 +3135,22 @@ throw new Error(
 
 
 /*
-   Remove everything first.
+   IMPORTANT:
+   Completely delete old QR.
 */
 
-qr.replaceChildren();
+qrBox.replaceChildren();
 
 
 /*
-   Confirm library.
+   Wait for QR library.
 */
 
-if(
-typeof QRCode ===
-"undefined" ||
-typeof QRCode.toDataURL !==
-"function"
-){
-
-throw new Error(
-"QR code library failed to load. Refresh the page."
-);
-
-}
+await waitForQRLibrary();
 
 
 /*
-   Create verification URL.
+   Verification URL.
 */
 
 const verificationURL =
@@ -2577,122 +3166,112 @@ verificationURL
 
 
 /*
-   Generate ONE QR image.
+   Generate exactly ONE QR.
 */
 
-const qrDataURL =
-await QRCode.toDataURL(
-verificationURL,
+new QRCode(
+qrBox,
 {
+
+text:
+verificationURL,
 
 width:106,
 
-margin:1,
+height:106,
 
-errorCorrectionLevel:"H",
+colorDark:
+"#071a38",
 
-color:{
-dark:"#071a38",
-light:"#ffffff"
-}
+colorLight:
+"#ffffff",
+
+correctLevel:
+QRCode.CorrectLevel.H
 
 }
 );
 
 
 /*
-   Create ONE IMG.
+   Wait for QRCode.js.
 */
 
-const qrImage =
-document.createElement(
+await wait(500);
+
+
+/*
+   QRCode.js normally creates
+   one canvas and one hidden/visible
+   image depending on browser/library.
+
+   We keep only ONE visible QR object.
+*/
+
+const canvases =
+qrBox.querySelectorAll(
+"canvas"
+);
+
+const images =
+qrBox.querySelectorAll(
 "img"
 );
 
 
-qrImage.src =
-qrDataURL;
+/*
+   Prefer canvas because QRCode.js
+   creates it directly and it works
+   reliably with html2canvas.
+*/
 
-qrImage.alt =
-"InternIO certificate verification QR code";
+if(
+canvases.length >= 1
+){
 
-qrImage.width =
-106;
+/*
+   Remove all images if any.
+*/
 
-qrImage.height =
-106;
+images.forEach(
+function(img){
 
-qrImage.style.width =
+img.remove();
+
+}
+);
+
+
+/*
+   If multiple canvases somehow exist,
+   keep only the first.
+*/
+
+for(
+let i=1;
+i<canvases.length;
+i++
+){
+
+canvases[i].remove();
+
+}
+
+
+const canvas =
+qrBox.querySelector(
+"canvas"
+);
+
+
+canvas.style.width =
 "106px";
 
-qrImage.style.height =
+canvas.style.height =
 "106px";
 
-qrImage.style.maxWidth =
-"106px";
-
-qrImage.style.maxHeight =
-"106px";
-
-qrImage.style.display =
+canvas.style.display =
 "block";
-
-qrImage.style.objectFit =
-"contain";
-
-
-/*
-   Replace container contents
-   with exactly this one image.
-*/
-
-qr.replaceChildren(
-qrImage
-);
-
-
-/*
-   Wait until image is ready.
-*/
-
-await waitForImage(
-qrImage
-);
-
-
-await wait(150);
-
-
-/*
-   FINAL SAFETY CHECK
-*/
-
-const qrImages =
-qr.querySelectorAll(
-"img"
-);
-
-
-if(
-qrImages.length !== 1
-){
-
-throw new Error(
-"QR rendering error: multiple QR codes detected."
-);
-
-}
-
-
-if(
-!qrImage.naturalWidth
-){
-
-throw new Error(
-"QR image was generated but could not be rendered."
-);
-
-}
 
 
 console.log(
@@ -2701,6 +3280,66 @@ console.log(
 
 
 return verificationURL;
+
+}
+
+
+/*
+   If there is no canvas,
+   use the first image.
+*/
+
+if(
+images.length >= 1
+){
+
+for(
+let i=1;
+i<images.length;
+i++
+){
+
+images[i].remove();
+
+}
+
+
+const img =
+qrBox.querySelector(
+"img"
+);
+
+
+img.style.width =
+"106px";
+
+img.style.height =
+"106px";
+
+img.style.display =
+"block";
+
+
+console.log(
+"InternIO QR generated successfully."
+);
+
+
+return verificationURL;
+
+}
+
+
+/*
+   Nothing generated.
+*/
+
+qrBox.replaceChildren();
+
+
+throw new Error(
+"QR code could not be generated."
+);
 
 }
 
@@ -2820,7 +3459,7 @@ projectDisplay.style.display =
 
 
 /*
-   WAIT FOR QR.
+   Generate ONE QR.
 */
 
 await generateQRCode(
@@ -2831,7 +3470,7 @@ certificateId
 
 
 /* =====================================================
-   PDF
+   CREATE PDF
 ===================================================== */
 
 async function createCertificatePDF(){
@@ -2852,7 +3491,7 @@ throw new Error(
 
 
 /*
-   Wait for fonts.
+   Fonts.
 */
 
 if(
@@ -2865,37 +3504,41 @@ await document.fonts.ready;
 }
 
 
-/*
-   Allow browser to finish layout.
-*/
-
 await wait(500);
 
 
 /*
-   There MUST be exactly one QR.
+   Make sure QR exists.
 */
 
-const qrImages =
-document.querySelectorAll(
-"#qrCode img"
+const qrBox =
+document.getElementById(
+"qrCode"
+);
+
+
+const qrCanvas =
+qrBox.querySelectorAll(
+"canvas"
+);
+
+
+const qrImage =
+qrBox.querySelectorAll(
+"img"
 );
 
 
 if(
-qrImages.length !== 1
+qrCanvas.length === 0 &&
+qrImage.length === 0
 ){
 
 throw new Error(
-"PDF stopped: certificate must contain exactly one QR code."
+"PDF stopped because QR code was not generated."
 );
 
 }
-
-
-await waitForImage(
-qrImages[0]
-);
 
 
 /*
@@ -2913,7 +3556,8 @@ useCORS:true,
 
 allowTaint:false,
 
-backgroundColor:"#fdfbf7",
+backgroundColor:
+"#fdfbf7",
 
 logging:false,
 
@@ -2930,7 +3574,7 @@ windowHeight:990
 
 
 /*
-   Convert to JPEG.
+   Convert.
 */
 
 const imageData =
@@ -2941,7 +3585,7 @@ canvas.toDataURL(
 
 
 /*
-   A4 landscape.
+   PDF.
 */
 
 const {
@@ -2954,17 +3598,25 @@ const pdf =
 new jsPDF(
 {
 
-orientation:"landscape",
+orientation:
+"landscape",
 
-unit:"mm",
+unit:
+"mm",
 
-format:"a4",
+format:
+"a4",
 
-compress:true
+compress:
+true
 
 }
 );
 
+
+/*
+   A4 landscape.
+*/
 
 pdf.addImage(
 imageData,
@@ -2984,7 +3636,7 @@ return pdf;
 
 
 /* =====================================================
-   DRIVE
+   GOOGLE DRIVE UPLOAD
 ===================================================== */
 
 async function uploadCertificateToDrive(
@@ -3095,7 +3747,7 @@ return result;
 
 
 /* =====================================================
-   SAVE URL TO SUPABASE
+   SAVE DRIVE URL
 ===================================================== */
 
 async function saveCertificateURL(
@@ -3176,10 +3828,12 @@ document
 
 const safeName =
 String(student)
+
 .replace(
 /[^a-zA-Z0-9_-]+/g,
 "_"
 )
+
 .replace(
 /^_+|_+$/g,
 ""
@@ -3191,6 +3845,7 @@ String(
 generatedCertificateId ||
 "Certificate"
 )
+
 .replace(
 /[^a-zA-Z0-9_-]+/g,
 "_"
@@ -3265,7 +3920,7 @@ try{
 
 
 /* -----------------------------------------------
-   1. DATABASE
+   DATABASE
 ------------------------------------------------ */
 
 button.textContent =
@@ -3287,7 +3942,7 @@ rpcData
 if(!certificateId){
 
 console.error(
-"Unexpected database response:",
+"Database response:",
 rpcData
 );
 
@@ -3305,13 +3960,13 @@ certificateId
 
 
 console.log(
-"InternIO certificate ID:",
+"InternIO Certificate ID:",
 generatedCertificateId
 );
 
 
 /* -----------------------------------------------
-   2. CERTIFICATE + ONE QR
+   QR
 ------------------------------------------------ */
 
 button.textContent =
@@ -3325,7 +3980,7 @@ generatedCertificateId
 
 
 /* -----------------------------------------------
-   3. SHOW RESULT
+   SHOW CERTIFICATE
 ------------------------------------------------ */
 
 document
@@ -3353,7 +4008,7 @@ behavior:"smooth"
 
 
 /* -----------------------------------------------
-   4. PDF
+   PDF
 ------------------------------------------------ */
 
 button.textContent =
@@ -3365,7 +4020,7 @@ await createCertificatePDF();
 
 
 /* -----------------------------------------------
-   5. DRIVE
+   DRIVE
 ------------------------------------------------ */
 
 button.textContent =
@@ -3391,7 +4046,7 @@ generatedDriveURL
 
 
 /* -----------------------------------------------
-   6. SAVE URL
+   DATABASE URL
 ------------------------------------------------ */
 
 button.textContent =
@@ -3415,7 +4070,7 @@ showMessage(
 
 
 console.log(
-"InternIO verification URL:",
+"InternIO Verification URL:",
 getVerificationURL(
 generatedCertificateId
 )
@@ -3425,7 +4080,7 @@ generatedCertificateId
 }catch(error){
 
 console.error(
-"InternIO certificate error:",
+"InternIO Certificate Error:",
 error
 );
 
@@ -3580,7 +4235,7 @@ null;
 
 
 /*
-   Completely remove old QR.
+   Remove old QR completely.
 */
 
 document
@@ -3628,7 +4283,7 @@ behavior:"smooth"
 
 
 /* =====================================================
-   INITIAL
+   INITIALIZE
 ===================================================== */
 
 selectType(
