@@ -1,74 +1,40 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>InternIO — Certificate Maker</title>
-
-<!-- =========================================================
-     FONTS
-========================================================= -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-rel="stylesheet"
->
-
-<!-- =========================================================
-     SUPABASE
-========================================================= -->
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- YOUR EXISTING AUTH FILE -->
 <script src="auth.js"></script>
-
-<!-- PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-*{
-    box-sizing:border-box;
-}
-
-html,
-body{
-    margin:0;
-    padding:0;
-}
-
-body{
-    min-height:100vh;
-    background:#eef2f7;
-    color:#071a38;
-    font-family:"Montserrat",Arial,sans-serif;
-}
-
 :root{
     --navy:#071a38;
     --navy2:#102a4d;
     --gold:#b88720;
     --gold2:#d09a25;
     --gold3:#e0bd58;
-    --cream:#fdfbf7;
+    --paper:#fdfbf7;
     --gray:#747e8d;
 }
 
-
-/* =========================================================
-   TOP BAR
-========================================================= */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+    min-height:100vh;
+    background:#eef2f7;
+    color:var(--navy);
+    font-family:"Montserrat",Arial,sans-serif;
+}
 
 .topbar{
     height:70px;
@@ -77,104 +43,68 @@ body{
     align-items:center;
     justify-content:space-between;
     background:var(--navy);
-    color:white;
+    color:#fff;
 }
-
 .logo{
-    color:white;
-    font-family:"Montserrat",sans-serif;
+    color:#fff;
     font-size:31px;
     font-weight:700;
     line-height:1;
     letter-spacing:-2.5px;
 }
-
-.logo span{
-    color:var(--gold3);
-}
-
-.top-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
-
+.logo span{color:var(--gold3)}
+.top-right{display:flex;align-items:center;gap:18px}
 .top-label{
     color:#dbe2ed;
     font-size:9px;
     font-weight:700;
     letter-spacing:2px;
 }
-
 .logout{
     height:36px;
     padding:0 16px;
     border:1px solid rgba(255,255,255,.3);
     border-radius:5px;
     background:rgba(255,255,255,.06);
-    color:white;
+    color:#fff;
     cursor:pointer;
     font-family:inherit;
     font-size:9px;
     font-weight:700;
 }
 
-
-/* =========================================================
-   PAGE
-========================================================= */
-
 .page{
     width:calc(100% - 32px);
     max-width:1500px;
     margin:20px auto 40px;
 }
-
 .form-layout{
     display:grid;
     grid-template-columns:400px minmax(600px,1fr);
     gap:20px;
 }
-
-
-/* =========================================================
-   FORM PANEL
-========================================================= */
-
 .form-panel{
-    background:white;
+    background:#fff;
     padding:25px;
     border:1px solid #dce2ea;
     border-radius:11px;
     box-shadow:0 12px 35px rgba(7,26,56,.07);
 }
-
-.form-title{
-    color:var(--navy);
-    font-size:23px;
-    font-weight:700;
-}
-
+.form-title{font-size:23px;font-weight:700}
 .form-description{
     margin:7px 0 22px;
     color:var(--gray);
     font-size:10px;
     line-height:1.65;
 }
-
-.field{
-    margin-bottom:14px;
-}
-
+.field{margin-bottom:14px}
 label{
     display:block;
     margin-bottom:7px;
-    color:var(--navy);
     font-size:9px;
     font-weight:700;
     letter-spacing:.7px;
 }
-
 input{
     width:100%;
     height:43px;
@@ -182,27 +112,16 @@ input{
     border:1px solid #d4dae2;
     border-radius:6px;
     outline:none;
-    background:white;
+    background:#fff;
     color:#26344a;
     font-family:inherit;
     font-size:12px;
 }
-
 input:focus{
     border-color:var(--gold);
     box-shadow:0 0 0 3px rgba(184,135,32,.1);
 }
-
-.two{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-
-/* =========================================================
-   CERTIFICATE TYPE
-========================================================= */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
 .type-option{
     display:flex;
@@ -214,42 +133,14 @@ input:focus{
     border-radius:7px;
     cursor:pointer;
 }
-
-.type-option.active{
-    border-color:var(--gold);
-    background:#fffaf0;
-}
-
+.type-option.active{border-color:var(--gold);background:#fffaf0}
 .type-radio{
-    width:17px;
-    height:17px;
-    flex:0 0 17px;
-    margin-top:1px;
-    border:2px solid #aeb7c4;
-    border-radius:50%;
+    width:17px;height:17px;flex:0 0 17px;margin-top:1px;
+    border:2px solid #aeb7c4;border-radius:50%;
 }
-
-.type-option.active .type-radio{
-    border:5px solid var(--navy);
-}
-
-.type-title{
-    color:var(--navy);
-    font-size:10px;
-    font-weight:700;
-}
-
-.type-description{
-    margin-top:3px;
-    color:#7b8491;
-    font-size:8px;
-    line-height:1.45;
-}
-
-
-/* =========================================================
-   INFO
-========================================================= */
+.type-option.active .type-radio{border:5px solid var(--navy)}
+.type-title{font-size:10px;font-weight:700}
+.type-description{margin-top:3px;color:#7b8491;font-size:8px;line-height:1.45}
 
 .info{
     padding:11px 12px;
@@ -257,63 +148,18 @@ input:focus{
     border-left:3px solid var(--gold);
     background:#faf8f1;
 }
-
-.info-title{
-    color:var(--navy);
-    font-size:9px;
-    font-weight:700;
-}
-
-.info-text{
-    margin-top:3px;
-    color:#7a8492;
-    font-size:8px;
-    line-height:1.5;
-}
-
-
-/* =========================================================
-   GENERATE BUTTON
-========================================================= */
+.info-title{font-size:9px;font-weight:700}
+.info-text{margin-top:3px;color:#7a8492;font-size:8px;line-height:1.5}
 
 .generate{
-    width:100%;
-    height:50px;
-    border:0;
-    border-radius:6px;
+    width:100%;height:50px;border:0;border-radius:6px;
     background:linear-gradient(135deg,#071a38,#17365e);
-    color:white;
-    cursor:pointer;
-    font-family:inherit;
-    font-size:11px;
-    font-weight:700;
+    color:#fff;cursor:pointer;font-family:inherit;font-size:11px;font-weight:700;
 }
-
-.generate:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-.message{
-    min-height:18px;
-    margin-top:9px;
-    text-align:center;
-    font-size:9px;
-    font-weight:700;
-}
-
-.message.error{
-    color:#c62828;
-}
-
-.message.success{
-    color:#16763b;
-}
-
-
-/* =========================================================
-   PREVIEW
-========================================================= */
+.generate:disabled{opacity:.6;cursor:wait}
+.message{min-height:18px;margin-top:9px;text-align:center;font-size:9px;font-weight:700}
+.message.error{color:#c62828}
+.message.success{color:#16763b}
 
 .form-preview{
     min-height:650px;
@@ -324,3799 +170,1117 @@ input:focus{
     justify-content:center;
     padding:30px;
     border-radius:11px;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(199,150,39,.10),
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #071a38,
-            #17365e
-        );
+    background:radial-gradient(circle at center,rgba(199,150,39,.10),transparent 35%),linear-gradient(135deg,#071a38,#17365e);
 }
+.preview-content{max-width:700px;text-align:center;color:#fff}
+.preview-logo{font-size:72px;font-weight:700;line-height:.9;letter-spacing:-6px}
+.preview-logo span{color:var(--gold3)}
+.preview-tagline{margin-top:12px;font-size:10px;font-weight:700;letter-spacing:3px}
+.preview-rule{width:140px;height:1px;margin:23px auto;background:var(--gold3)}
+.preview-title{font-family:"Cinzel",serif;font-size:29px;letter-spacing:5px}
+.preview-description{max-width:560px;margin:16px auto;color:#d5dce7;font-size:10px;line-height:1.8}
 
-.preview-content{
-    max-width:700px;
-    text-align:center;
-    color:white;
-}
-
-.preview-logo{
-    font-size:72px;
-    font-weight:700;
-    line-height:.9;
-    letter-spacing:-6px;
-}
-
-.preview-logo span{
-    color:var(--gold3);
-}
-
-.preview-tagline{
-    margin-top:12px;
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:3px;
-}
-
-.preview-rule{
-    width:140px;
-    height:1px;
-    margin:23px auto;
-    background:var(--gold3);
-}
-
-.preview-title{
-    font-family:"Cinzel",serif;
-    font-size:29px;
-    letter-spacing:5px;
-}
-
-.preview-description{
-    max-width:560px;
-    margin:16px auto;
-    color:#d5dce7;
-    font-size:10px;
-    line-height:1.8;
-}
-
-
-/* =========================================================
-   RESULT
-========================================================= */
-
-.result{
-    display:none;
-}
-
+.result{display:none}
 .result-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding:15px 18px;
-    margin-bottom:15px;
-    background:white;
-    border:1px solid #dce2ea;
-    border-radius:10px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:15px 18px;margin-bottom:15px;background:#fff;
+    border:1px solid #dce2ea;border-radius:10px;
 }
-
-.result-title{
-    color:var(--navy);
-    font-size:17px;
-    font-weight:700;
-}
-
-.result-description{
-    margin-top:4px;
-    color:#7a8492;
-    font-size:9px;
-}
-
-.actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-}
-
+.result-title{font-size:17px;font-weight:700}
+.result-description{margin-top:4px;color:#7a8492;font-size:9px}
+.actions{display:flex;flex-wrap:wrap;gap:7px}
 .actions button{
-    height:35px;
-    padding:0 14px;
-    border:0;
-    border-radius:5px;
-    background:var(--navy);
-    color:white;
-    cursor:pointer;
-    font-family:inherit;
-    font-size:9px;
-    font-weight:700;
+    height:35px;padding:0 14px;border:0;border-radius:5px;
+    background:var(--navy);color:#fff;cursor:pointer;
+    font-family:inherit;font-size:9px;font-weight:700;
 }
+.actions .light{background:#edf0f4;color:var(--navy)}
+.actions .gold{background:#a8791f}
 
-.actions .light{
-    background:#edf0f4;
-    color:var(--navy);
-}
-
-.actions .gold{
-    background:#a8791f;
-}
-
+.certificate-scroll{width:100%;overflow-x:auto;padding-bottom:25px}
 
 /* =========================================================
-   CERTIFICATE SCROLL
-========================================================= */
-
-.certificate-scroll{
-    width:100%;
-    overflow-x:auto;
-    padding-bottom:25px;
-}
-
-
-/* =========================================================
-   FIXED CERTIFICATE
-   EXACT DESIGN SIZE
-========================================================= */
-
+   CERTIFICATE — fixed 1400 × 990 design
+   The layout is intentionally matched to the supplied Harshit
+   certificate: no project block, wide body text, four date
+   columns, signature/seal/QR at the bottom.
+   ========================================================= */
 .certificate{
     width:1400px;
     height:990px;
     margin:0 auto;
     padding:9px;
-    background:
-        linear-gradient(
-            135deg,
-            #06162f 0%,
-            #193961 50%,
-            #071a38 100%
-        );
+    position:relative;
+    background:linear-gradient(135deg,#06162f 0%,#193961 50%,#071a38 100%);
     box-shadow:0 25px 70px rgba(5,20,45,.30);
 }
-
-
-/* =========================================================
-   PAPER
-========================================================= */
-
 .paper{
     position:relative;
     width:100%;
     height:100%;
     overflow:hidden;
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(199,150,39,.045),
-            transparent 58%
-        ),
-        #fdfbf7;
+    background:radial-gradient(ellipse at center,rgba(199,150,39,.045),transparent 58%),var(--paper);
     border:2px solid var(--gold);
 }
-
 .paper::before{
     content:"";
-    position:absolute;
-    inset:14px;
+    position:absolute;inset:14px;
     border:1px solid rgba(184,135,32,.72);
-    pointer-events:none;
-    z-index:2;
+    pointer-events:none;z-index:2;
 }
-
 .paper::after{
     content:"";
-    position:absolute;
-    inset:25px;
+    position:absolute;inset:25px;
     border:1px solid rgba(7,26,56,.12);
-    pointer-events:none;
-    z-index:2;
+    pointer-events:none;z-index:2;
 }
-
-
-/* =========================================================
-   TOP LEFT CORNER
-========================================================= */
 
 .corner-tl{
-    position:absolute;
-    top:0;
-    left:0;
-    width:305px;
-    height:195px;
-    background:
-        linear-gradient(
-            135deg,
-            #071a38 0 66%,
-            transparent 66%
-        );
+    position:absolute;top:0;left:0;width:305px;height:195px;
+    background:linear-gradient(135deg,#071a38 0 66%,transparent 66%);
     z-index:4;
 }
-
 .corner-tl::after{
-    content:"";
-    position:absolute;
-    left:22px;
-    top:20px;
-    width:270px;
-    height:150px;
-    border-top:3px solid var(--gold3);
-    border-left:3px solid var(--gold3);
+    content:"";position:absolute;left:22px;top:20px;width:270px;height:150px;
+    border-top:3px solid var(--gold3);border-left:3px solid var(--gold3);
 }
-
-
-/* =========================================================
-   TOP RIGHT
-========================================================= */
-
 .corner-tr{
-    position:absolute;
-    top:0;
-    right:0;
-    width:90px;
-    height:70px;
-    border-top:4px solid var(--gold);
-    border-right:4px solid var(--gold);
-    z-index:4;
+    position:absolute;top:0;right:0;width:90px;height:70px;
+    border-top:4px solid var(--gold);border-right:4px solid var(--gold);z-index:4;
 }
-
-
-/* =========================================================
-   BOTTOM LEFT
-========================================================= */
-
 .corner-bl{
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:75px;
-    height:75px;
-    border-left:4px solid var(--gold);
-    border-bottom:4px solid var(--gold);
-    z-index:4;
+    position:absolute;left:0;bottom:0;width:75px;height:75px;
+    border-left:4px solid var(--gold);border-bottom:4px solid var(--gold);z-index:4;
 }
-
-
-/* =========================================================
-   BOTTOM RIGHT
-========================================================= */
-
 .corner-br{
-    position:absolute;
-    right:0;
-    bottom:0;
-    width:235px;
-    height:145px;
-    background:
-        linear-gradient(
-            315deg,
-            #071a38 0 64%,
-            transparent 64%
-        );
-    z-index:3;
+    position:absolute;right:0;bottom:0;width:235px;height:145px;
+    background:linear-gradient(315deg,#071a38 0 64%,transparent 64%);z-index:3;
 }
-
 .corner-br::after{
-    content:"";
-    position:absolute;
-    right:18px;
-    bottom:18px;
-    width:200px;
-    height:112px;
-    border-right:3px solid var(--gold3);
-    border-bottom:3px solid var(--gold3);
+    content:"";position:absolute;right:18px;bottom:18px;width:200px;height:112px;
+    border-right:3px solid var(--gold3);border-bottom:3px solid var(--gold3);
 }
-
-
-/* =========================================================
-   WATERMARK
-========================================================= */
 
 .watermark{
-    position:absolute;
-    left:50%;
-    top:54%;
-    transform:translate(-50%,-50%);
-    z-index:1;
-    color:rgba(7,26,56,.025);
-    font-family:"Cinzel",serif;
-    font-size:410px;
-    font-weight:700;
-    line-height:1;
-    letter-spacing:-50px;
+    position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
+    z-index:1;color:rgba(7,26,56,.025);font-family:"Cinzel",serif;
+    font-size:410px;font-weight:700;line-height:1;letter-spacing:-50px;
     pointer-events:none;
 }
-
-.watermark span{
-    color:rgba(199,150,39,.04);
-}
-
-
-/* =========================================================
-   CERTIFICATE ID
-========================================================= */
+.watermark span{color:rgba(199,150,39,.04)}
 
 .certificate-id{
-    position:absolute;
-    top:55px;
-    right:58px;
-    z-index:20;
-    width:220px;
-    text-align:center;
+    position:absolute;top:55px;right:58px;z-index:20;width:220px;text-align:center;
 }
-
-.id-label{
-    color:#747e8d;
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.id-value{
-    margin-top:7px;
-    color:var(--navy);
-    font-size:16px;
-    font-weight:700;
-    letter-spacing:1px;
-}
-
-.id-decoration{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-top:8px;
-}
-
-.id-line{
-    width:38px;
-    height:1px;
-    background:var(--gold);
-}
-
-.id-star{
-    color:#8e681c;
-    font-size:11px;
-}
-
-
-/* =========================================================
-   BRAND
-========================================================= */
+.id-label{color:#747e8d;font-size:10px;font-weight:700;letter-spacing:2px}
+.id-value{margin-top:7px;color:var(--navy);font-size:16px;font-weight:700;letter-spacing:1px}
+.id-decoration{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+.id-line{width:38px;height:1px;background:var(--gold)}
+.id-star{color:#8e681c;font-size:11px}
 
 .brand{
-    position:absolute;
-    top:70px;
-    left:0;
-    right:0;
-    z-index:10;
-    padding:0;
-    text-align:center;
+    position:absolute;top:70px;left:0;right:0;z-index:10;text-align:center;
 }
-
 .brand-name{
-    color:var(--navy);
-    font-family:"Montserrat",sans-serif;
-    font-size:82px;
-    font-weight:700;
-    line-height:.9;
-    letter-spacing:-7px;
+    color:var(--navy);font-size:82px;font-weight:700;line-height:.9;letter-spacing:-7px;
 }
-
-.brand-name span{
-    color:#d09a25;
-}
-
+.brand-name span{color:#d09a25}
 .brand-tagline{
-    margin-top:14px;
-    color:#263650;
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:4px;
+    margin-top:14px;color:#263650;font-size:14px;font-weight:700;letter-spacing:4px;
 }
-
 .brand-decoration{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:420px;
-    height:16px;
-    margin:12px auto 0;
+    display:flex;align-items:center;justify-content:center;width:420px;height:16px;margin:12px auto 0;
 }
-
-.brand-decoration::before,
-.brand-decoration::after{
-    content:"";
-    width:130px;
-    height:1px;
-    background:var(--gold);
+.brand-decoration::before,.brand-decoration::after{
+    content:"";width:130px;height:1px;background:var(--gold);
 }
-
-.diamond{
-    width:9px;
-    height:9px;
-    margin:0 10px;
-    transform:rotate(45deg);
-    background:var(--gold);
-}
-
-
-/* =========================================================
-   MAIN TITLE
-========================================================= */
+.diamond{width:9px;height:9px;margin:0 10px;transform:rotate(45deg);background:var(--gold)}
 
 .certificate-title{
-    position:absolute;
-    top:264px;
-    left:0;
-    right:0;
-    z-index:10;
-    margin:0;
-    color:var(--navy);
-    font-family:"Cinzel",serif;
-    font-size:65px;
-    font-weight:500;
-    line-height:1;
-    letter-spacing:10px;
-    text-align:center;
+    position:absolute;top:264px;left:0;right:0;z-index:10;
+    margin:0;color:var(--navy);font-family:"Cinzel",serif;
+    font-size:65px;font-weight:500;line-height:1;letter-spacing:10px;text-align:center;
 }
-
 .certificate-subtitle{
-    position:absolute;
-    top:350px;
-    left:0;
-    right:0;
-    z-index:10;
-    margin:0;
-    color:#9b721e;
-    font-family:"Cinzel",serif;
-    font-size:24px;
-    font-weight:600;
-    line-height:1;
-    letter-spacing:8px;
-    text-align:center;
+    position:absolute;top:350px;left:0;right:0;z-index:10;
+    margin:0;color:#9b721e;font-family:"Cinzel",serif;
+    font-size:24px;font-weight:600;line-height:1;letter-spacing:8px;text-align:center;
 }
-
-
-/* =========================================================
-   CERTIFY
-========================================================= */
-
 .certify{
-    position:absolute;
-    top:432px;
-    left:0;
-    right:0;
-    z-index:10;
-    margin:0;
-    color:#536073;
-    font-size:13px;
-    font-weight:600;
-    line-height:1.2;
-    letter-spacing:3px;
-    text-align:center;
+    position:absolute;top:432px;left:0;right:0;z-index:10;
+    margin:0;color:#536073;font-size:13px;font-weight:600;line-height:1.2;
+    letter-spacing:3px;text-align:center;
 }
-
-
-/* =========================================================
-   STUDENT NAME
-========================================================= */
-
 .student-name{
-    position:absolute;
-    top:462px;
-    left:90px;
-    right:90px;
-    z-index:10;
-
-    width:auto;
-    margin:0;
-    padding:0;
-
-    color:var(--navy);
-
-    font-family:"Allura",cursive;
-    font-size:94px;
-    font-weight:400;
-    line-height:1;
-
-    text-align:center;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:clip;
+    position:absolute;top:462px;left:80px;right:80px;z-index:10;
+    margin:0;color:var(--navy);font-family:"Allura",cursive;
+    font-size:94px;font-weight:400;line-height:1;text-align:center;
+    white-space:nowrap;overflow:hidden;text-overflow:clip;
 }
-
-
-/* Automatic name sizing */
-
-.student-name[data-length="short"]{
-    font-size:98px;
-}
-
-.student-name[data-length="long"]{
-    font-size:84px;
-}
-
-.student-name[data-length="very-long"]{
-    font-size:72px;
-}
-
-
-/* =========================================================
-   NAME LINE
-========================================================= */
+.student-name[data-length="short"]{font-size:98px}
+.student-name[data-length="long"]{font-size:84px}
+.student-name[data-length="very-long"]{font-size:72px}
 
 .name-line{
-    position:absolute;
-    top:555px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:10;
-
-    width:680px;
-    height:1px;
-
-    margin:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #c6a348 12%,
-            #c6a348 88%,
-            transparent
-        );
+    position:absolute;top:555px;left:50%;transform:translateX(-50%);
+    z-index:10;width:680px;height:1px;
+    background:linear-gradient(90deg,transparent,#c6a348 12%,#c6a348 88%,transparent);
 }
-
 .name-diamond{
-    position:absolute;
-    top:550px;
-    left:50%;
-    transform:
-        translateX(-50%)
-        rotate(45deg);
-
-    z-index:11;
-
-    width:10px;
-    height:10px;
-
-    margin:0;
-
-    background:#b88720;
+    position:absolute;top:550px;left:50%;transform:translateX(-50%) rotate(45deg);
+    z-index:11;width:10px;height:10px;background:#b88720;
 }
-
-
-/* =========================================================
-   BODY
-========================================================= */
 
 .body-text{
-    position:absolute;
-    top:582px;
-    left:150px;
-    right:150px;
-
-    width:auto;
-    max-width:none;
-
-    z-index:10;
-
-    margin:0;
-
-    color:#354257;
-
-    font-family:"Montserrat",sans-serif;
-    font-size:14px;
-    font-weight:400;
-    line-height:1.55;
-
-    text-align:center;
+    position:absolute;top:582px;left:150px;right:150px;z-index:10;
+    margin:0;color:#354257;font-family:"Montserrat",sans-serif;
+    font-size:14px;font-weight:400;line-height:1.55;text-align:center;
 }
-
-.body-text strong{
-    color:var(--navy);
-    font-weight:700;
-}
-
-
-/* =========================================================
-   PROJECT
-========================================================= */
-
-.project{
-    position:absolute;
-    top:625px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:10;
-
-    width:520px;
-    margin:0;
-
-    padding:6px 15px;
-
-    text-align:center;
-
-    border-top:1px solid var(--gold);
-    border-bottom:1px solid var(--gold);
-}
-
-.project-label{
-    color:#9b721e;
-    font-size:9px;
-    font-weight:700;
-    letter-spacing:3px;
-}
-
-.project-value{
-    margin-top:4px;
-    color:var(--navy);
-    font-size:15px;
-    font-weight:700;
-}
-
-
-/* =========================================================
-   DATE DETAILS
-========================================================= */
+.body-text strong{color:var(--navy);font-weight:700}
 
 .details{
-    position:absolute;
-
-    top:665px;
-    left:175px;
-    right:175px;
-
-    width:auto;
-
-    z-index:10;
-
-    margin:0;
-
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-
-    padding:12px 0;
-
-    border-top:1px solid rgba(184,135,32,.48);
+    position:absolute;top:665px;left:175px;right:175px;z-index:10;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    padding:12px 0;border-top:1px solid rgba(184,135,32,.48);
     border-bottom:1px solid rgba(184,135,32,.48);
 }
-
-.detail{
-    min-height:44px;
-    text-align:center;
-    border-right:1px solid #d9d2c4;
-}
-
-.detail:last-child{
-    border-right:none;
-}
-
-.detail-label{
-    color:#747e8d;
-    font-size:8px;
-    font-weight:700;
-    letter-spacing:1.6px;
-}
-
-.detail-value{
-    margin-top:5px;
-    color:var(--navy);
-    font-size:13px;
-    font-weight:700;
-}
-
-
-/* =========================================================
-   BOTTOM AREA
-========================================================= */
+.detail{min-height:44px;text-align:center;border-right:1px solid #d9d2c4}
+.detail:last-child{border-right:none}
+.detail-label{color:#747e8d;font-size:8px;font-weight:700;letter-spacing:1.6px}
+.detail-value{margin-top:5px;color:var(--navy);font-size:13px;font-weight:700}
 
 .bottom{
-    position:absolute;
-
-    left:175px;
-    right:175px;
-    bottom:28px;
-
-    height:165px;
-
-    z-index:30;
-
-    display:grid;
-
-    grid-template-columns:
-        300px
-        1fr
-        390px;
-
-    align-items:end;
-
-    column-gap:32px;
-
-    min-width:0;
+    position:absolute;left:175px;right:175px;bottom:28px;height:165px;
+    z-index:30;display:grid;grid-template-columns:300px 1fr 390px;
+    align-items:end;column-gap:32px;
 }
-
-
-/* =========================================================
-   SIGNATURE
-========================================================= */
-
 .signature{
-    position:relative;
-    z-index:40;
-
-    width:300px;
-
-    align-self:end;
-
-    margin-bottom:3px;
-
-    text-align:center;
+    position:relative;z-index:40;width:300px;align-self:end;margin-bottom:3px;text-align:center;
 }
-
 .signature-image{
-    display:block;
-
-    width:250px;
-    height:72px;
-
-    margin:0 auto 2px;
-
-    object-fit:contain;
-
-    mix-blend-mode:multiply;
+    display:block;width:250px;height:72px;margin:0 auto 2px;
+    object-fit:contain;mix-blend-mode:multiply;
 }
-
 .signature-fallback{
-    margin-bottom:4px;
-
-    color:#102746;
-
-    font-family:"Allura",cursive;
-
-    font-size:52px;
-
-    line-height:1;
-
-    transform:rotate(-3deg);
+    margin-bottom:4px;color:#102746;font-family:"Allura",cursive;
+    font-size:52px;line-height:1;transform:rotate(-3deg);
 }
-
-.signature-line{
-    width:295px;
-    height:1px;
-    margin:0 auto;
-    background:#26354b;
-}
-
-.signature-name{
-    margin-top:7px;
-    color:var(--navy);
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.signature-title{
-    margin-top:3px;
-    color:#747e8d;
-    font-size:9px;
-}
-
-
-/* =========================================================
-   SEAL
-========================================================= */
+.signature-line{width:295px;height:1px;margin:0 auto;background:#26354b}
+.signature-name{margin-top:7px;color:var(--navy);font-size:12px;font-weight:700;letter-spacing:2px}
+.signature-title{margin-top:3px;color:#747e8d;font-size:9px}
 
 .seal{
-    position:relative;
-    z-index:45;
-
-    width:150px;
-    height:150px;
-
-    margin:0 auto;
-
-    align-self:end;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f0d174,
-            #b47e17 45%,
-            #f1d477 70%,
-            #916717
-        );
-
+    position:relative;z-index:45;width:150px;height:150px;margin:0 auto;
+    align-self:end;display:flex;align-items:center;justify-content:center;border-radius:50%;
+    background:linear-gradient(135deg,#f0d174,#b47e17 45%,#f1d477 70%,#916717);
     box-shadow:0 5px 12px rgba(0,0,0,.20);
 }
-
 .seal::before{
-    content:"";
-    position:absolute;
-    inset:7px;
-
-    border-radius:50%;
-
-    background:var(--navy);
-
-    border:1px solid #f1d477;
+    content:"";position:absolute;inset:7px;border-radius:50%;
+    background:var(--navy);border:1px solid #f1d477;
 }
-
 .seal::after{
-    content:"";
-    position:absolute;
-    inset:15px;
-
-    border-radius:50%;
-
-    border:1px solid #dcb856;
+    content:"";position:absolute;inset:15px;border-radius:50%;border:1px solid #dcb856;
 }
-
-.seal-content{
-    position:relative;
-    z-index:2;
-
-    text-align:center;
-    color:white;
-}
-
-.seal-brand{
-    color:#f1d477;
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:3px;
-}
-
-.seal-stars{
-    margin-top:5px;
-    color:#e8c55d;
-    font-size:9px;
-    letter-spacing:3px;
-}
-
-.seal-io{
-    margin-top:2px;
-    color:#e7c15a;
-    font-family:"Cinzel",serif;
-    font-size:36px;
-    font-weight:700;
-}
-
-.seal-verified{
-    margin-top:1px;
-    color:white;
-    font-size:8px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.seal-small{
-    margin-top:4px;
-    color:#e5c25d;
-    font-size:6px;
-    font-weight:700;
-    letter-spacing:1.5px;
-}
-
-
-/* =========================================================
-   QR
-========================================================= */
+.seal-content{position:relative;z-index:2;text-align:center;color:#fff}
+.seal-brand{color:#f1d477;font-size:10px;font-weight:700;letter-spacing:3px}
+.seal-stars{margin-top:5px;color:#e8c55d;font-size:9px;letter-spacing:3px}
+.seal-io{margin-top:2px;color:#e7c15a;font-family:"Cinzel",serif;font-size:36px;font-weight:700}
+.seal-verified{margin-top:1px;color:#fff;font-size:8px;font-weight:700;letter-spacing:2px}
+.seal-small{margin-top:4px;color:#e5c25d;font-size:6px;font-weight:700;letter-spacing:1.5px}
 
 .qr-area{
-    width:390px;
-
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-
-    gap:13px;
-
-    align-self:end;
-
-    margin-bottom:2px;
-
-    position:relative;
-    z-index:60;
+    width:390px;display:flex;align-items:center;justify-content:flex-start;
+    gap:13px;align-self:end;margin-bottom:2px;position:relative;z-index:60;
 }
-
 .qr-box{
-    width:118px;
-    height:118px;
-
-    flex:0 0 118px;
-
-    padding:5px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#fff;
-
-    border:2px solid #c9a64a;
-
-    position:relative;
-    z-index:70;
-
-    overflow:hidden;
+    width:118px;height:118px;flex:0 0 118px;padding:5px;
+    display:flex;align-items:center;justify-content:center;
+    background:#fff;border:2px solid #c9a64a;position:relative;z-index:70;overflow:hidden;
 }
-
-.qr-box canvas{
-    display:block !important;
-
-    width:106px !important;
-    height:106px !important;
-
-    max-width:106px !important;
-    max-height:106px !important;
+.qr-box canvas,.qr-box img{
+    display:block!important;width:106px!important;height:106px!important;
+    max-width:106px!important;max-height:106px!important;
 }
-
-.qr-box img{
-    display:block !important;
-
-    width:106px !important;
-    height:106px !important;
-
-    max-width:106px !important;
-    max-height:106px !important;
-}
-
-.qr-copy{
-    width:220px;
-    min-width:0;
-}
-
-.qr-title{
-    color:var(--navy);
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1px;
-    white-space:nowrap;
-}
-
-.qr-description{
-    margin-top:6px;
-    color:#747e8d;
-    font-size:8px;
-    line-height:1.55;
-    max-width:190px;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
+.qr-copy{width:220px;min-width:0}
+.qr-title{color:var(--navy);font-size:11px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+.qr-description{margin-top:6px;color:#747e8d;font-size:8px;line-height:1.55;max-width:190px}
 
 .certificate-footer{
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:9px;
-
-    z-index:80;
-
-    text-align:center;
-
-    color:#7b8491;
-
-    font-size:7px;
-
-    font-weight:600;
-
-    letter-spacing:1.5px;
+    position:absolute;left:0;right:0;bottom:9px;z-index:80;
+    text-align:center;color:#7b8491;font-size:7px;font-weight:600;letter-spacing:1.5px;
 }
-
-
-/* =========================================================
-   PRINT
-========================================================= */
 
 @media print{
-
-    @page{
-        size:A4 landscape;
-        margin:0;
-    }
-
-    html,
-    body{
-        width:297mm;
-        height:210mm;
-        margin:0;
-        padding:0;
-        background:white;
-    }
-
-    body *{
-        visibility:hidden;
-    }
-
-    .result,
-    .result *{
-        visibility:visible;
-    }
-
-    .result{
-        display:block !important;
-
-        position:absolute;
-
-        left:0;
-        top:0;
-
-        width:297mm;
-        height:210mm;
-    }
-
-    .result-header{
-        display:none !important;
-    }
-
-    .certificate-scroll{
-        overflow:visible;
-        padding:0;
-    }
-
-    .certificate{
-        width:297mm !important;
-        height:210mm !important;
-
-        padding:2mm !important;
-
-        margin:0;
-
-        box-shadow:none;
-    }
-
-    .paper{
-        width:100% !important;
-        height:100% !important;
-    }
+    @page{size:A4 landscape;margin:0}
+    html,body{width:297mm;height:210mm;margin:0;padding:0;background:#fff}
+    body *{visibility:hidden}
+    .result,.result *{visibility:visible}
+    .result{display:block!important;position:absolute;left:0;top:0;width:297mm;height:210mm}
+    .result-header{display:none!important}
+    .certificate-scroll{overflow:visible;padding:0}
+    .certificate{width:297mm!important;height:210mm!important;padding:2mm!important;margin:0;box-shadow:none}
+    .paper{width:100%!important;height:100%!important}
 }
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
 @media(max-width:1050px){
-
-    .form-layout{
-        grid-template-columns:1fr;
-    }
-
-    .form-preview{
-        min-height:480px;
-    }
+    .form-layout{grid-template-columns:1fr}
+    .form-preview{min-height:480px}
 }
-
 @media(max-width:650px){
-
-    .topbar{
-        padding:0 15px;
-    }
-
-    .top-label{
-        display:none;
-    }
-
-    .page{
-        width:calc(100% - 14px);
-    }
-
-    .two{
-        grid-template-columns:1fr;
-    }
-
-    .result-header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+    .topbar{padding:0 15px}
+    .top-label{display:none}
+    .page{width:calc(100% - 14px)}
+    .two{grid-template-columns:1fr}
+    .result-header{flex-direction:column;align-items:flex-start}
 }
-
 </style>
 </head>
 
-
 <body>
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
 <header class="topbar">
-
-    <div class="logo">
-        Intern<span>IO</span>
-    </div>
-
+    <div class="logo">Intern<span>IO</span></div>
     <div class="top-right">
-
-        <div class="top-label">
-            CERTIFICATE MAKER
-        </div>
-
-        <button
-            class="logout"
-            type="button"
-            onclick="logoutAdmin()"
-        >
-            LOGOUT
-        </button>
-
+        <div class="top-label">CERTIFICATE MAKER</div>
+        <button class="logout" type="button" onclick="logoutAdmin()">LOGOUT</button>
     </div>
-
 </header>
-
 
 <main class="page">
 
+<section id="formScreen" class="form-layout">
+    <div class="form-panel">
+        <div class="form-title">Create Certificate</div>
+        <div class="form-description">
+            Enter the student's internship details. The certificate will be securely created,
+            verified and stored.
+        </div>
 
-<!-- =========================================================
-     FORM SCREEN
-========================================================= -->
+        <div class="field">
+            <label>CERTIFICATE TYPE</label>
 
-<section
-    id="formScreen"
-    class="form-layout"
->
-
-
-<div class="form-panel">
-
-
-    <div class="form-title">
-        Create Certificate
-    </div>
-
-
-    <div class="form-description">
-
-        Enter the student's internship details.
-        The certificate will be securely created,
-        verified and stored.
-
-    </div>
-
-
-    <!-- CERTIFICATE TYPE -->
-
-    <div class="field">
-
-        <label>
-            CERTIFICATE TYPE
-        </label>
-
-
-        <div
-            id="typeProject"
-            class="type-option active"
-            onclick="selectType('PROJECT_NAMED')"
-        >
-
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Project-Based Internship
+            <div id="typeProject" class="type-option active" onclick="selectType('PROJECT_NAMED')">
+                <div class="type-radio"></div>
+                <div>
+                    <div class="type-title">Project-Based Internship</div>
+                    <div class="type-description">Include the project name.</div>
                 </div>
-
-                <div class="type-description">
-                    Include the project name.
-                </div>
-
             </div>
 
-        </div>
-
-
-        <div
-            id="typeNoProject"
-            class="type-option"
-            onclick="selectType('PROJECT_NONE')"
-        >
-
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Project-Based — No Project Name
+            <div id="typeNoProject" class="type-option" onclick="selectType('PROJECT_NONE')">
+                <div class="type-radio"></div>
+                <div>
+                    <div class="type-title">Project-Based — No Project Name</div>
+                    <div class="type-description">Use when no specific project should appear.</div>
                 </div>
-
-                <div class="type-description">
-                    Use when no specific project should appear.
-                </div>
-
             </div>
 
-        </div>
-
-
-        <div
-            id="typeCompletion"
-            class="type-option"
-            onclick="selectType('COMPLETION')"
-        >
-
-            <div class="type-radio"></div>
-
-            <div>
-
-                <div class="type-title">
-                    Internship Completion
+            <div id="typeCompletion" class="type-option" onclick="selectType('COMPLETION')">
+                <div class="type-radio"></div>
+                <div>
+                    <div class="type-title">Internship Completion</div>
+                    <div class="type-description">General internship completion certificate.</div>
                 </div>
-
-                <div class="type-description">
-                    General internship completion certificate.
-                </div>
-
             </div>
-
         </div>
-
-    </div>
-
-
-    <!-- STUDENT -->
-
-    <div class="field">
-
-        <label for="studentName">
-            STUDENT NAME *
-        </label>
-
-        <input
-            id="studentName"
-            type="text"
-            autocomplete="off"
-            placeholder="Enter student's full name"
-        >
-
-    </div>
-
-
-    <!-- INTERNSHIP -->
-
-    <div class="field">
-
-        <label for="internship">
-            INTERNSHIP / PROGRAM *
-        </label>
-
-        <input
-            id="internship"
-            type="text"
-            autocomplete="off"
-            placeholder="Example: Python Programming Training"
-        >
-
-    </div>
-
-
-    <!-- PROJECT -->
-
-    <div
-        id="projectField"
-        class="field"
-    >
-
-        <label for="projectName">
-            PROJECT NAME
-        </label>
-
-        <input
-            id="projectName"
-            type="text"
-            autocomplete="off"
-            placeholder="Example: InternIO Platform Development"
-        >
-
-    </div>
-
-
-    <!-- DATES -->
-
-    <div class="two">
 
         <div class="field">
-
-            <label for="startDate">
-                START DATE *
-            </label>
-
-            <input
-                id="startDate"
-                type="date"
-            >
-
+            <label for="studentName">STUDENT NAME *</label>
+            <input id="studentName" type="text" autocomplete="off" placeholder="Enter student's full name">
         </div>
-
 
         <div class="field">
-
-            <label for="endDate">
-                END DATE *
-            </label>
-
-            <input
-                id="endDate"
-                type="date"
-            >
-
+            <label for="internship">INTERNSHIP / PROGRAM *</label>
+            <input id="internship" type="text" autocomplete="off" placeholder="Example: Python Programming Training">
         </div>
 
+        <div id="projectField" class="field">
+            <label for="projectName">PROJECT NAME</label>
+            <input id="projectName" type="text" autocomplete="off" placeholder="Example: InternIO Platform Development">
+        </div>
+
+        <div class="two">
+            <div class="field">
+                <label for="startDate">START DATE *</label>
+                <input id="startDate" type="date">
+            </div>
+            <div class="field">
+                <label for="endDate">END DATE *</label>
+                <input id="endDate" type="date">
+            </div>
+        </div>
+
+        <div class="two">
+            <div class="field">
+                <label for="duration">DURATION *</label>
+                <input id="duration" type="text" autocomplete="off" placeholder="Example: 45 Days">
+            </div>
+            <div class="field">
+                <label for="issueDate">ISSUE DATE *</label>
+                <input id="issueDate" type="date">
+            </div>
+        </div>
+
+        <div class="info">
+            <div class="info-title">SECURE VERIFICATION</div>
+            <div class="info-text">
+                A unique certificate record and certificate ID are created in the InternIO
+                verification system. The QR code contains the verification link.
+            </div>
+        </div>
+
+        <button id="generateButton" class="generate" type="button" onclick="generateCertificate()">
+            GENERATE CERTIFICATE
+        </button>
+        <div id="message" class="message"></div>
     </div>
 
-
-    <div class="two">
-
-        <div class="field">
-
-            <label for="duration">
-                DURATION *
-            </label>
-
-            <input
-                id="duration"
-                type="text"
-                autocomplete="off"
-                placeholder="Example: 45 Days"
-            >
-
+    <div class="form-preview">
+        <div class="preview-content">
+            <div class="preview-logo">Intern<span>IO</span></div>
+            <div class="preview-tagline">INNOVATION &amp; OPPORTUNITIES</div>
+            <div class="preview-rule"></div>
+            <div class="preview-title">CERTIFICATE OF INTERNSHIP</div>
+            <div class="preview-description">
+                A professional certificate recognizing practical learning, project experience,
+                professional development and real-world skills through InternIO.
+            </div>
         </div>
-
-
-        <div class="field">
-
-            <label for="issueDate">
-                ISSUE DATE *
-            </label>
-
-            <input
-                id="issueDate"
-                type="date"
-            >
-
-        </div>
-
     </div>
-
-
-    <!-- INFO -->
-
-    <div class="info">
-
-        <div class="info-title">
-            SECURE VERIFICATION
-        </div>
-
-        <div class="info-text">
-
-            A unique certificate record and certificate ID
-            are created in the InternIO verification system.
-            The QR code contains the verification link.
-
-        </div>
-
-    </div>
-
-
-    <button
-        id="generateButton"
-        class="generate"
-        type="button"
-        onclick="generateCertificate()"
-    >
-        GENERATE CERTIFICATE
-    </button>
-
-
-    <div
-        id="message"
-        class="message"
-    ></div>
-
-
-</div>
-
-
-<!-- PREVIEW -->
-
-<div class="form-preview">
-
-    <div class="preview-content">
-
-        <div class="preview-logo">
-            Intern<span>IO</span>
-        </div>
-
-        <div class="preview-tagline">
-            INNOVATION &amp; OPPORTUNITIES
-        </div>
-
-        <div class="preview-rule"></div>
-
-        <div class="preview-title">
-            CERTIFICATE OF INTERNSHIP
-        </div>
-
-        <div class="preview-description">
-
-            A professional certificate recognizing
-            practical learning, project experience,
-            professional development and real-world
-            skills through InternIO.
-
-        </div>
-
-    </div>
-
-</div>
-
 </section>
 
-
-<!-- =========================================================
-     RESULT
-========================================================= -->
-
-<section
-    id="result"
-    class="result"
->
-
-
-<div class="result-header">
-
-
-    <div>
-
-        <div class="result-title">
-            Certificate Generated
+<section id="result" class="result">
+    <div class="result-header">
+        <div>
+            <div class="result-title">Certificate Generated</div>
+            <div class="result-description">
+                Your certificate has been securely created. Review it before printing or saving as PDF.
+            </div>
         </div>
-
-        <div class="result-description">
-
-            Your certificate has been securely created.
-            Review it before printing or saving as PDF.
-
+        <div class="actions">
+            <button class="light" type="button" onclick="editCertificate()">EDIT</button>
+            <button class="gold" type="button" onclick="downloadCertificatePDF()">PRINT / SAVE PDF</button>
+            <button type="button" onclick="newCertificate()">CREATE ANOTHER</button>
         </div>
-
     </div>
 
-
-    <div class="actions">
-
-        <button
-            class="light"
-            type="button"
-            onclick="editCertificate()"
-        >
-            EDIT
-        </button>
-
-
-        <button
-            class="gold"
-            type="button"
-            onclick="downloadCertificatePDF()"
-        >
-            PRINT / SAVE PDF
-        </button>
-
-
-        <button
-            type="button"
-            onclick="newCertificate()"
-        >
-            CREATE ANOTHER
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="certificate-scroll">
-
-
-<div
-    id="certificate"
-    class="certificate"
->
-
-
-<div class="paper">
-
-
-<!-- =====================================================
-     CORNERS
-====================================================== -->
-
-<div class="corner-tl"></div>
-<div class="corner-tr"></div>
-<div class="corner-bl"></div>
-<div class="corner-br"></div>
-
-
-<!-- =====================================================
-     WATERMARK
-====================================================== -->
-
-<div class="watermark">
-    I<span>O</span>
-</div>
-
-
-<!-- =====================================================
-     CERTIFICATE ID
-====================================================== -->
-
-<div class="certificate-id">
-
-    <div class="id-label">
-        CERTIFICATE ID
-    </div>
-
-    <div
-        id="certificateId"
-        class="id-value"
-    >
-        —
-    </div>
-
-    <div class="id-decoration">
-
-        <div class="id-line"></div>
-
-        <div class="id-star">★</div>
-        <div class="id-star">★</div>
-        <div class="id-star">★</div>
-
-        <div class="id-line"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     BRAND
-====================================================== -->
-
-<div class="brand">
-
-    <div class="brand-name">
-        Intern<span>IO</span>
-    </div>
-
-    <div class="brand-tagline">
-        INNOVATION &amp; OPPORTUNITIES
-    </div>
-
-    <div class="brand-decoration">
-
-        <div class="diamond"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     TITLE
-====================================================== -->
-
-<div class="certificate-title">
-    CERTIFICATE
-</div>
-
-<div class="certificate-subtitle">
-    OF INTERNSHIP
-</div>
-
-
-<!-- =====================================================
-     CERTIFY
-====================================================== -->
-
-<div class="certify">
-    THIS IS TO CERTIFY THAT
-</div>
-
-
-<!-- =====================================================
-     STUDENT
-====================================================== -->
-
-<div
-    id="certificateStudent"
-    class="student-name"
->
-    Student Name
-</div>
-
-
-<div class="name-line"></div>
-
-<div class="name-diamond"></div>
-
-
-<!-- =====================================================
-     BODY
-====================================================== -->
-
-<div
-    id="certificateBody"
-    class="body-text"
->
-
-    has successfully completed the
-    <strong>Python Programming Training</strong>
-    at <strong>InternIO</strong> and demonstrated
-    dedication, professional conduct, practical
-    learning and a strong commitment to developing
-    real-world skills and experience.
-
-</div>
-
-
-<!-- =====================================================
-     PROJECT
-====================================================== -->
-
-<div
-    id="projectDisplay"
-    class="project"
->
-
-    <div class="project-label">
-        PROJECT
-    </div>
-
-    <div
-        id="certificateProject"
-        class="project-value"
-    >
-        Project Name
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     DATES
-====================================================== -->
-
-<div class="details">
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            START DATE
+    <div class="certificate-scroll">
+        <div id="certificate" class="certificate">
+            <div class="paper">
+
+                <div class="corner-tl"></div>
+                <div class="corner-tr"></div>
+                <div class="corner-bl"></div>
+                <div class="corner-br"></div>
+
+                <div class="watermark">I<span>O</span></div>
+
+                <div class="certificate-id">
+                    <div class="id-label">CERTIFICATE ID</div>
+                    <div id="certificateId" class="id-value">—</div>
+                    <div class="id-decoration">
+                        <div class="id-line"></div>
+                        <div class="id-star">★</div>
+                        <div class="id-star">★</div>
+                        <div class="id-star">★</div>
+                        <div class="id-line"></div>
+                    </div>
+                </div>
+
+                <div class="brand">
+                    <div class="brand-name">Intern<span>IO</span></div>
+                    <div class="brand-tagline">INNOVATION &amp; OPPORTUNITIES</div>
+                    <div class="brand-decoration"><div class="diamond"></div></div>
+                </div>
+
+                <div class="certificate-title">CERTIFICATE</div>
+                <div class="certificate-subtitle">OF INTERNSHIP</div>
+                <div class="certify">THIS IS TO CERTIFY THAT</div>
+
+                <div id="certificateStudent" class="student-name">Student Name</div>
+                <div class="name-line"></div>
+                <div class="name-diamond"></div>
+
+                <div id="certificateBody" class="body-text">
+                    has successfully completed the
+                    <strong>Python Programming Training</strong>
+                    at <strong>InternIO</strong> and demonstrated dedication,
+                    professional conduct, practical learning and a strong commitment
+                    to developing real-world skills and experience.
+                </div>
+
+                <div class="details">
+                    <div class="detail">
+                        <div class="detail-label">START DATE</div>
+                        <div id="certificateStart" class="detail-value">—</div>
+                    </div>
+                    <div class="detail">
+                        <div class="detail-label">END DATE</div>
+                        <div id="certificateEnd" class="detail-value">—</div>
+                    </div>
+                    <div class="detail">
+                        <div class="detail-label">DURATION</div>
+                        <div id="certificateDuration" class="detail-value">—</div>
+                    </div>
+                    <div class="detail">
+                        <div class="detail-label">ISSUE DATE</div>
+                        <div id="certificateIssue" class="detail-value">—</div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <div class="signature">
+                        <img src="amar-singh-signature.png" class="signature-image"
+                             alt="Authorized Signature" crossorigin="anonymous"
+                             onerror="this.style.display='none';document.getElementById('signatureFallback').style.display='block';">
+                        <div id="signatureFallback" class="signature-fallback" style="display:none;">Amar Singh</div>
+                        <div class="signature-line"></div>
+                        <div class="signature-name">AMAR SINGH</div>
+                        <div class="signature-title">Founder &amp; CEO, InternIO</div>
+                    </div>
+
+                    <div class="seal">
+                        <div class="seal-content">
+                            <div class="seal-brand">INTERNIO</div>
+                            <div class="seal-stars">★ ★ ★</div>
+                            <div class="seal-io">IO</div>
+                            <div class="seal-verified">VERIFIED</div>
+                            <div class="seal-small">CERTIFICATE</div>
+                        </div>
+                    </div>
+
+                    <div class="qr-area">
+                        <div id="qrCode" class="qr-box"></div>
+                        <div class="qr-copy">
+                            <div class="qr-title">VERIFY THIS CERTIFICATE</div>
+                            <div class="qr-description">
+                                Scan the QR code to verify certificate authenticity.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="certificate-footer">INTERNIO • INNOVATION &amp; OPPORTUNITIES</div>
+            </div>
         </div>
-
-        <div
-            id="certificateStart"
-            class="detail-value"
-        >
-            —
-        </div>
-
     </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            END DATE
-        </div>
-
-        <div
-            id="certificateEnd"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            DURATION
-        </div>
-
-        <div
-            id="certificateDuration"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="detail-label">
-            ISSUE DATE
-        </div>
-
-        <div
-            id="certificateIssue"
-            class="detail-value"
-        >
-            —
-        </div>
-
-    </div>
-
-
-</div>
-
-
-<!-- =====================================================
-     BOTTOM
-====================================================== -->
-
-<div class="bottom">
-
-
-<!-- SIGNATURE -->
-
-<div class="signature">
-
-
-    <img
-        src="amar-singh-signature.png"
-        class="signature-image"
-        alt="Authorized Signature"
-        crossorigin="anonymous"
-
-        onerror="
-            this.style.display='none';
-            document.getElementById('signatureFallback').style.display='block';
-        "
-    >
-
-
-    <div
-        id="signatureFallback"
-        class="signature-fallback"
-        style="display:none;"
-    >
-        Amar Singh
-    </div>
-
-
-    <div class="signature-line"></div>
-
-
-    <div class="signature-name">
-        AMAR SINGH
-    </div>
-
-
-    <div class="signature-title">
-        Founder &amp; CEO, InternIO
-    </div>
-
-
-</div>
-
-
-<!-- SEAL -->
-
-<div class="seal">
-
-    <div class="seal-content">
-
-        <div class="seal-brand">
-            INTERNIO
-        </div>
-
-        <div class="seal-stars">
-            ★ ★ ★
-        </div>
-
-        <div class="seal-io">
-            IO
-        </div>
-
-        <div class="seal-verified">
-            VERIFIED
-        </div>
-
-        <div class="seal-small">
-            CERTIFICATE
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- QR -->
-
-<div class="qr-area">
-
-    <div
-        id="qrCode"
-        class="qr-box"
-    ></div>
-
-
-    <div class="qr-copy">
-
-        <div class="qr-title">
-            VERIFY THIS CERTIFICATE
-        </div>
-
-        <div class="qr-description">
-
-            Scan the QR code to verify
-            certificate authenticity.
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</div>
-
-
-<!-- FOOTER -->
-
-<div class="certificate-footer">
-
-    INTERNIO • INNOVATION &amp; OPPORTUNITIES
-
-</div>
-
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
 
-
 <script>
-
 /* =========================================================
    CONFIG
-========================================================= */
-
+   ========================================================= */
 const VERIFICATION_BASE =
     "https://internio-official.github.io/internio-verification/";
 
 const GOOGLE_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyCWuhBqqMmM4o-eRdoYkSyqbnme9I7ULyCXCTUoHrWNvUtHbsmk9421neoZB9r8Rqg/exec";
 
-
 /* =========================================================
    STATE
-========================================================= */
-
-let certificateType =
-    "PROJECT_NAMED";
-
-let generatedCertificateId =
-    null;
-
-let generatedPDF =
-    null;
-
-let generatedDriveURL =
-    null;
-
+   ========================================================= */
+let certificateType = "PROJECT_NAMED";
+let generatedCertificateId = null;
+let generatedPDF = null;
+let generatedDriveURL = null;
 
 /* =========================================================
-   QR LIBRARY
-========================================================= */
-
-function loadQRCodeLibrary(){
-
-    return new Promise(function(resolve,reject){
-
-        if(typeof QRCode !== "undefined"){
-
-            resolve();
-
-            return;
-
-        }
-
-
-        const oldScript =
-            document.getElementById(
-                "internioQRCodeScript"
-            );
-
-
-        if(oldScript){
-
-            oldScript.addEventListener(
-                "load",
-                function(){
-
-                    if(typeof QRCode !== "undefined"){
-                        resolve();
-                    }
-                    else{
-                        reject(
-                            new Error(
-                                "QR code library failed to load."
-                            )
-                        );
-                    }
-
-                }
-            );
-
-
-            oldScript.addEventListener(
-                "error",
-                function(){
-
-                    reject(
-                        new Error(
-                            "QR code library failed to load."
-                        )
-                    );
-
-                }
-            );
-
-            return;
-
-        }
-
-
-        const script =
-            document.createElement("script");
-
-
-        script.id =
-            "internioQRCodeScript";
-
-
-        script.src =
-            "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
-
-
-        script.async =
-            true;
-
-
-        script.onload =
-            function(){
-
-                if(typeof QRCode !== "undefined"){
-
-                    resolve();
-
-                }
-                else{
-
-                    loadQRCodeFallback(
-                        resolve,
-                        reject
-                    );
-
-                }
-
-            };
-
-
-        script.onerror =
-            function(){
-
-                loadQRCodeFallback(
-                    resolve,
-                    reject
-                );
-
-            };
-
-
-        document.head.appendChild(
-            script
-        );
-
-    });
-
+   HELPERS
+   ========================================================= */
+function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-function loadQRCodeFallback(
-    resolve,
-    reject
-){
-
-    const script =
-        document.createElement("script");
-
-
-    script.src =
-        "https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js";
-
-
-    script.async =
-        true;
-
-
-    script.onload =
-        function(){
-
-            if(typeof QRCode !== "undefined"){
-
-                resolve();
-
-            }
-            else{
-
-                reject(
-                    new Error(
-                        "QR code library failed to load."
-                    )
-                );
-
-            }
-
-        };
-
-
-    script.onerror =
-        function(){
-
-            reject(
-                new Error(
-                    "QR code library failed to load. Refresh the page."
-                )
-            );
-
-        };
-
-
-    document.head.appendChild(
-        script
-    );
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logoutAdmin(){
-
-    try{
-
-        if(
-            typeof internioLogout ===
-            "function"
-        ){
-
-            await internioLogout();
-
-            return;
-
-        }
-
-
-        if(
-            typeof internioSupabase !==
-            "undefined" &&
-            internioSupabase
-        ){
-
-            await internioSupabase.auth.signOut();
-
-        }
-
-
-        window.location.href =
-            "admin.html";
-
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        window.location.href =
-            "admin.html";
-
-    }
-
-}
-
-
-/* =========================================================
-   TYPE
-========================================================= */
-
-function selectType(type){
-
-    certificateType =
-        type;
-
-
-    document
-        .getElementById("typeProject")
-        .classList
-        .remove("active");
-
-
-    document
-        .getElementById("typeNoProject")
-        .classList
-        .remove("active");
-
-
-    document
-        .getElementById("typeCompletion")
-        .classList
-        .remove("active");
-
-
-    const projectField =
-        document.getElementById(
-            "projectField"
-        );
-
-
-    if(type === "PROJECT_NAMED"){
-
-        document
-            .getElementById("typeProject")
-            .classList
-            .add("active");
-
-
-        projectField.style.display =
-            "block";
-
-    }
-
-    else if(type === "PROJECT_NONE"){
-
-        document
-            .getElementById("typeNoProject")
-            .classList
-            .add("active");
-
-
-        projectField.style.display =
-            "none";
-
-    }
-
-    else{
-
-        document
-            .getElementById("typeCompletion")
-            .classList
-            .add("active");
-
-
-        projectField.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   DATE
-========================================================= */
 
 function formatDate(value){
-
-    if(!value){
-        return "—";
-    }
-
-
-    const date =
-        new Date(
-            value + "T00:00:00"
-        );
-
-
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
-
-        return value;
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-GB",
-        {
-            day:"2-digit",
-            month:"short",
-            year:"numeric"
-        }
-    );
-
+    if(!value) return "—";
+    const date = new Date(value + "T00:00:00");
+    if(Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    });
 }
 
-
-/* =========================================================
-   ESCAPE
-========================================================= */
-
 function escapeHTML(value){
-
     return String(value)
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
-
 }
 
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(
-    text,
-    type
-){
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    message.textContent =
-        text;
-
-
-    message.className =
-        "message " +
-        (type || "");
-
+function showMessage(text,type){
+    const message = document.getElementById("message");
+    message.textContent = text;
+    message.className = "message " + (type || "");
 }
 
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+async function logoutAdmin(){
+    try{
+        if(typeof internioLogout === "function"){
+            await internioLogout();
+            return;
+        }
+
+        if(typeof internioSupabase !== "undefined" && internioSupabase){
+            await internioSupabase.auth.signOut();
+        }
+
+        window.location.href = "admin.html";
+    }catch(error){
+        console.error(error);
+        window.location.href = "admin.html";
+    }
+}
 
 /* =========================================================
-   FORM DATA
-========================================================= */
+   CERTIFICATE TYPE
+   ========================================================= */
+function selectType(type){
+    certificateType = type;
 
+    ["typeProject","typeNoProject","typeCompletion"].forEach(id => {
+        document.getElementById(id).classList.remove("active");
+    });
+
+    const projectField = document.getElementById("projectField");
+
+    if(type === "PROJECT_NAMED"){
+        document.getElementById("typeProject").classList.add("active");
+        projectField.style.display = "block";
+    }else if(type === "PROJECT_NONE"){
+        document.getElementById("typeNoProject").classList.add("active");
+        projectField.style.display = "none";
+    }else{
+        document.getElementById("typeCompletion").classList.add("active");
+        projectField.style.display = "none";
+    }
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
 function getFormData(){
-
-    return{
-
-        studentName:
-            document
-                .getElementById("studentName")
-                .value
-                .trim(),
-
-        internship:
-            document
-                .getElementById("internship")
-                .value
-                .trim(),
-
-        project:
-            document
-                .getElementById("projectName")
-                .value
-                .trim(),
-
-        startDate:
-            document
-                .getElementById("startDate")
-                .value,
-
-        endDate:
-            document
-                .getElementById("endDate")
-                .value,
-
-        duration:
-            document
-                .getElementById("duration")
-                .value
-                .trim(),
-
-        issueDate:
-            document
-                .getElementById("issueDate")
-                .value
-
+    return {
+        studentName:document.getElementById("studentName").value.trim(),
+        internship:document.getElementById("internship").value.trim(),
+        project:document.getElementById("projectName").value.trim(),
+        startDate:document.getElementById("startDate").value,
+        endDate:document.getElementById("endDate").value,
+        duration:document.getElementById("duration").value.trim(),
+        issueDate:document.getElementById("issueDate").value
     };
-
 }
-
-
-/* =========================================================
-   VALIDATION
-========================================================= */
 
 function validateForm(data){
-
     if(!data.studentName){
-
-        showMessage(
-            "Please enter the student's name.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please enter the student's name.","error"); return false;
     }
-
-
     if(!data.internship){
-
-        showMessage(
-            "Please enter the internship/program name.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please enter the internship/program name.","error"); return false;
     }
-
-
     if(!data.startDate){
-
-        showMessage(
-            "Please select the start date.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please select the start date.","error"); return false;
     }
-
-
     if(!data.endDate){
-
-        showMessage(
-            "Please select the end date.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please select the end date.","error"); return false;
     }
-
-
-    if(
-        new Date(data.endDate) <
-        new Date(data.startDate)
-    ){
-
-        showMessage(
-            "End date cannot be before start date.",
-            "error"
-        );
-
-        return false;
-
+    if(new Date(data.endDate) < new Date(data.startDate)){
+        showMessage("End date cannot be before start date.","error"); return false;
     }
-
-
     if(!data.duration){
-
-        showMessage(
-            "Please enter the duration.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please enter the duration.","error"); return false;
     }
-
-
     if(!data.issueDate){
-
-        showMessage(
-            "Please select the issue date.",
-            "error"
-        );
-
-        return false;
-
+        showMessage("Please select the issue date.","error"); return false;
     }
-
-
-    if(
-        certificateType ===
-        "PROJECT_NAMED" &&
-        !data.project
-    ){
-
-        showMessage(
-            "Please enter the project name.",
-            "error"
-        );
-
-        return false;
-
+    if(certificateType === "PROJECT_NAMED" && !data.project){
+        showMessage("Please enter the project name.","error"); return false;
     }
-
-
     return true;
-
 }
 
-
 /* =========================================================
-   SAVE DATABASE RECORD
-========================================================= */
-
+   DATABASE
+   ========================================================= */
 async function saveCertificate(data){
-
-    if(
-        typeof internioSupabase ===
-        "undefined"
-    ){
-
-        throw new Error(
-            "InternIO Supabase client is not available."
-        );
-
+    if(typeof internioSupabase === "undefined"){
+        throw new Error("InternIO Supabase client is not available.");
     }
-
 
     const projectValue =
-        certificateType ===
-        "PROJECT_NAMED"
-            ? data.project
-            : null;
+        certificateType === "PROJECT_NAMED" ? data.project : null;
 
-
-    const result =
-        await internioSupabase.rpc(
-            "create_certificate",
-            {
-
-                p_student_name:
-                    data.studentName,
-
-                p_internship:
-                    data.internship,
-
-                p_project:
-                    projectValue,
-
-                p_start_date:
-                    data.startDate,
-
-                p_end_date:
-                    data.endDate,
-
-                p_duration:
-                    data.duration,
-
-                p_issue_date:
-                    data.issueDate,
-
-                p_certificate_url:
-                    null
-
-            }
-        );
-
+    const result = await internioSupabase.rpc("create_certificate",{
+        p_student_name:data.studentName,
+        p_internship:data.internship,
+        p_project:projectValue,
+        p_start_date:data.startDate,
+        p_end_date:data.endDate,
+        p_duration:data.duration,
+        p_issue_date:data.issueDate,
+        p_certificate_url:null
+    });
 
     if(result.error){
-
-        console.error(
-            result.error
-        );
-
-        throw new Error(
-            result.error.message ||
-            "Unable to create certificate."
-        );
-
+        console.error(result.error);
+        throw new Error(result.error.message || "Unable to create certificate.");
     }
-
 
     return result.data;
-
 }
-
-
-/* =========================================================
-   EXTRACT CERTIFICATE ID
-========================================================= */
 
 function extractCertificateId(data){
+    if(!data) return null;
 
-    if(!data){
-        return null;
-    }
-
-
-    if(
-        typeof data === "string" ||
-        typeof data === "number"
-    ){
-
+    if(typeof data === "string" || typeof data === "number"){
         return String(data);
-
     }
 
+    if(Array.isArray(data) && data.length){
+        const first = data[0];
 
-    if(
-        Array.isArray(data) &&
-        data.length
-    ){
-
-        const first =
-            data[0];
-
-
-        if(
-            typeof first === "string" ||
-            typeof first === "number"
-        ){
-
+        if(typeof first === "string" || typeof first === "number"){
             return String(first);
-
         }
 
-
-        return(
-            first.certificate_id ||
-            first.id ||
-            first.certificateId ||
-            null
-        );
-
+        return first.certificate_id ||
+               first.id ||
+               first.certificateId ||
+               null;
     }
 
-
-    return(
-        data.certificate_id ||
-        data.id ||
-        data.certificateId ||
-        data.data?.certificate_id ||
-        data.data?.id ||
-        null
-    );
-
+    return data.certificate_id ||
+           data.id ||
+           data.certificateId ||
+           data.data?.certificate_id ||
+           data.data?.id ||
+           null;
 }
 
-
 /* =========================================================
-   VERIFICATION URL
-========================================================= */
-
-function getVerificationURL(
-    certificateId
-){
-
-    return(
-        VERIFICATION_BASE +
-        "?id=" +
-        encodeURIComponent(
-            certificateId
-        )
-    );
-
+   VERIFICATION + QR
+   ========================================================= */
+function getVerificationURL(certificateId){
+    return VERIFICATION_BASE + "?id=" + encodeURIComponent(certificateId);
 }
 
-
-/* =========================================================
-   WAIT
-========================================================= */
-
-function wait(ms){
-
-    return new Promise(
-        function(resolve){
-
-            setTimeout(
-                resolve,
-                ms
-            );
-
+function loadQRCodeLibrary(){
+    return new Promise(function(resolve,reject){
+        if(typeof QRCode !== "undefined"){
+            resolve();
+            return;
         }
-    );
 
+        const oldScript = document.getElementById("internioQRCodeScript");
+
+        if(oldScript){
+            oldScript.addEventListener("load",function(){
+                if(typeof QRCode !== "undefined") resolve();
+                else reject(new Error("QR code library failed to load."));
+            });
+            oldScript.addEventListener("error",function(){
+                reject(new Error("QR code library failed to load."));
+            });
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.id = "internioQRCodeScript";
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+        script.async = true;
+
+        script.onload = function(){
+            if(typeof QRCode !== "undefined"){
+                resolve();
+            }else{
+                loadQRCodeFallback(resolve,reject);
+            }
+        };
+
+        script.onerror = function(){
+            loadQRCodeFallback(resolve,reject);
+        };
+
+        document.head.appendChild(script);
+    });
 }
 
+function loadQRCodeFallback(resolve,reject){
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js";
+    script.async = true;
 
-/* =========================================================
-   QR
-   EXACTLY ONE QR
-========================================================= */
+    script.onload = function(){
+        if(typeof QRCode !== "undefined"){
+            resolve();
+        }else{
+            reject(new Error("QR code library failed to load."));
+        }
+    };
 
-async function generateQRCode(
-    certificateId
-){
+    script.onerror = function(){
+        reject(new Error("QR code library failed to load. Refresh the page."));
+    };
 
-    const qrBox =
-        document.getElementById(
-            "qrCode"
-        );
+    document.head.appendChild(script);
+}
 
+async function generateQRCode(certificateId){
+    const qrBox = document.getElementById("qrCode");
 
     if(!qrBox){
-
-        throw new Error(
-            "QR container was not found."
-        );
-
+        throw new Error("QR container was not found.");
     }
-
-
-    /*
-       IMPORTANT:
-       Remove every previous QR.
-    */
 
     qrBox.replaceChildren();
-
-
     await loadQRCodeLibrary();
 
-
     if(typeof QRCode === "undefined"){
-
-        throw new Error(
-            "QR code library failed to load."
-        );
-
+        throw new Error("QR code library failed to load.");
     }
 
+    const verificationURL = getVerificationURL(certificateId);
 
-    const verificationURL =
-        getVerificationURL(
-            certificateId
-        );
+    new QRCode(qrBox,{
+        text:verificationURL,
+        width:106,
+        height:106,
+        colorDark:"#071a38",
+        colorLight:"#ffffff",
+        correctLevel:QRCode.CorrectLevel.H
+    });
 
+    await wait(400);
 
-    console.log(
-        "InternIO verification URL:",
-        verificationURL
-    );
+    const canvases = Array.from(qrBox.querySelectorAll("canvas"));
+    const images = Array.from(qrBox.querySelectorAll("img"));
 
+    if(canvases.length){
+        for(let i=1;i<canvases.length;i++) canvases[i].remove();
+        images.forEach(image => image.remove());
 
-    /*
-       Generate ONLY ONE QR.
-    */
-
-    new QRCode(
-        qrBox,
-        {
-
-            text:
-                verificationURL,
-
-            width:
-                106,
-
-            height:
-                106,
-
-            colorDark:
-                "#071a38",
-
-            colorLight:
-                "#ffffff",
-
-            correctLevel:
-                QRCode.CorrectLevel.H
-
-        }
-    );
-
-
-    await wait(500);
-
-
-    /*
-       Keep one output only.
-    */
-
-    const canvases =
-        Array.from(
-            qrBox.querySelectorAll(
-                "canvas"
-            )
-        );
-
-
-    const images =
-        Array.from(
-            qrBox.querySelectorAll(
-                "img"
-            )
-        );
-
-
-    if(canvases.length > 0){
-
-        for(
-            let i = 1;
-            i < canvases.length;
-            i++
-        ){
-
-            canvases[i].remove();
-
-        }
-
-
-        images.forEach(
-            function(image){
-
-                image.remove();
-
-            }
-        );
-
-
-        const canvas =
-            qrBox.querySelector(
-                "canvas"
-            );
-
-
-        canvas.style.width =
-            "106px";
-
-        canvas.style.height =
-            "106px";
-
-        canvas.style.display =
-            "block";
-
-
+        const canvas = qrBox.querySelector("canvas");
+        canvas.style.width = "106px";
+        canvas.style.height = "106px";
+        canvas.style.display = "block";
         return verificationURL;
-
     }
 
+    if(images.length){
+        for(let i=1;i<images.length;i++) images[i].remove();
 
-    if(images.length > 0){
-
-        for(
-            let i = 1;
-            i < images.length;
-            i++
-        ){
-
-            images[i].remove();
-
-        }
-
-
-        const image =
-            qrBox.querySelector(
-                "img"
-            );
-
-
-        image.style.width =
-            "106px";
-
-        image.style.height =
-            "106px";
-
-        image.style.display =
-            "block";
-
-
+        const image = qrBox.querySelector("img");
+        image.style.width = "106px";
+        image.style.height = "106px";
+        image.style.display = "block";
         return verificationURL;
-
     }
 
-
-    throw new Error(
-        "QR code could not be generated."
-    );
-
+    throw new Error("QR code could not be generated.");
 }
 
-
 /* =========================================================
-   RENDER CERTIFICATE
-========================================================= */
+   RENDER — MATCHES HARSHIT CERTIFICATE
+   ========================================================= */
+async function renderCertificate(data,certificateId){
+    document.getElementById("certificateId").textContent = certificateId;
 
-async function renderCertificate(
-    data,
-    certificateId
-){
+    const studentElement = document.getElementById("certificateStudent");
+    studentElement.textContent = data.studentName;
+    studentElement.removeAttribute("data-length");
 
-    document
-        .getElementById(
-            "certificateId"
-        )
-        .textContent =
-        certificateId;
-
-
-    /*
-       STUDENT NAME
-       Automatic size based on length.
-    */
-
-    const studentElement =
-        document.getElementById(
-            "certificateStudent"
-        );
-
-
-    studentElement.textContent =
-        data.studentName;
-
-
-    studentElement.removeAttribute(
-        "data-length"
-    );
-
-
-    const nameLength =
-        data.studentName
-            .trim()
-            .length;
-
+    const nameLength = data.studentName.trim().length;
 
     if(nameLength >= 22){
-
-        studentElement.setAttribute(
-            "data-length",
-            "very-long"
-        );
-
-    }
-    else if(nameLength >= 18){
-
-        studentElement.setAttribute(
-            "data-length",
-            "long"
-        );
-
-    }
-    else if(nameLength <= 12){
-
-        studentElement.setAttribute(
-            "data-length",
-            "short"
-        );
-
+        studentElement.setAttribute("data-length","very-long");
+    }else if(nameLength >= 18){
+        studentElement.setAttribute("data-length","long");
+    }else if(nameLength <= 12){
+        studentElement.setAttribute("data-length","short");
     }
 
+    document.getElementById("certificateStart").textContent = formatDate(data.startDate);
+    document.getElementById("certificateEnd").textContent = formatDate(data.endDate);
+    document.getElementById("certificateDuration").textContent = data.duration;
+    document.getElementById("certificateIssue").textContent = formatDate(data.issueDate);
 
-    /*
-       DATES
-    */
-
-    document
-        .getElementById(
-            "certificateStart"
-        )
-        .textContent =
-        formatDate(
-            data.startDate
-        );
-
-
-    document
-        .getElementById(
-            "certificateEnd"
-        )
-        .textContent =
-        formatDate(
-            data.endDate
-        );
-
-
-    document
-        .getElementById(
-            "certificateDuration"
-        )
-        .textContent =
-        data.duration;
-
-
-    document
-        .getElementById(
-            "certificateIssue"
-        )
-        .textContent =
-        formatDate(
-            data.issueDate
-        );
-
-
-    /*
-       BODY
-    */
-
-    document
-        .getElementById(
-            "certificateBody"
-        )
-        .innerHTML =
-        `
-        has successfully completed the
+    document.getElementById("certificateBody").innerHTML =
+        `has successfully completed the
         <strong>${escapeHTML(data.internship)}</strong>
-        at <strong>InternIO</strong> and demonstrated
-        dedication, professional conduct, practical
-        learning and a strong commitment to developing
-        real-world skills and experience.
-        `;
+        at <strong>InternIO</strong> and demonstrated dedication,
+        professional conduct, practical learning and a strong commitment
+        to developing real-world skills and experience.`;
 
-
-    /*
-       PROJECT
-    */
-
-    const projectDisplay =
-        document.getElementById(
-            "projectDisplay"
-        );
-
-
-    if(
-        certificateType ===
-        "PROJECT_NAMED"
-    ){
-
-        projectDisplay.style.display =
-            "block";
-
-
-        document
-            .getElementById(
-                "certificateProject"
-            )
-            .textContent =
-            data.project;
-
-    }
-    else{
-
-        projectDisplay.style.display =
-            "none";
-
-    }
-
-
-    /*
-       QR
-    */
-
-    await generateQRCode(
-        certificateId
-    );
-
+    await generateQRCode(certificateId);
 }
 
-
 /* =========================================================
-   CREATE PDF
-========================================================= */
-
+   PDF
+   ========================================================= */
 async function createCertificatePDF(){
-
-    const certificate =
-        document.getElementById(
-            "certificate"
-        );
-
+    const certificate = document.getElementById("certificate");
 
     if(!certificate){
-
-        throw new Error(
-            "Certificate element was not found."
-        );
-
+        throw new Error("Certificate element was not found.");
     }
 
-
-    /*
-       Wait for fonts.
-    */
-
-    if(
-        document.fonts &&
-        document.fonts.ready
-    ){
-
+    if(document.fonts && document.fonts.ready){
         await document.fonts.ready;
-
     }
-
 
     await wait(500);
 
-
-    /*
-       Make sure exactly one QR exists.
-    */
-
-    const qrBox =
-        document.getElementById(
-            "qrCode"
-        );
-
-
-    const qrObjects =
-        qrBox.querySelectorAll(
-            "canvas,img"
-        );
-
+    const qrBox = document.getElementById("qrCode");
+    const qrObjects = qrBox.querySelectorAll("canvas,img");
 
     if(qrObjects.length !== 1){
-
-        throw new Error(
-            "PDF stopped because exactly one QR code is required."
-        );
-
+        throw new Error("PDF stopped because exactly one QR code is required.");
     }
 
+    const canvas = await html2canvas(certificate,{
+        scale:2,
+        useCORS:true,
+        allowTaint:false,
+        backgroundColor:"#fdfbf7",
+        logging:false,
+        width:1400,
+        height:990,
+        windowWidth:1400,
+        windowHeight:990
+    });
 
-    /*
-       High-quality capture.
-    */
+    const imageData = canvas.toDataURL("image/jpeg",.97);
+    const {jsPDF} = window.jspdf;
 
-    const canvas =
-        await html2canvas(
-            certificate,
-            {
+    const pdf = new jsPDF({
+        orientation:"landscape",
+        unit:"mm",
+        format:"a4",
+        compress:true
+    });
 
-                scale:2,
-
-                useCORS:true,
-
-                allowTaint:false,
-
-                backgroundColor:"#fdfbf7",
-
-                logging:false,
-
-                width:1400,
-
-                height:990,
-
-                windowWidth:1400,
-
-                windowHeight:990
-
-            }
-        );
-
-
-    const imageData =
-        canvas.toDataURL(
-            "image/jpeg",
-            .97
-        );
-
-
-    const {
-        jsPDF
-    } =
-    window.jspdf;
-
-
-    const pdf =
-        new jsPDF(
-            {
-
-                orientation:"landscape",
-
-                unit:"mm",
-
-                format:"a4",
-
-                compress:true
-
-            }
-        );
-
-
-    pdf.addImage(
-        imageData,
-        "JPEG",
-        0,
-        0,
-        297,
-        210,
-        undefined,
-        "FAST"
-    );
-
-
+    pdf.addImage(imageData,"JPEG",0,0,297,210,undefined,"FAST");
     return pdf;
-
 }
 
-
 /* =========================================================
-   GOOGLE DRIVE UPLOAD
-========================================================= */
-
-async function uploadCertificateToDrive(
-    pdf,
-    studentName,
-    certificateId
-){
-
-    const pdfDataURI =
-        pdf.output(
-            "datauristring"
-        );
-
-
-    const commaIndex =
-        pdfDataURI.indexOf(",");
-
+   GOOGLE DRIVE
+   ========================================================= */
+async function uploadCertificateToDrive(pdf,studentName,certificateId){
+    const pdfDataURI = pdf.output("datauristring");
+    const commaIndex = pdfDataURI.indexOf(",");
 
     if(commaIndex === -1){
-
-        throw new Error(
-            "Unable to prepare PDF for Drive upload."
-        );
-
+        throw new Error("Unable to prepare PDF for Drive upload.");
     }
 
+    const pdfBase64 = pdfDataURI.substring(commaIndex + 1);
 
-    const pdfBase64 =
-        pdfDataURI.substring(
-            commaIndex + 1
-        );
-
-
-    const response =
-        await fetch(
-            GOOGLE_SCRIPT_URL,
-            {
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":
-                        "text/plain;charset=utf-8"
-                },
-
-                body:
-                    JSON.stringify(
-                        {
-
-                            studentName:
-                                studentName,
-
-                            certificateId:
-                                certificateId,
-
-                            pdfBase64:
-                                pdfBase64
-
-                        }
-                    )
-
-            }
-        );
-
+    const response = await fetch(GOOGLE_SCRIPT_URL,{
+        method:"POST",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify({
+            studentName:studentName,
+            certificateId:certificateId,
+            pdfBase64:pdfBase64
+        })
+    });
 
     if(!response.ok){
-
-        throw new Error(
-            "Google Drive upload failed. HTTP " +
-            response.status
-        );
-
+        throw new Error("Google Drive upload failed. HTTP " + response.status);
     }
 
+    const result = await response.json();
 
-    const result =
-        await response.json();
-
-
-    if(
-        !result ||
-        !result.success
-    ){
-
-        throw new Error(
-            result?.error ||
-            "Google Drive upload failed."
-        );
-
+    if(!result || !result.success){
+        throw new Error(result?.error || "Google Drive upload failed.");
     }
-
 
     if(!result.driveUrl){
-
-        throw new Error(
-            "Drive upload completed but no Drive URL was returned."
-        );
-
+        throw new Error("Drive upload completed but no Drive URL was returned.");
     }
-
 
     return result;
-
 }
 
-
-/* =========================================================
-   SAVE DRIVE URL
-========================================================= */
-
-async function saveCertificateURL(
-    certificateId,
-    certificateURL
-){
-
-    if(
-        typeof internioSupabase ===
-        "undefined"
-    ){
-
-        throw new Error(
-            "InternIO Supabase client is not available."
-        );
-
+async function saveCertificateURL(certificateId,certificateURL){
+    if(typeof internioSupabase === "undefined"){
+        throw new Error("InternIO Supabase client is not available.");
     }
 
-
-    const result =
-        await internioSupabase.rpc(
-            "set_certificate_url",
-            {
-
-                p_certificate_id:
-                    certificateId,
-
-                p_certificate_url:
-                    certificateURL
-
-            }
-        );
-
+    const result = await internioSupabase.rpc("set_certificate_url",{
+        p_certificate_id:certificateId,
+        p_certificate_url:certificateURL
+    });
 
     if(result.error){
-
-        console.error(
-            result.error
-        );
-
-
-        throw new Error(
-            result.error.message ||
-            "Unable to save certificate URL."
-        );
-
+        console.error(result.error);
+        throw new Error(result.error.message || "Unable to save certificate URL.");
     }
 
-
     return true;
-
 }
-
 
 /* =========================================================
    DOWNLOAD
-========================================================= */
-
+   ========================================================= */
 async function downloadCertificatePDF(){
-
     try{
-
         if(!generatedPDF){
-
-            generatedPDF =
-                await createCertificatePDF();
-
+            generatedPDF = await createCertificatePDF();
         }
 
-
         const student =
-            document
-                .getElementById(
-                    "certificateStudent"
-                )
-                .textContent ||
-            "Student";
+            document.getElementById("certificateStudent").textContent || "Student";
 
+        const safeName = String(student)
+            .replace(/[^a-zA-Z0-9_-]+/g,"_")
+            .replace(/^_+|_+$/g,"");
 
-        const safeName =
-            String(student)
-                .replace(
-                    /[^a-zA-Z0-9_-]+/g,
-                    "_"
-                )
-                .replace(
-                    /^_+|_+$/g,
-                    ""
-                );
-
-
-        const safeId =
-            String(
-                generatedCertificateId ||
-                "Certificate"
-            )
-                .replace(
-                    /[^a-zA-Z0-9_-]+/g,
-                    "_"
-                );
-
+        const safeId = String(generatedCertificateId || "Certificate")
+            .replace(/[^a-zA-Z0-9_-]+/g,"_");
 
         generatedPDF.save(
-            "InternIO_Certificate_" +
-            safeName +
-            "_" +
-            safeId +
-            ".pdf"
+            "InternIO_Certificate_" + safeName + "_" + safeId + ".pdf"
         );
-
-
+    }catch(error){
+        console.error("PDF error:",error);
+        alert("Unable to create the PDF.\n\n" + error.message);
     }
-    catch(error){
-
-        console.error(
-            "PDF error:",
-            error
-        );
-
-
-        alert(
-            "Unable to create the PDF.\n\n" +
-            error.message
-        );
-
-    }
-
 }
-
 
 /* =========================================================
    MAIN GENERATION
-========================================================= */
-
+   ========================================================= */
 async function generateCertificate(){
+    const button = document.getElementById("generateButton");
+    const data = getFormData();
 
-    const button =
-        document.getElementById(
-            "generateButton"
-        );
+    showMessage("","");
 
+    if(!validateForm(data)) return;
 
-    const data =
-        getFormData();
-
-
-    showMessage(
-        "",
-        ""
-    );
-
-
-    if(
-        !validateForm(data)
-    ){
-
-        return;
-
-    }
-
-
-    button.disabled =
-        true;
-
+    button.disabled = true;
 
     try{
+        button.textContent = "CREATING CERTIFICATE...";
 
-        /*
-           STEP 1
-           DATABASE
-        */
-
-        button.textContent =
-            "CREATING CERTIFICATE...";
-
-
-        const rpcData =
-            await saveCertificate(
-                data
-            );
-
-
-        const certificateId =
-            extractCertificateId(
-                rpcData
-            );
-
+        const rpcData = await saveCertificate(data);
+        const certificateId = extractCertificateId(rpcData);
 
         if(!certificateId){
-
-            console.error(
-                "Database response:",
-                rpcData
-            );
-
-
+            console.error("Database response:",rpcData);
             throw new Error(
                 "Certificate was created but no certificate ID was returned."
             );
-
         }
 
+        generatedCertificateId = String(certificateId);
 
-        generatedCertificateId =
-            String(
-                certificateId
-            );
+        button.textContent = "GENERATING CERTIFICATE...";
+        await renderCertificate(data,generatedCertificateId);
 
+        document.getElementById("formScreen").style.display = "none";
+        document.getElementById("result").style.display = "block";
 
-        /*
-           STEP 2
-           RENDER
-        */
+        window.scrollTo({top:0,behavior:"smooth"});
 
-        button.textContent =
-            "GENERATING CERTIFICATE...";
+        button.textContent = "CREATING PDF...";
+        generatedPDF = await createCertificatePDF();
 
-
-        await renderCertificate(
-            data,
+        button.textContent = "UPLOADING TO DRIVE...";
+        const driveResult = await uploadCertificateToDrive(
+            generatedPDF,
+            data.studentName,
             generatedCertificateId
         );
 
+        generatedDriveURL = driveResult.driveUrl;
 
-        /*
-           STEP 3
-           SHOW RESULT
-        */
-
-        document
-            .getElementById(
-                "formScreen"
-            )
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById(
-                "result"
-            )
-            .style.display =
-            "block";
-
-
-        window.scrollTo(
-            {
-                top:0,
-                behavior:"smooth"
-            }
-        );
-
-
-        /*
-           STEP 4
-           PDF
-        */
-
-        button.textContent =
-            "CREATING PDF...";
-
-
-        generatedPDF =
-            await createCertificatePDF();
-
-
-        /*
-           STEP 5
-           DRIVE
-        */
-
-        button.textContent =
-            "UPLOADING TO DRIVE...";
-
-
-        const driveResult =
-            await uploadCertificateToDrive(
-                generatedPDF,
-                data.studentName,
-                generatedCertificateId
-            );
-
-
-        generatedDriveURL =
-            driveResult.driveUrl;
-
-
-        /*
-           STEP 6
-           DATABASE URL
-        */
-
-        button.textContent =
-            "SAVING VERIFICATION LINK...";
-
-
+        button.textContent = "SAVING VERIFICATION LINK...";
         await saveCertificateURL(
             generatedCertificateId,
             generatedDriveURL
         );
 
-
-        console.log(
-            "InternIO certificate created:",
-            generatedCertificateId
-        );
-
-
-        console.log(
-            "Drive URL:",
-            generatedDriveURL
-        );
-
-
+        console.log("InternIO certificate created:",generatedCertificateId);
+        console.log("Drive URL:",generatedDriveURL);
         console.log(
             "Verification URL:",
-            getVerificationURL(
-                generatedCertificateId
-            )
+            getVerificationURL(generatedCertificateId)
         );
 
+        showMessage("Certificate created successfully.","success");
+
+    }catch(error){
+        console.error("InternIO Certificate Error:",error);
+
+        alert("Certificate creation failed.\n\n" + error.message);
+
+        document.getElementById("result").style.display = "none";
+        document.getElementById("formScreen").style.display = "grid";
 
         showMessage(
-            "Certificate created successfully.",
-            "success"
-        );
-
-
-    }
-    catch(error){
-
-        console.error(
-            "InternIO Certificate Error:",
-            error
-        );
-
-
-        alert(
-            "Certificate creation failed.\n\n" +
-            error.message
-        );
-
-
-        document
-            .getElementById(
-                "result"
-            )
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById(
-                "formScreen"
-            )
-            .style.display =
-            "grid";
-
-
-        showMessage(
-            error.message ||
-            "Unable to create certificate.",
+            error.message || "Unable to create certificate.",
             "error"
         );
-
-
+    }finally{
+        button.disabled = false;
+        button.textContent = "GENERATE CERTIFICATE";
     }
-    finally{
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "GENERATE CERTIFICATE";
-
-    }
-
 }
 
-
 /* =========================================================
-   EDIT
-========================================================= */
-
+   EDIT / NEW
+   ========================================================= */
 function editCertificate(){
-
-    document
-        .getElementById(
-            "result"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "formScreen"
-        )
-        .style.display =
-        "grid";
-
-
-    window.scrollTo(
-        {
-            top:0,
-            behavior:"smooth"
-        }
-    );
-
+    document.getElementById("result").style.display = "none";
+    document.getElementById("formScreen").style.display = "grid";
+    window.scrollTo({top:0,behavior:"smooth"});
 }
-
-
-/* =========================================================
-   NEW CERTIFICATE
-========================================================= */
 
 function newCertificate(){
+    [
+        "studentName",
+        "internship",
+        "projectName",
+        "startDate",
+        "endDate",
+        "duration",
+        "issueDate"
+    ].forEach(id => {
+        document.getElementById(id).value = "";
+    });
 
-    document
-        .getElementById(
-            "studentName"
-        )
-        .value =
-        "";
+    generatedCertificateId = null;
+    generatedPDF = null;
+    generatedDriveURL = null;
 
+    document.getElementById("qrCode").replaceChildren();
 
-    document
-        .getElementById(
-            "internship"
-        )
-        .value =
-        "";
+    selectType("PROJECT_NAMED");
 
-
-    document
-        .getElementById(
-            "projectName"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "startDate"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "endDate"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "duration"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "issueDate"
-        )
-        .value =
-        "";
-
-
-    generatedCertificateId =
-        null;
-
-
-    generatedPDF =
-        null;
-
-
-    generatedDriveURL =
-        null;
-
-
-    document
-        .getElementById(
-            "qrCode"
-        )
-        .replaceChildren();
-
-
-    selectType(
-        "PROJECT_NAMED"
-    );
-
-
-    document
-        .getElementById(
-            "result"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "formScreen"
-        )
-        .style.display =
-        "grid";
-
-
-    showMessage(
-        "",
-        ""
-    );
-
-
-    window.scrollTo(
-        {
-            top:0,
-            behavior:"smooth"
-        }
-    );
-
+    document.getElementById("result").style.display = "none";
+    document.getElementById("formScreen").style.display = "grid";
+    showMessage("","");
+    window.scrollTo({top:0,behavior:"smooth"});
 }
-
 
 /* =========================================================
    INITIAL
-========================================================= */
-
-selectType(
-    "PROJECT_NAMED"
-);
-
+   ========================================================= */
+selectType("PROJECT_NAMED");
 </script>
-
 </body>
 </html>
+'''
+
+out = Path("/mnt/data/InternIO_Certificate_Maker_Harshit_Style.html")
+out.write_text(html, encoding="utf-8")
+print(f"Created: {out}")
+print(f"Size: {out.stat().st_size:,} bytes")
